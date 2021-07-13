@@ -1,3 +1,10 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Android端
+    * 缩放按钮
+    * 指南针
+    * 定位按钮（定位功能未实现）
+    * 比例尺控件
+    
+* iOS端
+    * 

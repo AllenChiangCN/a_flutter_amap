@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 export 'amap_view.dart';
+export 'logo_position.dart';
 
 class AFlutterAmap {
   static const MethodChannel _channel = const MethodChannel('a_flutter_amap');

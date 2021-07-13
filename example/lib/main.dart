@@ -19,7 +19,10 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: AMapView(),
+          child: AMapView(
+            autoLocateAfterInit: true,
+            logoPosition: LogoPosition.BOTTOM_LEFT,
+          ),
         ),
       ),
     );

@@ -1,8 +1,5 @@
 package com.allen.a_flutter_amap
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -15,20 +12,20 @@ import io.flutter.plugin.common.MethodChannel.Result
 
 /** AFlutterAmapPlugin */
 class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    private lateinit var mActivity: FlutterActivity
+    private lateinit var _activity: FlutterActivity
 
-    private lateinit var mFlutterPluginBinding: FlutterPlugin.FlutterPluginBinding
+    private lateinit var _flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
 
-    private lateinit var mChannel: MethodChannel
+    private lateinit var _channel: MethodChannel
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        mFlutterPluginBinding = flutterPluginBinding
-        mChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "a_flutter_amap")
-        mChannel.setMethodCallHandler(this)
+        this._flutterPluginBinding = flutterPluginBinding
+        _channel = MethodChannel(flutterPluginBinding.binaryMessenger, "a_flutter_amap")
+        _channel.setMethodCallHandler(this)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        mChannel.setMethodCallHandler(null)
+        _channel.setMethodCallHandler(null)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -40,23 +37,11 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        mActivity = binding.activity as FlutterActivity
-        mFlutterPluginBinding.platformViewRegistry.registerViewFactory(
+        _activity = binding.activity as FlutterActivity
+        _flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "AMapView",
-            AMapViewFactory(mActivity)
+            AMapViewFactory(_activity)
         )
-        binding.addRequestPermissionsResultListener { requestCode, permissions, grantResults ->
-            if (requestCode == AMapView.PERMISSION_REQUEST_CODE) {
-                if (permissions.size == 1 && permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
-                    grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                ) {
-                    Log.d("AMapView", "Permission granted")
-                } else {
-                    Log.d("AMapView", "Permission denied still")
-                }
-            }
-            true
-        }
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

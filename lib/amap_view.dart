@@ -2,15 +2,49 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import 'logo_position.dart';
+
 /// 高德地图
 class AMapView extends StatelessWidget {
-  const AMapView({Key? key}) : super(key: key);
+  const AMapView({
+    Key? key,
+    this.autoLocateAfterInit = false,
+    this.showZoomControl = false,
+    this.showCompass = false,
+    this.showLocationButton = false,
+    this.showScaleControl = false,
+    this.logoPosition = LogoPosition.BOTTOM_LEFT,
+  }) : super(key: key);
 
   final String viewType = 'AMapView';
 
+  /// 初始化后是否自动定位
+  final bool autoLocateAfterInit;
+
+  /// 是否显示缩放控件
+  final bool showZoomControl;
+
+  /// 是否显示指南针
+  final bool showCompass;
+
+  /// 是否显示定位按钮
+  final bool showLocationButton;
+
+  /// 是否显示比例尺控件
+  final bool showScaleControl;
+
+  final LogoPosition logoPosition;
+
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> creationParams = <String, dynamic>{};
+    Map<String, dynamic> creationParams = <String, dynamic>{
+      'autoLocateAfterInit': autoLocateAfterInit,
+      'showZoomControl': showZoomControl,
+      'showCompass': showCompass,
+      'showLocationButton': showLocationButton,
+      'showScaleControl': showScaleControl,
+      'logoPosition': logoPosition.name,
+    };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return AndroidView(
