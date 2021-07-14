@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
           child: AMapView(
             autoLocateAfterInit: true,
             showCompass: true,
+            showScaleControl: true,
             showZoomControl: false,
           ),
         ),

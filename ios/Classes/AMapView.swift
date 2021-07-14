@@ -64,7 +64,7 @@ class AMapView: NSObject, FlutterPlatformView {
 
         mapView.showsUserLocation = _autoLocateAfterInit
         if _autoLocateAfterInit {
-            mapView.userTrackingMode = .follow
+            mapView.setUserTrackingMode(.follow, animated: true)
         }
 
         mapView.showsCompass = _showCompass

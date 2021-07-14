@@ -28,6 +28,8 @@ class AMapView(
 
     private var _uiSettings: UiSettings = _aMap.uiSettings
 
+    private var _onLocationChangedListener: LocationSource.OnLocationChangedListener? = null
+
     /**
      * 初始化后是否自动定位
      */
@@ -326,10 +328,11 @@ class AMapView(
     }
 
     override fun activate(listener: LocationSource.OnLocationChangedListener?) {
-
+        _onLocationChangedListener = listener
     }
 
     override fun deactivate() {
+        _onLocationChangedListener = null
 
     }
 }
