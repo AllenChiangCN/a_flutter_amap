@@ -18,6 +18,7 @@ class AMapView extends StatelessWidget {
     this.rotateGestureEnable = true,
     this.scrollGestureEnable = true,
     this.tiltGestureEnable = true,
+    this.allGestureEnable,
     this.zoomPosition = ZoomPosition.RIGHT_BOTTOM,
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
   }) : super(key: key);
@@ -55,6 +56,11 @@ class AMapView extends StatelessWidget {
   /// 倾斜手势是否可用
   final bool tiltGestureEnable;
 
+  /// 所有手势是否可用
+  ///
+  /// 为null或true时其余手势可以单独控制
+  final bool? allGestureEnable;
+
   /// 缩放控件位置
   ///
   /// 只针对Android
@@ -77,6 +83,7 @@ class AMapView extends StatelessWidget {
       'rotateGestureEnable': rotateGestureEnable,
       'scrollGestureEnable': scrollGestureEnable,
       'tiltGestureEnable': tiltGestureEnable,
+      'allGestureEnable': allGestureEnable,
       'zoomPosition': zoomPosition.name,
       'logoPosition': logoPosition.name,
     };
