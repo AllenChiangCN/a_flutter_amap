@@ -1,10 +1,7 @@
 package com.allen.a_flutter_amap
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.view.View
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.amap.api.maps.*
@@ -57,6 +54,11 @@ class AMapView(
     private var _showScaleControl: Boolean = false
 
     /**
+     * 缩放控件位置
+     */
+    private var _zoomPosition: String = ""
+
+    /**
      * Logo位置
      */
     private var _logoPosition: String = ""
@@ -67,6 +69,7 @@ class AMapView(
         _showCompass = creationParams["showCompass"] as Boolean
         _showLocationButton = creationParams["showLocationButton"] as Boolean
         _showScaleControl = creationParams["showScaleControl"] as Boolean
+        _zoomPosition = creationParams["zoomPosition"] as String
         _logoPosition = creationParams["logoPosition"] as String
 
         activity.lifecycle.addObserver(this)
@@ -81,11 +84,6 @@ class AMapView(
 
         if (_autoLocateAfterInit) {
             _aMap.isMyLocationEnabled = true
-//            if (haveLocationPermission()) {
-//                _aMap.isMyLocationEnabled = true
-//            } else {
-//                throw Exception("定位权限未授予")
-//            }
         }
 
         showZoomControl(_showZoomControl)
@@ -96,22 +94,16 @@ class AMapView(
     }
 
     /**
-     * 是否有定位权限
-     */
-    private fun haveLocationPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            activity,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    /**
      * 是否显示缩放按钮
      *
      * @param show 是否显示
      */
     private fun showZoomControl(show: Boolean) {
         _uiSettings.isZoomControlsEnabled = show
+
+        if (show) {
+            setZoomPosition(_zoomPosition)
+        }
     }
 
     /**
@@ -133,25 +125,8 @@ class AMapView(
             _aMap.setLocationSource(this)
             _uiSettings.isMyLocationButtonEnabled = true
             _aMap.isMyLocationEnabled = true
-//            _aMap.setOnMyLocationChangeListener(LocationChangeListener)
-//            _aMap.setOnMyLocationChangeListener {
-//                _aMap.animateCamera(
-//                    CameraUpdateFactory.newLatLng(
-//                        LatLng(
-//                            it.latitude,
-//                            it.longitude
-//                        )
-//                    )
-//                )
-//            }
-//            if (haveLocationPermission() && _autoLocateAfterInit.not()) {
-//                _aMap.isMyLocationEnabled = true
-//            } else {
-//                throw Exception("定位权限未授予")
-//            }
         } else {
             _uiSettings.isMyLocationButtonEnabled = false
-//            _aMap.removeOnMyLocationChangeListener(LocationChangeListener)
         }
     }
 
@@ -164,6 +139,23 @@ class AMapView(
         _uiSettings.isScaleControlsEnabled = show
     }
 
+    /**
+     * 设置缩放控件位置
+     */
+    private fun setZoomPosition(position: String) {
+        when (position) {
+            "RIGHT_BOTTOM" -> {
+                _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
+            }
+            "RIGHT_CENTER" -> {
+                _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_CENTER
+            }
+        }
+    }
+
+    /**
+     * 设置Logo位置
+     */
     private fun setLogoPosition(position: String) {
         when (position) {
             "BOTTOM_LEFT" -> {
@@ -186,12 +178,6 @@ class AMapView(
             }
         }
     }
-
-//    private object LocationChangeListener : AMap.OnMyLocationChangeListener {
-//        override fun onMyLocationChange(location: Location?) {
-//
-//        }
-//    }
 
     override fun getView(): View {
         return _mapView

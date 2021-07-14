@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'logo_position.dart';
+import 'zoom_position.dart';
 
 /// 高德地图
 class AMapView extends StatelessWidget {
@@ -13,6 +14,7 @@ class AMapView extends StatelessWidget {
     this.showCompass = false,
     this.showLocationButton = false,
     this.showScaleControl = false,
+    this.zoomPosition = ZoomPosition.RIGHT_BOTTOM,
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
   }) : super(key: key);
 
@@ -37,6 +39,11 @@ class AMapView extends StatelessWidget {
   /// 是否显示比例尺控件
   final bool showScaleControl;
 
+  /// 缩放控件位置
+  ///
+  /// 只针对Android
+  final ZoomPosition zoomPosition;
+
   /// Logo位置
   ///
   /// 只针对Android
@@ -50,6 +57,7 @@ class AMapView extends StatelessWidget {
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,
       'showScaleControl': showScaleControl,
+      'zoomPosition': zoomPosition.name,
       'logoPosition': logoPosition.name,
     };
     switch (defaultTargetPlatform) {

@@ -1,4 +1,6 @@
 /// Logo位置
+///
+/// 只针对Android
 enum LogoPosition {
   BOTTOM_LEFT,
   BOTTOM_RIGHT,
