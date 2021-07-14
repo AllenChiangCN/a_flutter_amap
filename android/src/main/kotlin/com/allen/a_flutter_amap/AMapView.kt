@@ -54,6 +54,11 @@ class AMapView(
     private var _showScaleControl: Boolean = creationParams["showScaleControl"] as Boolean
 
     /**
+     * 所有手势是否可用
+     */
+    private var _allGestureEnable: Boolean? = creationParams["allGestureEnable"] as Boolean?
+
+    /**
      * 缩放手势是否可用
      */
     private var _zoomGestureEnable: Boolean = creationParams["zoomGestureEnable"] as Boolean
@@ -74,9 +79,10 @@ class AMapView(
     private var _tiltGestureEnable: Boolean = creationParams["tiltGestureEnable"] as Boolean
 
     /**
-     * 所有手势是否可用
+     * 是否以地图中心点缩放
      */
-    private var _allGestureEnable: Boolean? = creationParams["allGestureEnable"] as Boolean?
+    private var _isGestureScaleByMapCenter: Boolean =
+        creationParams["isGestureScaleByMapCenter"] as Boolean
 
     /**
      * 缩放控件位置
@@ -94,7 +100,7 @@ class AMapView(
 
     private fun initAMapView() {
         val locationStyle = MyLocationStyle().apply {
-            myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)
+            myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
             showMyLocation(true)
         }
         _aMap.myLocationStyle = locationStyle
@@ -107,6 +113,7 @@ class AMapView(
         showCompass(_showCompass)
         showLocationButton(_showLocationButton)
         showScaleControl(_showScaleControl)
+        setGestureScaleByMapCenter(_isGestureScaleByMapCenter)
         enableAllGesture(_allGestureEnable)
         setLogoPosition(_logoPosition)
     }
@@ -158,34 +165,6 @@ class AMapView(
     }
 
     /**
-     * 缩放手势是否可用
-     */
-    private fun enableZoomGesture(enable: Boolean) {
-        _uiSettings.isZoomGesturesEnabled = enable
-    }
-
-    /**
-     * 旋转手势是否可用
-     */
-    private fun enableRotateGesture(enable: Boolean) {
-        _uiSettings.isRotateGesturesEnabled = enable
-    }
-
-    /**
-     * 旋转手势是否可用
-     */
-    private fun enableScrollGesture(enable: Boolean) {
-        _uiSettings.isScrollGesturesEnabled = enable
-    }
-
-    /**
-     * 倾斜手势是否可用
-     */
-    private fun enableTiltGesture(enable: Boolean) {
-        _uiSettings.isTiltGesturesEnabled = enable
-    }
-
-    /**
      * 所有手势是否可用
      */
     private fun enableAllGesture(enable: Boolean?) {
@@ -207,6 +186,41 @@ class AMapView(
                 enableTiltGesture(_tiltGestureEnable)
             }
         }
+    }
+
+    /**
+     * 缩放手势是否可用
+     */
+    private fun enableZoomGesture(enable: Boolean) {
+        _uiSettings.isZoomGesturesEnabled = enable
+    }
+
+    /**
+     * 旋转手势是否可用
+     */
+    private fun enableRotateGesture(enable: Boolean) {
+        _uiSettings.isRotateGesturesEnabled = enable
+    }
+
+    /**
+     * 拖拽手势是否可用
+     */
+    private fun enableScrollGesture(enable: Boolean) {
+        _uiSettings.isScrollGesturesEnabled = enable
+    }
+
+    /**
+     * 倾斜手势是否可用
+     */
+    private fun enableTiltGesture(enable: Boolean) {
+        _uiSettings.isTiltGesturesEnabled = enable
+    }
+
+    /**
+     * 设置是否以地图中心点缩放
+     */
+    private fun setGestureScaleByMapCenter(isCenter: Boolean) {
+        _uiSettings.isGestureScaleByMapCenter = isCenter
     }
 
     /**

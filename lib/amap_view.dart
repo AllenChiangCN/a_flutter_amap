@@ -14,11 +14,12 @@ class AMapView extends StatelessWidget {
     this.showCompass = false,
     this.showLocationButton = false,
     this.showScaleControl = false,
+    this.allGestureEnable,
     this.zoomGestureEnable = true,
     this.rotateGestureEnable = true,
     this.scrollGestureEnable = true,
     this.tiltGestureEnable = true,
-    this.allGestureEnable,
+    this.isGestureScaleByMapCenter = false,
     this.zoomPosition = ZoomPosition.RIGHT_BOTTOM,
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
   }) : super(key: key);
@@ -44,6 +45,11 @@ class AMapView extends StatelessWidget {
   /// 是否显示比例尺控件
   final bool showScaleControl;
 
+  /// 所有手势是否可用
+  ///
+  /// 为null或true时其余手势可以单独控制
+  final bool? allGestureEnable;
+
   /// 缩放手势是否可用
   final bool zoomGestureEnable;
 
@@ -56,10 +62,8 @@ class AMapView extends StatelessWidget {
   /// 倾斜手势是否可用
   final bool tiltGestureEnable;
 
-  /// 所有手势是否可用
-  ///
-  /// 为null或true时其余手势可以单独控制
-  final bool? allGestureEnable;
+  /// 是否以地图中心点缩放
+  final bool isGestureScaleByMapCenter;
 
   /// 缩放控件位置
   ///
@@ -79,11 +83,12 @@ class AMapView extends StatelessWidget {
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,
       'showScaleControl': showScaleControl,
+      'allGestureEnable': allGestureEnable,
       'zoomGestureEnable': zoomGestureEnable,
       'rotateGestureEnable': rotateGestureEnable,
       'scrollGestureEnable': scrollGestureEnable,
       'tiltGestureEnable': tiltGestureEnable,
-      'allGestureEnable': allGestureEnable,
+      'isGestureScaleByMapCenter': isGestureScaleByMapCenter,
       'zoomPosition': zoomPosition.name,
       'logoPosition': logoPosition.name,
     };
