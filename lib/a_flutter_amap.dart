@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 export 'amap_view.dart';
+export 'location_type.dart';
 export 'logo_position.dart';
 export 'zoom_position.dart';
 

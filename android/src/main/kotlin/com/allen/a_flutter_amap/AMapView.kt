@@ -34,6 +34,16 @@ class AMapView(
     private var _autoLocateAfterInit: Boolean = creationParams["autoLocateAfterInit"] as Boolean
 
     /**
+     * 定位类型
+     */
+    private var _locationType: String = creationParams["locationType"] as String
+
+    /**
+     * 定位间隔，仅定位类型为连续定位时有效，单位毫秒
+     */
+    private var _locationInterval: Int = creationParams["locationInterval"] as Int
+
+    /**
      * 是否显示缩放控件
      */
     private var _showZoomControl: Boolean = creationParams["showZoomControl"] as Boolean
@@ -100,7 +110,8 @@ class AMapView(
 
     private fun initAMapView() {
         val locationStyle = MyLocationStyle().apply {
-            myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
+            myLocationType(getLocationType(_locationType))
+            interval(_locationInterval.toLong())
             showMyLocation(true)
         }
         _aMap.myLocationStyle = locationStyle
@@ -116,6 +127,25 @@ class AMapView(
         setGestureScaleByMapCenter(_isGestureScaleByMapCenter)
         enableAllGesture(_allGestureEnable)
         setLogoPosition(_logoPosition)
+    }
+
+    /**
+     * 获取定位类型常量
+     *
+     * @param type 定位类型名称
+     */
+    private fun getLocationType(type: String): Int {
+        return when (type) {
+            "SHOW" -> MyLocationStyle.LOCATION_TYPE_SHOW
+            "LOCATE" -> MyLocationStyle.LOCATION_TYPE_LOCATE
+            "FOLLOW" -> MyLocationStyle.LOCATION_TYPE_FOLLOW
+            "MAP_ROTATE" -> MyLocationStyle.LOCATION_TYPE_MAP_ROTATE
+            "LOCATION_ROTATE" -> MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE
+            "LOCATION_ROTATE_NO_CENTER" -> MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER
+            "FOLLOW_NO_CENTER" -> MyLocationStyle.LOCATION_TYPE_FOLLOW_NO_CENTER
+            "MAP_ROTATE_NO_CENTER" -> MyLocationStyle.LOCATION_TYPE_MAP_ROTATE_NO_CENTER
+            else -> MyLocationStyle.LOCATION_TYPE_LOCATE
+        }
     }
 
     /**

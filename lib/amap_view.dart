@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import 'location_type.dart';
 import 'logo_position.dart';
 import 'zoom_position.dart';
 
@@ -10,6 +11,8 @@ class AMapView extends StatelessWidget {
   const AMapView({
     Key? key,
     this.autoLocateAfterInit = false,
+    this.locationType = LocationType.LOCATE,
+    this.locationInterval = 2000,
     this.showZoomControl = true,
     this.showCompass = false,
     this.showLocationButton = false,
@@ -28,6 +31,12 @@ class AMapView extends StatelessWidget {
 
   /// 初始化后是否自动定位
   final bool autoLocateAfterInit;
+
+  /// 定位类型
+  final LocationType locationType;
+
+  /// 定位间隔，仅定位类型为连续定位时有效，单位毫秒
+  final int locationInterval;
 
   /// 是否显示缩放控件
   ///
@@ -79,6 +88,8 @@ class AMapView extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
       'autoLocateAfterInit': autoLocateAfterInit,
+      'locationType': locationType.name,
+      'locationInterval': locationInterval,
       'showZoomControl': showZoomControl,
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,
