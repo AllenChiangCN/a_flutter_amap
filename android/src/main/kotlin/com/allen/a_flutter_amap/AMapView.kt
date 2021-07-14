@@ -59,6 +59,11 @@ class AMapView(
     private var _zoomGestureEnable: Boolean = creationParams["zoomGestureEnable"] as Boolean
 
     /**
+     * 旋转手势是否可用
+     */
+    private var _rotateGestureEnable: Boolean = creationParams["rotateGestureEnable"] as Boolean
+
+    /**
      * 缩放控件位置
      */
     private var _zoomPosition: String = creationParams["zoomPosition"] as String
@@ -88,6 +93,7 @@ class AMapView(
         showLocationButton(_showLocationButton)
         showScaleControl(_showScaleControl)
         enableZoomGesture(_zoomGestureEnable)
+        enableRotateGesture(_rotateGestureEnable)
         setLogoPosition(_logoPosition)
     }
 
@@ -137,8 +143,18 @@ class AMapView(
         _uiSettings.isScaleControlsEnabled = show
     }
 
+    /**
+     * 缩放手势是否可用
+     */
     private fun enableZoomGesture(enable: Boolean) {
         _uiSettings.isZoomGesturesEnabled = enable
+    }
+
+    /**
+     * 旋转手势是否可用
+     */
+    private fun enableRotateGesture(enable: Boolean) {
+        _uiSettings.isRotateGesturesEnabled = enable
     }
 
     /**
