@@ -64,6 +64,16 @@ class AMapView(
     private var _rotateGestureEnable: Boolean = creationParams["rotateGestureEnable"] as Boolean
 
     /**
+     * 拖拽手势是否可用
+     */
+    private var _scrollGestureEnable: Boolean = creationParams["scrollGestureEnable"] as Boolean
+
+    /**
+     * 倾斜手势是否可用
+     */
+    private var _tiltGestureEnable: Boolean = creationParams["tiltGestureEnable"] as Boolean
+
+    /**
      * 缩放控件位置
      */
     private var _zoomPosition: String = creationParams["zoomPosition"] as String
@@ -94,6 +104,8 @@ class AMapView(
         showScaleControl(_showScaleControl)
         enableZoomGesture(_zoomGestureEnable)
         enableRotateGesture(_rotateGestureEnable)
+        enableScrollGesture(_scrollGestureEnable)
+        enableTiltGesture(_tiltGestureEnable)
         setLogoPosition(_logoPosition)
     }
 
@@ -155,6 +167,20 @@ class AMapView(
      */
     private fun enableRotateGesture(enable: Boolean) {
         _uiSettings.isRotateGesturesEnabled = enable
+    }
+
+    /**
+     * 旋转手势是否可用
+     */
+    private fun enableScrollGesture(enable: Boolean) {
+        _uiSettings.isScrollGesturesEnabled = enable
+    }
+
+    /**
+     * 倾斜手势是否可用
+     */
+    private fun enableTiltGesture(enable: Boolean) {
+        _uiSettings.isTiltGesturesEnabled = enable
     }
 
     /**

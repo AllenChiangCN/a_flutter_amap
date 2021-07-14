@@ -21,7 +21,6 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: AMapView(
             autoLocateAfterInit: true,
-            rotateGestureEnable: false,
             zoomPosition: ZoomPosition.RIGHT_CENTER,
             logoPosition: LogoPosition.BOTTOM_LEFT,
           ),
