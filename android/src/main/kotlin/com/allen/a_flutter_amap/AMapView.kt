@@ -31,47 +31,44 @@ class AMapView(
     /**
      * 初始化后是否自动定位
      */
-    private var _autoLocateAfterInit: Boolean = false
+    private var _autoLocateAfterInit: Boolean = creationParams["autoLocateAfterInit"] as Boolean
 
     /**
      * 是否显示缩放控件
      */
-    private var _showZoomControl: Boolean = false
+    private var _showZoomControl: Boolean = creationParams["showZoomControl"] as Boolean
 
     /**
      * 是否显示指南针
      */
-    private var _showCompass: Boolean = false
+    private var _showCompass: Boolean = creationParams["showCompass"] as Boolean
 
     /**
      * 是否显示定位按钮
      */
-    private var _showLocationButton: Boolean = false
+    private var _showLocationButton: Boolean = creationParams["showLocationButton"] as Boolean
 
     /**
      * 是否显示比例尺控件
      */
-    private var _showScaleControl: Boolean = false
+    private var _showScaleControl: Boolean = creationParams["showScaleControl"] as Boolean
+
+    /**
+     * 缩放手势是否可用
+     */
+    private var _zoomGestureEnable: Boolean = creationParams["zoomGestureEnable"] as Boolean
 
     /**
      * 缩放控件位置
      */
-    private var _zoomPosition: String = ""
+    private var _zoomPosition: String = creationParams["zoomPosition"] as String
 
     /**
      * Logo位置
      */
-    private var _logoPosition: String = ""
+    private var _logoPosition: String = creationParams["logoPosition"] as String
 
     init {
-        _autoLocateAfterInit = creationParams["autoLocateAfterInit"] as Boolean
-        _showZoomControl = creationParams["showZoomControl"] as Boolean
-        _showCompass = creationParams["showCompass"] as Boolean
-        _showLocationButton = creationParams["showLocationButton"] as Boolean
-        _showScaleControl = creationParams["showScaleControl"] as Boolean
-        _zoomPosition = creationParams["zoomPosition"] as String
-        _logoPosition = creationParams["logoPosition"] as String
-
         activity.lifecycle.addObserver(this)
     }
 
@@ -90,6 +87,7 @@ class AMapView(
         showCompass(_showCompass)
         showLocationButton(_showLocationButton)
         showScaleControl(_showScaleControl)
+        enableZoomGesture(_zoomGestureEnable)
         setLogoPosition(_logoPosition)
     }
 
@@ -137,6 +135,10 @@ class AMapView(
      */
     private fun showScaleControl(show: Boolean) {
         _uiSettings.isScaleControlsEnabled = show
+    }
+
+    private fun enableZoomGesture(enable: Boolean) {
+        _uiSettings.isZoomGesturesEnabled = enable
     }
 
     /**

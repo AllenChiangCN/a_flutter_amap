@@ -10,10 +10,11 @@ class AMapView extends StatelessWidget {
   const AMapView({
     Key? key,
     this.autoLocateAfterInit = false,
-    this.showZoomControl = false,
+    this.showZoomControl = true,
     this.showCompass = false,
     this.showLocationButton = false,
     this.showScaleControl = false,
+    this.zoomGestureEnable = true,
     this.zoomPosition = ZoomPosition.RIGHT_BOTTOM,
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
   }) : super(key: key);
@@ -39,6 +40,9 @@ class AMapView extends StatelessWidget {
   /// 是否显示比例尺控件
   final bool showScaleControl;
 
+  /// 缩放手势是否可用
+  final bool zoomGestureEnable;
+
   /// 缩放控件位置
   ///
   /// 只针对Android
@@ -57,6 +61,7 @@ class AMapView extends StatelessWidget {
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,
       'showScaleControl': showScaleControl,
+      'zoomGestureEnable': zoomGestureEnable,
       'zoomPosition': zoomPosition.name,
       'logoPosition': logoPosition.name,
     };
