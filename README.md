@@ -2,4 +2,4 @@
 
 高德地图Flutter插件
 
-- [ ] Android定位按钮
+- [ ] Android定位按钮功能

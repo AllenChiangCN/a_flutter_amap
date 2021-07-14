@@ -22,17 +22,24 @@ class AMapView extends StatelessWidget {
   final bool autoLocateAfterInit;
 
   /// 是否显示缩放控件
+  ///
+  /// 只针对Android
   final bool showZoomControl;
 
   /// 是否显示指南针
   final bool showCompass;
 
   /// 是否显示定位按钮
+  ///
+  /// 只针对Android
   final bool showLocationButton;
 
   /// 是否显示比例尺控件
   final bool showScaleControl;
 
+  /// Logo位置
+  ///
+  /// 只针对Android
   final LogoPosition logoPosition;
 
   @override
