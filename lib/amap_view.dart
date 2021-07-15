@@ -40,6 +40,7 @@ class AMapView extends StatelessWidget {
     this.logoMargin,
     this.compassMargin,
     this.scaleMargin,
+    this.initialZoomLevel = 12.0,
   }) : super(key: key);
 
   final String viewType = 'AMapView';
@@ -137,6 +138,9 @@ class AMapView extends StatelessWidget {
   /// 只针对iOS
   final ScaleMargin? scaleMargin;
 
+  /// 初始缩放等级
+  final double initialZoomLevel;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
@@ -165,6 +169,7 @@ class AMapView extends StatelessWidget {
       'logoMargin': logoMargin?.toJson(),
       'compassMargin': compassMargin?.toJson(),
       'scaleMargin': scaleMargin?.toJson(),
+      'initialZoomLevel': initialZoomLevel,
     };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

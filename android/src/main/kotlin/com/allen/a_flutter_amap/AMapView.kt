@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.amap.api.maps.AMap
-import com.amap.api.maps.AMapOptions
-import com.amap.api.maps.MapView
-import com.amap.api.maps.UiSettings
+import com.amap.api.maps.*
 import com.amap.api.maps.model.MyLocationStyle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.platform.PlatformView
@@ -151,11 +148,18 @@ class AMapView(
     private var _logoMargin: HashMap<String, Any>? =
         creationParams["logoMargin"] as HashMap<String, Any>?
 
+    /**
+     * 初始缩放等级
+     */
+    private var _initialZoomLevel: Double = creationParams["initialZoomLevel"] as Double
+
     init {
         activity.lifecycle.addObserver(this)
     }
 
     private fun initAMapView() {
+        _aMap.moveCamera(CameraUpdateFactory.zoomTo(_initialZoomLevel.toFloat()))
+
         val locationStyle = MyLocationStyle().apply {
             myLocationType(getLocationType(_locationType))
             interval(_locationInterval.toLong())

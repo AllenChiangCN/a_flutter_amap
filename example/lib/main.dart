@@ -21,7 +21,6 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: AMapView(
             autoLocateAfterInit: true,
-            mapLanguage: MapLanguage.ENGLISH,
             showBuildings: false,
             showCompass: true,
             showLocationButton: true,

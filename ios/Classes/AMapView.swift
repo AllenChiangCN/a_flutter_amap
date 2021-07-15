@@ -11,6 +11,8 @@ import UIKit
 class AMapView: NSObject, FlutterPlatformView {
     private var _view: UIView
 
+    // MARK: - 属性
+
     /// 初始化后是否自动定位
     private var _autoLocateAfterInit: Bool
 
@@ -71,6 +73,11 @@ class AMapView: NSObject, FlutterPlatformView {
     /// marginBottom: 下边距
     private var _scaleMargin: NSDictionary?
 
+    /// 初始缩放等级
+    private var _initialZoomLevel: NSNumber
+
+    // MARK: - 方法
+
     init(frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger messenger: FlutterBinaryMessenger?) {
         _view = UIView()
         let params = args as! NSDictionary
@@ -90,6 +97,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _logoMargin = params["logoMargin"] as? NSDictionary
         _compassMargin = params["compassMargin"] as? NSDictionary
         _scaleMargin = params["scaleMargin"] as? NSDictionary
+        _initialZoomLevel = params["initialZoomLevel"] as! NSNumber
         super.init()
         createAMapView(view: _view)
     }
@@ -109,6 +117,8 @@ class AMapView: NSObject, FlutterPlatformView {
     ///
     /// - Parameter mapView: 地图组件
     private func configAMapView(_ mapView: MAMapView) {
+        mapView.zoomLevel = CGFloat(_initialZoomLevel.floatValue)
+
         mapView.delegate = self
 
         mapView.showsUserLocation = _autoLocateAfterInit
