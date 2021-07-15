@@ -25,7 +25,6 @@ class _MyAppState extends State<MyApp> {
             showLocationButton: true,
             showScaleControl: true,
             showZoomControl: false,
-            scaleMargin: ScaleMargin(marginLeft: 40, marginBottom: 40),
           ),
         ),
       ),

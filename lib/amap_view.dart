@@ -20,6 +20,8 @@ class AMapView extends StatelessWidget {
     this.showCompass = false,
     this.showLocationButton = false,
     this.showScaleControl = false,
+    this.showIndoorMap = false,
+    this.showIndoorMapControl = false,
     this.allGestureEnable,
     this.zoomGestureEnable = true,
     this.rotateGestureEnable = true,
@@ -59,6 +61,12 @@ class AMapView extends StatelessWidget {
 
   /// 是否显示比例尺控件
   final bool showScaleControl;
+
+  /// 是否显示室内地图
+  final bool showIndoorMap;
+
+  /// 是否显示室内地图控件
+  final bool showIndoorMapControl;
 
   /// 所有手势是否可用
   ///
@@ -115,6 +123,8 @@ class AMapView extends StatelessWidget {
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,
       'showScaleControl': showScaleControl,
+      'showIndoorMap': showIndoorMap,
+      'showIndoorMapControl': showIndoorMapControl,
       'allGestureEnable': allGestureEnable,
       'zoomGestureEnable': zoomGestureEnable,
       'rotateGestureEnable': rotateGestureEnable,

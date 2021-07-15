@@ -66,6 +66,11 @@ class AMapView(
     private var _showScaleControl: Boolean = creationParams["showScaleControl"] as Boolean
 
     /**
+     * 是否显示室内地图
+     */
+    private var _showIndoorMap: Boolean = creationParams["showIndoorMap"] as Boolean
+
+    /**
      * 所有手势是否可用
      */
     private var _allGestureEnable: Boolean? = creationParams["allGestureEnable"] as Boolean?
@@ -136,6 +141,7 @@ class AMapView(
         showCompass(_showCompass)
         showLocationButton(_showLocationButton)
         showScaleControl(_showScaleControl)
+        showIndoorMap(_showIndoorMap)
         setGestureScaleByMapCenter(_isGestureScaleByMapCenter)
         enableAllGesture(_allGestureEnable)
         if (_logoMargin != null) {
@@ -203,6 +209,16 @@ class AMapView(
      */
     private fun showScaleControl(show: Boolean) {
         _uiSettings.isScaleControlsEnabled = show
+    }
+
+    /**
+     * 是否显示室内地图
+     *
+     * @param show 是否显示
+     */
+    private fun showIndoorMap(show: Boolean) {
+        _aMap.showIndoorMap(show)
+        _uiSettings.isIndoorSwitchEnabled = show
     }
 
     /**

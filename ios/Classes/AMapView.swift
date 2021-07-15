@@ -20,6 +20,12 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 是否显示比例尺控件
     private var _showScaleControl: Bool
 
+    /// 是否显示室内地图
+    private var _showIndoorMap: Bool
+
+    /// 是否显示室内地图控件
+    private var _showIndoorMapControl: Bool
+
     /// 缩放手势是否可用
     private var _zoomGestureEnable: Bool
 
@@ -59,6 +65,8 @@ class AMapView: NSObject, FlutterPlatformView {
         _autoLocateAfterInit = params["autoLocateAfterInit"] as! Bool
         _showCompass = params["showCompass"] as! Bool
         _showScaleControl = params["showScaleControl"] as! Bool
+        _showIndoorMap = params["showIndoorMap"] as! Bool
+        _showIndoorMapControl = params["showIndoorMapControl"] as! Bool
         _zoomGestureEnable = params["zoomGestureEnable"] as! Bool
         _rotateGestureEnable = params["rotateGestureEnable"] as! Bool
         _scrollGestureEnable = params["scrollGestureEnable"] as! Bool
@@ -92,8 +100,13 @@ class AMapView: NSObject, FlutterPlatformView {
         }
 
         mapView.showsCompass = _showCompass
-
         mapView.showsScale = _showScaleControl
+        mapView.isShowsIndoorMap = _showIndoorMap
+        if _showIndoorMap {
+            mapView.isShowsIndoorMapControl = _showIndoorMap
+        } else {
+            mapView.isShowsIndoorMapControl = false
+        }
 
         mapView.isZoomEnabled = _zoomGestureEnable
         mapView.isScrollEnabled = _scrollGestureEnable
