@@ -17,6 +17,9 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 地图图层类型
     private var _mapType: String
 
+    /// 底图语言
+    private var _mapLanguage: String
+
     /// 是否显示实时路况
     private var _showTraffic: Bool
 
@@ -73,6 +76,7 @@ class AMapView: NSObject, FlutterPlatformView {
         let params = args as! NSDictionary
         _autoLocateAfterInit = params["autoLocateAfterInit"] as! Bool
         _mapType = params["mapType"] as! String
+        _mapLanguage = params["mapLanguage"] as! String
         _showTraffic = params["showTraffic"] as! Bool
         _showBuildings = params["showBuildings"] as! Bool
         _showCompass = params["showCompass"] as! Bool
@@ -113,6 +117,7 @@ class AMapView: NSObject, FlutterPlatformView {
         }
 
         mapView.mapType = getMapType(_mapType)
+        mapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
         mapView.isShowTraffic = _showTraffic
         mapView.isShowsBuildings = _showBuildings
         mapView.showsCompass = _showCompass

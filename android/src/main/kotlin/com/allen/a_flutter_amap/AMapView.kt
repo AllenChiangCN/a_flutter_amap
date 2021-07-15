@@ -41,6 +41,11 @@ class AMapView(
     private var _mapType: String = creationParams["mapType"] as String
 
     /**
+     * 底图语言
+     */
+    private var _mapLanguage: String = creationParams["mapLanguage"] as String
+
+    /**
      * 定位类型
      */
     private var _locationType: String = creationParams["locationType"] as String
@@ -163,6 +168,7 @@ class AMapView(
         }
 
         setMapType(_mapType)
+        _aMap.setMapLanguage(if (_mapLanguage == "CHINESE") AMap.CHINESE else AMap.ENGLISH)
         _aMap.isTrafficEnabled = _showTraffic
         _aMap.showBuildings(_showBuildings)
         _aMap.showMapText(_showMapText)

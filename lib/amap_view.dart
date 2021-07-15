@@ -1,3 +1,4 @@
+import 'package:a_flutter_amap/a_flutter_amap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -16,6 +17,7 @@ class AMapView extends StatelessWidget {
     Key? key,
     this.autoLocateAfterInit = false,
     this.mapType = MapType.NORMAL,
+    this.mapLanguage = MapLanguage.CHINESE,
     this.locationType = LocationType.LOCATE,
     this.locationInterval = 2000,
     this.showTraffic = false,
@@ -47,6 +49,9 @@ class AMapView extends StatelessWidget {
 
   /// 地图图层类型
   final MapType mapType;
+
+  /// 底图语言
+  final MapLanguage mapLanguage;
 
   /// 定位类型
   final LocationType locationType;
@@ -137,6 +142,7 @@ class AMapView extends StatelessWidget {
     Map<String, dynamic> creationParams = <String, dynamic>{
       'autoLocateAfterInit': autoLocateAfterInit,
       'mapType': mapType.name,
+      'mapLanguage': mapLanguage.name,
       'locationType': locationType.name,
       'locationInterval': locationInterval,
       'showTraffic': showTraffic,
