@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 export 'amap_view.dart';
+export 'compass_margin.dart';
 export 'location_type.dart';
 export 'logo_margin.dart';
 export 'logo_position.dart';

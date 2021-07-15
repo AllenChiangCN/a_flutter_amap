@@ -19,18 +19,32 @@ class AMapView: NSObject, FlutterPlatformView {
 
     /// 是否显示比例尺控件
     private var _showScaleControl: Bool
-    
+
     /// 缩放手势是否可用
     private var _zoomGestureEnable: Bool
-    
+
     /// 旋转手势是否可用
     private var _rotateGestureEnable: Bool
-    
+
     /// 拖拽手势是否可用
     private var _scrollGestureEnable: Bool
-    
+
     /// 倾斜手势是否可用
     private var _tiltGestureEnable: Bool
+
+    /// Logo左下边距
+    ///
+    /// marginLeft: 左边距
+    ///
+    /// marginBottom: 下边距
+    private var _logoMargin: NSDictionary?
+
+    /// 指南针右上边距
+    ///
+    /// marginRight: 右边距
+    ///
+    /// marginTop: 上边距
+    private var _compassMargin: NSDictionary?
 
     init(frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger messenger: FlutterBinaryMessenger?) {
         _view = UIView()
@@ -42,6 +56,8 @@ class AMapView: NSObject, FlutterPlatformView {
         _rotateGestureEnable = params["rotateGestureEnable"] as! Bool
         _scrollGestureEnable = params["scrollGestureEnable"] as! Bool
         _tiltGestureEnable = params["tiltGestureEnable"] as! Bool
+        _logoMargin = params["logoMargin"] as? NSDictionary
+        _compassMargin = params["compassMargin"] as? NSDictionary
         super.init()
         createAMapView(view: _view)
     }
@@ -60,7 +76,7 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 配置地图组件
     /// - Parameter mapView: 地图组件
     private func configAMapView(_ mapView: MAMapView) {
-        mapView.delegate = self
+//        mapView.delegate = self
 
         mapView.showsUserLocation = _autoLocateAfterInit
         if _autoLocateAfterInit {
@@ -70,11 +86,25 @@ class AMapView: NSObject, FlutterPlatformView {
         mapView.showsCompass = _showCompass
 
         mapView.showsScale = _showScaleControl
-        
+
         mapView.isZoomEnabled = _zoomGestureEnable
         mapView.isScrollEnabled = _scrollGestureEnable
         mapView.isRotateEnabled = _rotateGestureEnable
         mapView.isRotateCameraEnabled = _tiltGestureEnable
+
+        // TODO: 设置Logo位置
+//        if _logoMargin != nil {
+//            let marginLeft = _logoMargin!["marginLeft"] as! Double
+//            let marginBottom = _logoMargin!["marginBottom"] as! Double
+//            print("左边距: \(marginLeft), 下边距: \(marginBottom)")
+//            mapView.logoCenter = CGPoint(x: mapView.logoCenter.x + CGFloat(marginLeft), y: mapView.logoCenter.y - CGFloat(marginBottom))
+//        }
+
+        if _compassMargin != nil {
+            let marginRight = _compassMargin!["marginRight"] as! Double
+            let marginTop = _compassMargin!["marginTop"] as! Double
+            mapView.compassOrigin = CGPoint(x: mapView.compassOrigin.x - CGFloat(marginRight), y: mapView.compassOrigin.y + CGFloat(marginTop))
+        }
     }
 }
 

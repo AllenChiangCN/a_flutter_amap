@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import 'compass_margin.dart';
 import 'location_type.dart';
 import 'logo_margin.dart';
 import 'logo_position.dart';
@@ -27,6 +28,7 @@ class AMapView extends StatelessWidget {
     this.zoomPosition = ZoomPosition.RIGHT_BOTTOM,
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
     this.logoMargin,
+    this.compassMargin,
   }) : super(key: key);
 
   final String viewType = 'AMapView';
@@ -91,6 +93,11 @@ class AMapView extends StatelessWidget {
   /// 不为null时LogoPosition属性无效
   final LogoMargin? logoMargin;
 
+  /// 指南针相对右上角边距
+  ///
+  /// 只针对iOS
+  final CompassMargin? compassMargin;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
@@ -110,6 +117,7 @@ class AMapView extends StatelessWidget {
       'zoomPosition': zoomPosition.name,
       'logoPosition': logoPosition.name,
       'logoMargin': logoMargin?.toJson(),
+      'compassMargin': compassMargin?.toJson(),
     };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
