@@ -4,7 +4,10 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.amap.api.maps.*
+import com.amap.api.maps.AMap
+import com.amap.api.maps.AMapOptions
+import com.amap.api.maps.MapView
+import com.amap.api.maps.UiSettings
 import com.amap.api.maps.model.MyLocationStyle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.platform.PlatformView
@@ -16,8 +19,7 @@ class AMapView(
     creationParams: Map<String, Any?>
 ) :
     PlatformView,
-    DefaultLifecycleObserver,
-    LocationSource {
+    DefaultLifecycleObserver {
     companion object {
         const val PERMISSION_REQUEST_CODE = 0x00000001
     }
@@ -27,8 +29,6 @@ class AMapView(
     private var _aMap: AMap = _mapView.map
 
     private var _uiSettings: UiSettings = _aMap.uiSettings
-
-    private var _onLocationChangedListener: LocationSource.OnLocationChangedListener? = null
 
     /**
      * 初始化后是否自动定位
@@ -178,13 +178,7 @@ class AMapView(
      * @param show 是否显示
      */
     private fun showLocationButton(show: Boolean) {
-        if (show) {
-            _aMap.setLocationSource(this)
-            _uiSettings.isMyLocationButtonEnabled = true
-            _aMap.isMyLocationEnabled = true
-        } else {
-            _uiSettings.isMyLocationButtonEnabled = false
-        }
+        _uiSettings.isMyLocationButtonEnabled = show
     }
 
     /**
@@ -325,14 +319,5 @@ class AMapView(
 
     override fun onDestroy(owner: LifecycleOwner) {
         _mapView.onDestroy()
-    }
-
-    override fun activate(listener: LocationSource.OnLocationChangedListener?) {
-        _onLocationChangedListener = listener
-    }
-
-    override fun deactivate() {
-        _onLocationChangedListener = null
-
     }
 }
