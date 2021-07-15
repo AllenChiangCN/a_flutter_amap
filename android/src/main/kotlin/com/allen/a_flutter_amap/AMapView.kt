@@ -56,6 +56,11 @@ class AMapView(
     private var _showTraffic: Boolean = creationParams["showTraffic"] as Boolean
 
     /**
+     * 是否显示底图文字标注
+     */
+    private var _showMapText: Boolean = creationParams["showMapText"] as Boolean
+
+    /**
      * 是否显示缩放控件
      */
     private var _showZoomControl: Boolean = creationParams["showZoomControl"] as Boolean
@@ -79,6 +84,11 @@ class AMapView(
      * 是否显示室内地图
      */
     private var _showIndoorMap: Boolean = creationParams["showIndoorMap"] as Boolean
+
+    /**
+     * 是否显示室内地图控件
+     */
+    private var _showIndoorMapControl: Boolean = creationParams["showIndoorMapControl"] as Boolean
 
     /**
      * 所有手势是否可用
@@ -148,13 +158,14 @@ class AMapView(
         }
 
         setMapType(_mapType)
-        showTraffic(_showTraffic)
+        _aMap.isTrafficEnabled = _showTraffic
+        _aMap.showMapText(_showMapText)
         showZoomControl(_showZoomControl)
-        showCompass(_showCompass)
-        showLocationButton(_showLocationButton)
-        showScaleControl(_showScaleControl)
+        _uiSettings.isCompassEnabled = _showCompass
+        _uiSettings.isMyLocationButtonEnabled = _showLocationButton
+        _uiSettings.isScaleControlsEnabled = _showScaleControl
         showIndoorMap(_showIndoorMap)
-        setGestureScaleByMapCenter(_isGestureScaleByMapCenter)
+        _uiSettings.isGestureScaleByMapCenter = _isGestureScaleByMapCenter
         enableAllGesture(_allGestureEnable)
         if (_logoMargin != null) {
             _uiSettings.setLogoLeftMargin((_logoMargin!!["marginLeft"] as Double).toInt())
@@ -200,15 +211,6 @@ class AMapView(
     }
 
     /**
-     * 是否显示实时路况
-     *
-     * @param show 是否显示
-     */
-    private fun showTraffic(show: Boolean) {
-        _aMap.isTrafficEnabled = show
-    }
-
-    /**
      * 是否显示缩放按钮
      *
      * @param show 是否显示
@@ -222,40 +224,17 @@ class AMapView(
     }
 
     /**
-     * 是否显示指南针
-     *
-     * @param show 是否显示
-     */
-    private fun showCompass(show: Boolean) {
-        _uiSettings.isCompassEnabled = show
-    }
-
-    /**
-     * 是否显示定位按钮
-     *
-     * @param show 是否显示
-     */
-    private fun showLocationButton(show: Boolean) {
-        _uiSettings.isMyLocationButtonEnabled = show
-    }
-
-    /**
-     * 是否显示比例尺控件
-     *
-     * @param show 是否显示
-     */
-    private fun showScaleControl(show: Boolean) {
-        _uiSettings.isScaleControlsEnabled = show
-    }
-
-    /**
      * 是否显示室内地图
      *
      * @param show 是否显示
      */
     private fun showIndoorMap(show: Boolean) {
         _aMap.showIndoorMap(show)
-        _uiSettings.isIndoorSwitchEnabled = show
+        if (show) {
+            _uiSettings.isIndoorSwitchEnabled = _showIndoorMapControl
+        } else {
+            _uiSettings.isIndoorSwitchEnabled = false
+        }
     }
 
     /**
@@ -308,13 +287,6 @@ class AMapView(
      */
     private fun enableTiltGesture(enable: Boolean) {
         _uiSettings.isTiltGesturesEnabled = enable
-    }
-
-    /**
-     * 设置是否以地图中心点缩放
-     */
-    private fun setGestureScaleByMapCenter(isCenter: Boolean) {
-        _uiSettings.isGestureScaleByMapCenter = isCenter
     }
 
     /**

@@ -114,7 +114,7 @@ class AMapView: NSObject, FlutterPlatformView {
         mapView.showsScale = _showScaleControl
         mapView.isShowsIndoorMap = _showIndoorMap
         if _showIndoorMap {
-            mapView.isShowsIndoorMapControl = _showIndoorMap
+            mapView.isShowsIndoorMapControl = _showIndoorMapControl
         } else {
             mapView.isShowsIndoorMapControl = false
         }

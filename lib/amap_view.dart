@@ -19,6 +19,7 @@ class AMapView extends StatelessWidget {
     this.locationType = LocationType.LOCATE,
     this.locationInterval = 2000,
     this.showTraffic = false,
+    this.showMapText = true,
     this.showZoomControl = true,
     this.showCompass = false,
     this.showLocationButton = false,
@@ -54,6 +55,11 @@ class AMapView extends StatelessWidget {
 
   /// 是否显示实时路况
   final bool showTraffic;
+
+  /// 是否显示底图文字标注
+  ///
+  /// 只针对Android
+  final bool showMapText;
 
   /// 是否显示缩放控件
   ///
@@ -130,6 +136,7 @@ class AMapView extends StatelessWidget {
       'locationType': locationType.name,
       'locationInterval': locationInterval,
       'showTraffic': showTraffic,
+      'showMapText': showMapText,
       'showZoomControl': showZoomControl,
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,
