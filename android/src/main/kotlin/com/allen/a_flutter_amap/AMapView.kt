@@ -56,6 +56,11 @@ class AMapView(
     private var _showTraffic: Boolean = creationParams["showTraffic"] as Boolean
 
     /**
+     * 是否显示楼块
+     */
+    private var _showBuildings: Boolean = creationParams["showBuildings"] as Boolean
+
+    /**
      * 是否显示底图文字标注
      */
     private var _showMapText: Boolean = creationParams["showMapText"] as Boolean
@@ -159,6 +164,7 @@ class AMapView(
 
         setMapType(_mapType)
         _aMap.isTrafficEnabled = _showTraffic
+        _aMap.showBuildings(_showBuildings)
         _aMap.showMapText(_showMapText)
         showZoomControl(_showZoomControl)
         _uiSettings.isCompassEnabled = _showCompass
