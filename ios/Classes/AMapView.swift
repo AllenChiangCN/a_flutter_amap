@@ -46,6 +46,13 @@ class AMapView: NSObject, FlutterPlatformView {
     /// marginTop: 上边距
     private var _compassMargin: NSDictionary?
 
+    /// 比例尺左下边距
+    ///
+    /// marginLeft: 左边距
+    ///
+    /// marginBottom: 下边距
+    private var _scaleMargin: NSDictionary?
+
     init(frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger messenger: FlutterBinaryMessenger?) {
         _view = UIView()
         let params = args as! NSDictionary
@@ -58,6 +65,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _tiltGestureEnable = params["tiltGestureEnable"] as! Bool
         _logoMargin = params["logoMargin"] as? NSDictionary
         _compassMargin = params["compassMargin"] as? NSDictionary
+        _scaleMargin = params["scaleMargin"] as? NSDictionary
         super.init()
         createAMapView(view: _view)
     }
@@ -104,6 +112,12 @@ class AMapView: NSObject, FlutterPlatformView {
             let marginRight = _compassMargin!["marginRight"] as! Double
             let marginTop = _compassMargin!["marginTop"] as! Double
             mapView.compassOrigin = CGPoint(x: mapView.compassOrigin.x - CGFloat(marginRight), y: mapView.compassOrigin.y + CGFloat(marginTop))
+        }
+
+        if _scaleMargin != nil {
+            let marginLeft = _scaleMargin!["marginLeft"] as! Double
+            let marginBottom = _scaleMargin!["marginBottom"] as! Double
+            mapView.scaleOrigin = CGPoint(x: mapView.scaleOrigin.x + CGFloat(marginLeft), y: mapView.scaleOrigin.y - CGFloat(marginBottom))
         }
     }
 }

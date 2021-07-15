@@ -6,6 +6,7 @@ import 'compass_margin.dart';
 import 'location_type.dart';
 import 'logo_margin.dart';
 import 'logo_position.dart';
+import 'scale_margin.dart';
 import 'zoom_position.dart';
 
 /// 高德地图
@@ -29,6 +30,7 @@ class AMapView extends StatelessWidget {
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
     this.logoMargin,
     this.compassMargin,
+    this.scaleMargin,
   }) : super(key: key);
 
   final String viewType = 'AMapView';
@@ -98,6 +100,11 @@ class AMapView extends StatelessWidget {
   /// 只针对iOS
   final CompassMargin? compassMargin;
 
+  /// 比例尺相对左下角边距
+  ///
+  /// 只针对iOS
+  final ScaleMargin? scaleMargin;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
@@ -118,6 +125,7 @@ class AMapView extends StatelessWidget {
       'logoPosition': logoPosition.name,
       'logoMargin': logoMargin?.toJson(),
       'compassMargin': compassMargin?.toJson(),
+      'scaleMargin': scaleMargin?.toJson(),
     };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

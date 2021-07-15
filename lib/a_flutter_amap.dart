@@ -7,6 +7,7 @@ export 'compass_margin.dart';
 export 'location_type.dart';
 export 'logo_margin.dart';
 export 'logo_position.dart';
+export 'scale_margin.dart';
 export 'zoom_position.dart';
 
 class AFlutterAmap {
