@@ -17,6 +17,9 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 地图图层类型
     private var _mapType: String
 
+    /// 是否显示实时路况
+    private var _showTraffic: Bool
+
     /// 是否显示指南针
     private var _showCompass: Bool
 
@@ -67,6 +70,7 @@ class AMapView: NSObject, FlutterPlatformView {
         let params = args as! NSDictionary
         _autoLocateAfterInit = params["autoLocateAfterInit"] as! Bool
         _mapType = params["mapType"] as! String
+        _showTraffic = params["showTraffic"] as! Bool
         _showCompass = params["showCompass"] as! Bool
         _showScaleControl = params["showScaleControl"] as! Bool
         _showIndoorMap = params["showIndoorMap"] as! Bool
@@ -105,6 +109,7 @@ class AMapView: NSObject, FlutterPlatformView {
         }
 
         mapView.mapType = getMapType(_mapType)
+        mapView.isShowTraffic = _showTraffic
         mapView.showsCompass = _showCompass
         mapView.showsScale = _showScaleControl
         mapView.isShowsIndoorMap = _showIndoorMap

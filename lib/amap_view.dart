@@ -18,6 +18,7 @@ class AMapView extends StatelessWidget {
     this.mapType = MapType.NORMAL,
     this.locationType = LocationType.LOCATE,
     this.locationInterval = 2000,
+    this.showTraffic = false,
     this.showZoomControl = true,
     this.showCompass = false,
     this.showLocationButton = false,
@@ -50,6 +51,9 @@ class AMapView extends StatelessWidget {
 
   /// 定位间隔，仅定位类型为连续定位时有效，单位毫秒
   final int locationInterval;
+
+  /// 是否显示实时路况
+  final bool showTraffic;
 
   /// 是否显示缩放控件
   ///
@@ -125,6 +129,7 @@ class AMapView extends StatelessWidget {
       'mapType': mapType.name,
       'locationType': locationType.name,
       'locationInterval': locationInterval,
+      'showTraffic': showTraffic,
       'showZoomControl': showZoomControl,
       'showCompass': showCompass,
       'showLocationButton': showLocationButton,

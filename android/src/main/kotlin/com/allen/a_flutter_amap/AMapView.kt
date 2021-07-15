@@ -51,6 +51,11 @@ class AMapView(
     private var _locationInterval: Int = creationParams["locationInterval"] as Int
 
     /**
+     * 是否显示实时路况
+     */
+    private var _showTraffic: Boolean = creationParams["showTraffic"] as Boolean
+
+    /**
      * 是否显示缩放控件
      */
     private var _showZoomControl: Boolean = creationParams["showZoomControl"] as Boolean
@@ -143,6 +148,7 @@ class AMapView(
         }
 
         setMapType(_mapType)
+        showTraffic(_showTraffic)
         showZoomControl(_showZoomControl)
         showCompass(_showCompass)
         showLocationButton(_showLocationButton)
@@ -191,6 +197,15 @@ class AMapView(
             "MAP_ROTATE_NO_CENTER" -> MyLocationStyle.LOCATION_TYPE_MAP_ROTATE_NO_CENTER
             else -> MyLocationStyle.LOCATION_TYPE_LOCATE
         }
+    }
+
+    /**
+     * 是否显示实时路况
+     *
+     * @param show 是否显示
+     */
+    private fun showTraffic(show: Boolean) {
+        _aMap.isTrafficEnabled = show
     }
 
     /**
