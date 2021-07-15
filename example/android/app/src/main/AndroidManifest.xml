@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.allen.a_flutter_amap_example">
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="a_flutter_amap_example">
+        android:label="a_flutter_amap_example"
+        android:debuggable="true"
+        tools:ignore="HardcodedDebugMode">
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

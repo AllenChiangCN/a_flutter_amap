@@ -5,9 +5,6 @@ enum LogoPosition {
   BOTTOM_LEFT,
   BOTTOM_RIGHT,
   BOTTOM_CENTER,
-  MARGIN_LEFT,
-  MARGIN_RIGHT,
-  MARGIN_BOTTOM,
 }
 
 extension LogoPositionExtension on LogoPosition {
@@ -19,12 +16,6 @@ extension LogoPositionExtension on LogoPosition {
         return 'BOTTOM_RIGHT';
       case LogoPosition.BOTTOM_CENTER:
         return 'BOTTOM_CENTER';
-      case LogoPosition.MARGIN_LEFT:
-        return 'MARGIN_LEFT';
-      case LogoPosition.MARGIN_RIGHT:
-        return 'MARGIN_RIGHT';
-      case LogoPosition.MARGIN_BOTTOM:
-        return 'MARGIN_BOTTOM';
       default:
         return '';
     }

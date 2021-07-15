@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'location_type.dart';
+import 'logo_margin.dart';
 import 'logo_position.dart';
 import 'zoom_position.dart';
 
@@ -25,6 +26,7 @@ class AMapView extends StatelessWidget {
     this.isGestureScaleByMapCenter = false,
     this.zoomPosition = ZoomPosition.RIGHT_BOTTOM,
     this.logoPosition = LogoPosition.BOTTOM_LEFT,
+    this.logoMargin,
   }) : super(key: key);
 
   final String viewType = 'AMapView';
@@ -84,6 +86,11 @@ class AMapView extends StatelessWidget {
   /// 只针对Android
   final LogoPosition logoPosition;
 
+  /// Logo相对左下角边距，同时会影响比例尺控件的位置
+  ///
+  /// 不为null时LogoPosition属性无效
+  final LogoMargin? logoMargin;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
@@ -102,6 +109,7 @@ class AMapView extends StatelessWidget {
       'isGestureScaleByMapCenter': isGestureScaleByMapCenter,
       'zoomPosition': zoomPosition.name,
       'logoPosition': logoPosition.name,
+      'logoMargin': logoMargin?.toJson(),
     };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

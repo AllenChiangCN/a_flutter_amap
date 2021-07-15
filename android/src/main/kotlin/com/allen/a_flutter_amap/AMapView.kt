@@ -106,6 +106,16 @@ class AMapView(
      */
     private var _logoPosition: String = creationParams["logoPosition"] as String
 
+    /**
+     * Logo左下边距
+     *
+     * marginLeft: 左边距
+     *
+     * marginBottom: 下边距
+     */
+    private var _logoMargin: HashMap<String, Any>? =
+        creationParams["logoMargin"] as HashMap<String, Any>?
+
     init {
         activity.lifecycle.addObserver(this)
     }
@@ -128,7 +138,12 @@ class AMapView(
         showScaleControl(_showScaleControl)
         setGestureScaleByMapCenter(_isGestureScaleByMapCenter)
         enableAllGesture(_allGestureEnable)
-        setLogoPosition(_logoPosition)
+        if (_logoMargin != null) {
+            _uiSettings.setLogoLeftMargin((_logoMargin!!["marginLeft"] as Double).toInt())
+            _uiSettings.setLogoBottomMargin((_logoMargin!!["marginBottom"] as Double).toInt())
+        } else {
+            setLogoPosition(_logoPosition)
+        }
     }
 
     /**
@@ -276,15 +291,6 @@ class AMapView(
             }
             "BOTTOM_CENTER" -> {
                 _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_CENTER
-            }
-            "MARGIN_LEFT" -> {
-                _uiSettings.logoPosition = AMapOptions.LOGO_MARGIN_LEFT
-            }
-            "MARGIN_RIGHT" -> {
-                _uiSettings.logoPosition = AMapOptions.LOGO_MARGIN_RIGHT
-            }
-            "MARGIN_BOTTOM" -> {
-                _uiSettings.logoPosition = AMapOptions.LOGO_MARGIN_BOTTOM
             }
         }
     }
