@@ -140,6 +140,7 @@ class AMapView extends StatelessWidget {
       'locationType': locationType.name,
       'locationInterval': locationInterval,
       'showTraffic': showTraffic,
+      'showBuildings': showBuildings,
       'showMapText': showMapText,
       'showZoomControl': showZoomControl,
       'showCompass': showCompass,
