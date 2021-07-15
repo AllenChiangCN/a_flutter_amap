@@ -6,6 +6,7 @@ import 'compass_margin.dart';
 import 'location_type.dart';
 import 'logo_margin.dart';
 import 'logo_position.dart';
+import 'map_type.dart';
 import 'scale_margin.dart';
 import 'zoom_position.dart';
 
@@ -14,6 +15,7 @@ class AMapView extends StatelessWidget {
   const AMapView({
     Key? key,
     this.autoLocateAfterInit = false,
+    this.mapType = MapType.NORMAL,
     this.locationType = LocationType.LOCATE,
     this.locationInterval = 2000,
     this.showZoomControl = true,
@@ -39,6 +41,9 @@ class AMapView extends StatelessWidget {
 
   /// 初始化后是否自动定位
   final bool autoLocateAfterInit;
+
+  /// 地图图层类型
+  final MapType mapType;
 
   /// 定位类型
   final LocationType locationType;
@@ -117,6 +122,7 @@ class AMapView extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
       'autoLocateAfterInit': autoLocateAfterInit,
+      'mapType': mapType.name,
       'locationType': locationType.name,
       'locationInterval': locationInterval,
       'showZoomControl': showZoomControl,

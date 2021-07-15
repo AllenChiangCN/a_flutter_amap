@@ -36,6 +36,11 @@ class AMapView(
     private var _autoLocateAfterInit: Boolean = creationParams["autoLocateAfterInit"] as Boolean
 
     /**
+     * 地图图层类型
+     */
+    private var _mapType: String = creationParams["mapType"] as String
+
+    /**
      * 定位类型
      */
     private var _locationType: String = creationParams["locationType"] as String
@@ -137,6 +142,7 @@ class AMapView(
             _aMap.isMyLocationEnabled = true
         }
 
+        setMapType(_mapType)
         showZoomControl(_showZoomControl)
         showCompass(_showCompass)
         showLocationButton(_showLocationButton)
@@ -149,6 +155,22 @@ class AMapView(
             _uiSettings.setLogoBottomMargin((_logoMargin!!["marginBottom"] as Double).toInt())
         } else {
             setLogoPosition(_logoPosition)
+        }
+    }
+
+    /**
+     * 设置地图图层类型
+     *
+     * @param type 图层类型名称
+     */
+    private fun setMapType(type: String) {
+        when (type) {
+            "NORMAL" -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
+            "NIGHT" -> _aMap.mapType = AMap.MAP_TYPE_NIGHT
+            "NAVI" -> _aMap.mapType = AMap.MAP_TYPE_NAVI
+            "BUS" -> _aMap.mapType = AMap.MAP_TYPE_BUS
+            "SATELLITE" -> _aMap.mapType = AMap.MAP_TYPE_SATELLITE
+            else -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
         }
     }
 
@@ -285,12 +307,11 @@ class AMapView(
      */
     private fun setZoomPosition(position: String) {
         when (position) {
-            "RIGHT_BOTTOM" -> {
+            "RIGHT_BOTTOM" ->
                 _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
-            }
-            "RIGHT_CENTER" -> {
+            "RIGHT_CENTER" ->
                 _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_CENTER
-            }
+            else -> _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
         }
     }
 
@@ -299,15 +320,14 @@ class AMapView(
      */
     private fun setLogoPosition(position: String) {
         when (position) {
-            "BOTTOM_LEFT" -> {
+            "BOTTOM_LEFT" ->
                 _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_LEFT
-            }
-            "BOTTOM_RIGHT" -> {
+            "BOTTOM_RIGHT" ->
                 _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_RIGHT
-            }
-            "BOTTOM_CENTER" -> {
+            "BOTTOM_CENTER" ->
                 _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_CENTER
-            }
+            else ->
+                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_LEFT
         }
     }
 

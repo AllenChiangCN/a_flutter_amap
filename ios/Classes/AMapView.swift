@@ -14,6 +14,9 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 初始化后是否自动定位
     private var _autoLocateAfterInit: Bool
 
+    /// 地图图层类型
+    private var _mapType: String
+
     /// 是否显示指南针
     private var _showCompass: Bool
 
@@ -63,6 +66,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _view = UIView()
         let params = args as! NSDictionary
         _autoLocateAfterInit = params["autoLocateAfterInit"] as! Bool
+        _mapType = params["mapType"] as! String
         _showCompass = params["showCompass"] as! Bool
         _showScaleControl = params["showScaleControl"] as! Bool
         _showIndoorMap = params["showIndoorMap"] as! Bool
@@ -90,15 +94,17 @@ class AMapView: NSObject, FlutterPlatformView {
     }
 
     /// 配置地图组件
+    ///
     /// - Parameter mapView: 地图组件
     private func configAMapView(_ mapView: MAMapView) {
-//        mapView.delegate = self
+        mapView.delegate = self
 
         mapView.showsUserLocation = _autoLocateAfterInit
         if _autoLocateAfterInit {
             mapView.setUserTrackingMode(.follow, animated: true)
         }
 
+        mapView.mapType = getMapType(_mapType)
         mapView.showsCompass = _showCompass
         mapView.showsScale = _showScaleControl
         mapView.isShowsIndoorMap = _showIndoorMap
@@ -131,6 +137,28 @@ class AMapView: NSObject, FlutterPlatformView {
             let marginLeft = _scaleMargin!["marginLeft"] as! Double
             let marginBottom = _scaleMargin!["marginBottom"] as! Double
             mapView.scaleOrigin = CGPoint(x: mapView.scaleOrigin.x + CGFloat(marginLeft), y: mapView.scaleOrigin.y - CGFloat(marginBottom))
+        }
+    }
+
+    /// 获取地图图层类型
+    ///
+    /// - Parameter type: 类型名称
+    ///
+    /// - Returns: 类型
+    private func getMapType(_ type: String) -> MAMapType {
+        switch type {
+        case "NORMAL":
+            return .standard
+        case "NIGHT":
+            return .standardNight
+        case "NAVI":
+            return .navi
+        case "BUS":
+            return .bus
+        case "SATELLITE":
+            return .satellite
+        default:
+            return .standard
         }
     }
 }
