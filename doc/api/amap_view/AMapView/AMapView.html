@@ -71,19 +71,29 @@
     <li><a href="../../amap_view/AMapView/autoLocateAfterInit.html">autoLocateAfterInit</a></li>
     <li><a href="../../amap_view/AMapView/compassMargin.html">compassMargin</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+    <li><a href="../../amap_view/AMapView/initialZoomLevel.html">initialZoomLevel</a></li>
     <li><a href="../../amap_view/AMapView/isGestureScaleByMapCenter.html">isGestureScaleByMapCenter</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
     <li><a href="../../amap_view/AMapView/locationInterval.html">locationInterval</a></li>
     <li><a href="../../amap_view/AMapView/locationType.html">locationType</a></li>
     <li><a href="../../amap_view/AMapView/logoMargin.html">logoMargin</a></li>
     <li><a href="../../amap_view/AMapView/logoPosition.html">logoPosition</a></li>
+    <li><a href="../../amap_view/AMapView/mapLanguage.html">mapLanguage</a></li>
+    <li><a href="../../amap_view/AMapView/mapType.html">mapType</a></li>
+    <li><a href="../../amap_view/AMapView/maxZoomLevel.html">maxZoomLevel</a></li>
+    <li><a href="../../amap_view/AMapView/minZoomLevel.html">minZoomLevel</a></li>
     <li><a href="../../amap_view/AMapView/rotateGestureEnable.html">rotateGestureEnable</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../amap_view/AMapView/scaleMargin.html">scaleMargin</a></li>
     <li><a href="../../amap_view/AMapView/scrollGestureEnable.html">scrollGestureEnable</a></li>
+    <li><a href="../../amap_view/AMapView/showBuildings.html">showBuildings</a></li>
     <li><a href="../../amap_view/AMapView/showCompass.html">showCompass</a></li>
+    <li><a href="../../amap_view/AMapView/showIndoorMap.html">showIndoorMap</a></li>
+    <li><a href="../../amap_view/AMapView/showIndoorMapControl.html">showIndoorMapControl</a></li>
     <li><a href="../../amap_view/AMapView/showLocationButton.html">showLocationButton</a></li>
+    <li><a href="../../amap_view/AMapView/showMapText.html">showMapText</a></li>
     <li><a href="../../amap_view/AMapView/showScaleControl.html">showScaleControl</a></li>
+    <li><a href="../../amap_view/AMapView/showTraffic.html">showTraffic</a></li>
     <li><a href="../../amap_view/AMapView/showZoomControl.html">showZoomControl</a></li>
     <li><a href="../../amap_view/AMapView/tiltGestureEnable.html">tiltGestureEnable</a></li>
     <li><a href="../../amap_view/AMapView/viewType.html">viewType</a></li>
@@ -121,12 +131,19 @@
     <section class="multi-line-signature">const
       <span class="name ">AMapView</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-key">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span></li>
 <li><span class="parameter" id="-param-autoLocateAfterInit"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoLocateAfterInit</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-mapType"><span class="type-annotation"><a href="../../map_type/MapType-class.html">MapType</a></span> <span class="parameter-name">mapType</span> = <span class="default-value">MapType.NORMAL</span>, </span></li>
+<li><span class="parameter" id="-param-mapLanguage"><span class="type-annotation"><a href="../../map_language/MapLanguage-class.html">MapLanguage</a></span> <span class="parameter-name">mapLanguage</span> = <span class="default-value">MapLanguage.CHINESE</span>, </span></li>
 <li><span class="parameter" id="-param-locationType"><span class="type-annotation"><a href="../../location_type/LocationType-class.html">LocationType</a></span> <span class="parameter-name">locationType</span> = <span class="default-value">LocationType.LOCATE</span>, </span></li>
 <li><span class="parameter" id="-param-locationInterval"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">locationInterval</span> = <span class="default-value">2000</span>, </span></li>
+<li><span class="parameter" id="-param-showTraffic"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showTraffic</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-showBuildings"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showBuildings</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-showMapText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showMapText</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-showZoomControl"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showZoomControl</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-showCompass"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showCompass</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-showLocationButton"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showLocationButton</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-showScaleControl"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showScaleControl</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-showIndoorMap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showIndoorMap</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-showIndoorMapControl"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showIndoorMapControl</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-allGestureEnable"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">allGestureEnable</span>, </span></li>
 <li><span class="parameter" id="-param-zoomGestureEnable"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">zoomGestureEnable</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-rotateGestureEnable"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">rotateGestureEnable</span> = <span class="default-value">true</span>, </span></li>
@@ -137,7 +154,10 @@
 <li><span class="parameter" id="-param-logoPosition"><span class="type-annotation"><a href="../../logo_position/LogoPosition-class.html">LogoPosition</a></span> <span class="parameter-name">logoPosition</span> = <span class="default-value">LogoPosition.BOTTOM_LEFT</span>, </span></li>
 <li><span class="parameter" id="-param-logoMargin"><span class="type-annotation"><a href="../../logo_margin/LogoMargin-class.html">LogoMargin</a>?</span> <span class="parameter-name">logoMargin</span>, </span></li>
 <li><span class="parameter" id="-param-compassMargin"><span class="type-annotation"><a href="../../compass_margin/CompassMargin-class.html">CompassMargin</a>?</span> <span class="parameter-name">compassMargin</span>, </span></li>
-<li><span class="parameter" id="-param-scaleMargin"><span class="type-annotation"><a href="../../scale_margin/ScaleMargin-class.html">ScaleMargin</a>?</span> <span class="parameter-name">scaleMargin</span>}</span></li>
+<li><span class="parameter" id="-param-scaleMargin"><span class="type-annotation"><a href="../../scale_margin/ScaleMargin-class.html">ScaleMargin</a>?</span> <span class="parameter-name">scaleMargin</span>, </span></li>
+<li><span class="parameter" id="-param-initialZoomLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">initialZoomLevel</span> = <span class="default-value">12.0</span>, </span></li>
+<li><span class="parameter" id="-param-maxZoomLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">maxZoomLevel</span> = <span class="default-value">20.0</span>, </span></li>
+<li><span class="parameter" id="-param-minZoomLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minZoomLevel</span> = <span class="default-value">3.0</span>}</span></li>
 </ol>)
     </section>
 
@@ -150,12 +170,19 @@
   <pre class="language-dart"><code class="language-dart">const AMapView({
   Key? key,
   this.autoLocateAfterInit = false,
+  this.mapType = MapType.NORMAL,
+  this.mapLanguage = MapLanguage.CHINESE,
   this.locationType = LocationType.LOCATE,
   this.locationInterval = 2000,
+  this.showTraffic = false,
+  this.showBuildings = true,
+  this.showMapText = true,
   this.showZoomControl = true,
   this.showCompass = false,
   this.showLocationButton = false,
   this.showScaleControl = false,
+  this.showIndoorMap = false,
+  this.showIndoorMapControl = false,
   this.allGestureEnable,
   this.zoomGestureEnable = true,
   this.rotateGestureEnable = true,
@@ -167,7 +194,16 @@
   this.logoMargin,
   this.compassMargin,
   this.scaleMargin,
-}) : super(key: key);</code></pre>
+  this.initialZoomLevel = 12.0,
+  this.maxZoomLevel = 20.0,
+  this.minZoomLevel = 3.0,
+})  : assert(
+          initialZoomLevel &gt;= minZoomLevel &amp;&amp;
+              initialZoomLevel &lt;= maxZoomLevel,
+          &#39;初始化缩放等级不能小于最小缩放等级，并且不能大于最大缩放等级&#39;),
+      assert(maxZoomLevel &lt;= 20, &#39;最大缩放等级不能大于20&#39;),
+      assert(minZoomLevel &gt;= 3, &#39;最小缩放等级不能小于3&#39;),
+      super(key: key);</code></pre>
 </section>
 
 
@@ -181,7 +217,7 @@
 <footer>
   <span class="no-break">
     a_flutter_amap
-      0.0.1
+      0.0.2
   </span>
 
   
