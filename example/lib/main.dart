@@ -28,6 +28,26 @@ class _MyAppState extends State<MyApp> {
               showScaleControl: true,
               showZoomControl: false,
             ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.zoomIn();
+                    },
+                    child: Text('ZoomIn'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.zoomOut();
+                    },
+                    child: Text('ZoomOut'),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

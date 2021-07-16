@@ -32,9 +32,9 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
-            "setZoomLevel" -> {
-                _aMapViewFactory.aMapView.setZoomLevel(call.arguments as Double)
-            }
+            "setZoomLevel" -> _aMapViewFactory.aMapView.setZoomLevel(call.arguments as Double)
+            "zoomIn" -> _aMapViewFactory.aMapView.zoomIn()
+            "zoomOut" -> _aMapViewFactory.aMapView.zoomOut()
             else -> result.notImplemented()
         }
     }

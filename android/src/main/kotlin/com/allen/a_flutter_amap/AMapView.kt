@@ -355,6 +355,20 @@ class AMapView(
         _aMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel.toFloat()))
     }
 
+    /**
+     * 放大缩放等级
+     */
+    fun zoomIn() {
+        _aMap.animateCamera(CameraUpdateFactory.zoomIn())
+    }
+
+    /**
+     * 缩小缩放等级
+     */
+    fun zoomOut() {
+        _aMap.animateCamera(CameraUpdateFactory.zoomOut())
+    }
+
     override fun getView(): View {
         return _mapView
     }

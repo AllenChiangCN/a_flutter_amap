@@ -21,4 +21,14 @@ class AFlutterAmap {
   static Future<void> setZoomLevel(double zoomLevel) async {
     await _channel.invokeMethod('setZoomLevel', zoomLevel);
   }
+
+  /// 放大缩放等级
+  static Future<void> zoomIn() async {
+    await _channel.invokeMethod('zoomIn');
+  }
+
+  /// 缩小缩放等级
+  static Future<void> zoomOut() async {
+    await _channel.invokeMethod('zoomOut');
+  }
 }
