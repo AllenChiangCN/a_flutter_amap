@@ -73,8 +73,14 @@ class AMapView: NSObject, FlutterPlatformView {
     /// marginBottom: 下边距
     private var _scaleMargin: NSDictionary?
 
-    /// 初始缩放等级
+    /// 初始缩放等级[3,20]
     private var _initialZoomLevel: NSNumber
+
+    /// 最大缩放等级
+    private var _maxZoomLevel: NSNumber
+
+    /// 最小缩放等级
+    private var _minZoomLevel: NSNumber
 
     // MARK: - 方法
 
@@ -98,6 +104,8 @@ class AMapView: NSObject, FlutterPlatformView {
         _compassMargin = params["compassMargin"] as? NSDictionary
         _scaleMargin = params["scaleMargin"] as? NSDictionary
         _initialZoomLevel = params["initialZoomLevel"] as! NSNumber
+        _maxZoomLevel = params["maxZoomLevel"] as! NSNumber
+        _minZoomLevel = params["minZoomLevel"] as! NSNumber
         super.init()
         createAMapView(view: _view)
     }
@@ -117,7 +125,9 @@ class AMapView: NSObject, FlutterPlatformView {
     ///
     /// - Parameter mapView: 地图组件
     private func configAMapView(_ mapView: MAMapView) {
-        mapView.zoomLevel = CGFloat(_initialZoomLevel.floatValue)
+        mapView.maxZoomLevel = CGFloat(truncating: _maxZoomLevel)
+        mapView.minZoomLevel = CGFloat(truncating: _minZoomLevel)
+        mapView.zoomLevel = CGFloat(truncating: _initialZoomLevel)
 
         mapView.delegate = self
 

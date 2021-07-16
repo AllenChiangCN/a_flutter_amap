@@ -41,7 +41,15 @@ class AMapView extends StatelessWidget {
     this.compassMargin,
     this.scaleMargin,
     this.initialZoomLevel = 12.0,
-  }) : super(key: key);
+    this.maxZoomLevel = 20.0,
+    this.minZoomLevel = 3.0,
+  })  : assert(
+            initialZoomLevel >= minZoomLevel &&
+                initialZoomLevel <= maxZoomLevel,
+            '初始化缩放等级不能小于最小缩放等级，并且不能大于最大缩放等级'),
+        assert(maxZoomLevel <= 20, '最大缩放等级不能大于20'),
+        assert(minZoomLevel >= 3, '最小缩放等级不能小于3'),
+        super(key: key);
 
   final String viewType = 'AMapView';
 
@@ -138,8 +146,14 @@ class AMapView extends StatelessWidget {
   /// 只针对iOS
   final ScaleMargin? scaleMargin;
 
-  /// 初始缩放等级
+  /// 初始缩放等级[3,20]
   final double initialZoomLevel;
+
+  /// 最大缩放等级
+  final double maxZoomLevel;
+
+  /// 最小缩放等级
+  final double minZoomLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +184,8 @@ class AMapView extends StatelessWidget {
       'compassMargin': compassMargin?.toJson(),
       'scaleMargin': scaleMargin?.toJson(),
       'initialZoomLevel': initialZoomLevel,
+      'maxZoomLevel': maxZoomLevel,
+      'minZoomLevel': minZoomLevel,
     };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

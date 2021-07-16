@@ -149,15 +149,27 @@ class AMapView(
         creationParams["logoMargin"] as HashMap<String, Any>?
 
     /**
-     * 初始缩放等级
+     * 初始缩放等级[3,20]
      */
     private var _initialZoomLevel: Double = creationParams["initialZoomLevel"] as Double
+
+    /**
+     * 最大缩放等级
+     */
+    private var _maxZoomLevel: Double = creationParams["maxZoomLevel"] as Double
+
+    /**
+     * 最小
+     */
+    private var _minZoomLevel: Double = creationParams["minZoomLevel"] as Double
 
     init {
         activity.lifecycle.addObserver(this)
     }
 
     private fun initAMapView() {
+        _aMap.maxZoomLevel = _maxZoomLevel.toFloat()
+        _aMap.minZoomLevel = _minZoomLevel.toFloat()
         _aMap.moveCamera(CameraUpdateFactory.zoomTo(_initialZoomLevel.toFloat()))
 
         val locationStyle = MyLocationStyle().apply {

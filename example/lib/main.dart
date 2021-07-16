@@ -26,6 +26,8 @@ class _MyAppState extends State<MyApp> {
             showLocationButton: true,
             showScaleControl: true,
             showZoomControl: false,
+            maxZoomLevel: 14,
+            minZoomLevel: 10,
           ),
         ),
       ),
