@@ -146,7 +146,11 @@ class AMapView extends StatelessWidget {
   /// 只针对iOS
   final ScaleMargin? scaleMargin;
 
-  /// 初始缩放等级[3,20]
+  /// 初始缩放等级
+  ///
+  /// 默认[3,19]
+  ///
+  /// 有室内地图时[3,20]
   final double initialZoomLevel;
 
   /// 最大缩放等级

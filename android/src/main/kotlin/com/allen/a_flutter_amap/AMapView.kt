@@ -149,7 +149,7 @@ class AMapView(
         creationParams["logoMargin"] as HashMap<String, Any>?
 
     /**
-     * 初始缩放等级[3,20]
+     * 初始缩放等级，默认[3,19]，有室内地图时[3,20]
      */
     private var _initialZoomLevel: Double = creationParams["initialZoomLevel"] as Double
 
