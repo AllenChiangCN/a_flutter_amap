@@ -18,17 +18,26 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: AMapView(
-            autoLocateAfterInit: true,
-            showBuildings: false,
-            showCompass: true,
-            showLocationButton: true,
-            showScaleControl: true,
-            showZoomControl: false,
-            maxZoomLevel: 14,
-            minZoomLevel: 10,
-          ),
+        body: Stack(
+          children: [
+            AMapView(
+              autoLocateAfterInit: true,
+              showBuildings: false,
+              showCompass: true,
+              showLocationButton: true,
+              showScaleControl: true,
+              showZoomControl: false,
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  AFlutterAmap.setZoomLevel(12);
+                },
+                child: Text('设置zoomLevel为12'),
+              ),
+            ),
+          ],
         ),
       ),
     );

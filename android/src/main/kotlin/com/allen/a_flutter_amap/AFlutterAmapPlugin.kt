@@ -18,6 +18,8 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var _channel: MethodChannel
 
+    private lateinit var _aMapViewFactory: AMapViewFactory
+
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         this._flutterPluginBinding = flutterPluginBinding
         _channel = MethodChannel(flutterPluginBinding.binaryMessenger, "a_flutter_amap")
@@ -29,18 +31,20 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else {
-            result.notImplemented()
+        when (call.method) {
+            "setZoomLevel" -> {
+                _aMapViewFactory.aMapView.setZoomLevel(call.arguments as Double)
+            }
+            else -> result.notImplemented()
         }
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         _activity = binding.activity as FlutterActivity
+        _aMapViewFactory = AMapViewFactory(_activity)
         _flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "AMapView",
-            AMapViewFactory(_activity)
+            _aMapViewFactory
         )
     }
 

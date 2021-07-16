@@ -8,8 +8,11 @@ import io.flutter.plugin.platform.PlatformViewFactory
 
 class AMapViewFactory(val activity: FlutterActivity) :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
+    lateinit var aMapView: AMapView
+
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
         val creationParams = args as Map<String, Any?>
-        return AMapView(context!!, activity, viewId, creationParams)
+        aMapView = AMapView(context!!, activity, viewId, creationParams)
+        return aMapView
     }
 }

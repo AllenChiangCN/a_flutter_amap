@@ -346,6 +346,15 @@ class AMapView(
         }
     }
 
+    /**
+     * 设置缩放等级
+     *
+     * @param zoomLevel 缩放等级
+     */
+    fun setZoomLevel(zoomLevel: Double) {
+        _aMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel.toFloat()))
+    }
+
     override fun getView(): View {
         return _mapView
     }

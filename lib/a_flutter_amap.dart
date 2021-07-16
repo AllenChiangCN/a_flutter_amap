@@ -15,8 +15,10 @@ export 'zoom_position.dart';
 class AFlutterAmap {
   static const MethodChannel _channel = const MethodChannel('a_flutter_amap');
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  /// 设置当前缩放等级
+  ///
+  /// [zoomLevel] 缩放等级
+  static Future<void> setZoomLevel(double zoomLevel) async {
+    await _channel.invokeMethod('setZoomLevel', zoomLevel);
   }
 }
