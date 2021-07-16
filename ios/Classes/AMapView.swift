@@ -11,6 +11,8 @@ import UIKit
 class AMapView: NSObject, FlutterPlatformView {
     private var _view: UIView
 
+    private var _mAMapView: MAMapView
+
     // MARK: - 属性
 
     /// 初始化后是否自动定位
@@ -106,6 +108,10 @@ class AMapView: NSObject, FlutterPlatformView {
         _initialZoomLevel = params["initialZoomLevel"] as! NSNumber
         _maxZoomLevel = params["maxZoomLevel"] as! NSNumber
         _minZoomLevel = params["minZoomLevel"] as! NSNumber
+
+        _view.backgroundColor = UIColor.white
+        _mAMapView = MAMapView(frame: _view.bounds)
+
         super.init()
         createAMapView(view: _view)
     }
@@ -115,44 +121,40 @@ class AMapView: NSObject, FlutterPlatformView {
     }
 
     private func createAMapView(view _view: UIView) {
-        _view.backgroundColor = UIColor.white
-        let mAMapView = MAMapView(frame: _view.bounds)
-        configAMapView(mAMapView)
-        _view.addSubview(mAMapView)
+        configAMapView()
+        _view.addSubview(_mAMapView)
     }
 
     /// 配置地图组件
-    ///
-    /// - Parameter mapView: 地图组件
-    private func configAMapView(_ mapView: MAMapView) {
-        mapView.maxZoomLevel = CGFloat(truncating: _maxZoomLevel)
-        mapView.minZoomLevel = CGFloat(truncating: _minZoomLevel)
-        mapView.zoomLevel = CGFloat(truncating: _initialZoomLevel)
+    private func configAMapView() {
+        _mAMapView.maxZoomLevel = CGFloat(truncating: _maxZoomLevel)
+        _mAMapView.minZoomLevel = CGFloat(truncating: _minZoomLevel)
+        _mAMapView.zoomLevel = CGFloat(truncating: _initialZoomLevel)
 
-        mapView.delegate = self
+        _mAMapView.delegate = self
 
-        mapView.showsUserLocation = _autoLocateAfterInit
+        _mAMapView.showsUserLocation = _autoLocateAfterInit
         if _autoLocateAfterInit {
-            mapView.setUserTrackingMode(.follow, animated: true)
+            _mAMapView.setUserTrackingMode(.follow, animated: true)
         }
 
-        mapView.mapType = getMapType(_mapType)
-        mapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
-        mapView.isShowTraffic = _showTraffic
-        mapView.isShowsBuildings = _showBuildings
-        mapView.showsCompass = _showCompass
-        mapView.showsScale = _showScaleControl
-        mapView.isShowsIndoorMap = _showIndoorMap
+        _mAMapView.mapType = getMapType(_mapType)
+        _mAMapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
+        _mAMapView.isShowTraffic = _showTraffic
+        _mAMapView.isShowsBuildings = _showBuildings
+        _mAMapView.showsCompass = _showCompass
+        _mAMapView.showsScale = _showScaleControl
+        _mAMapView.isShowsIndoorMap = _showIndoorMap
         if _showIndoorMap {
-            mapView.isShowsIndoorMapControl = _showIndoorMapControl
+            _mAMapView.isShowsIndoorMapControl = _showIndoorMapControl
         } else {
-            mapView.isShowsIndoorMapControl = false
+            _mAMapView.isShowsIndoorMapControl = false
         }
 
-        mapView.isZoomEnabled = _zoomGestureEnable
-        mapView.isScrollEnabled = _scrollGestureEnable
-        mapView.isRotateEnabled = _rotateGestureEnable
-        mapView.isRotateCameraEnabled = _tiltGestureEnable
+        _mAMapView.isZoomEnabled = _zoomGestureEnable
+        _mAMapView.isScrollEnabled = _scrollGestureEnable
+        _mAMapView.isRotateEnabled = _rotateGestureEnable
+        _mAMapView.isRotateCameraEnabled = _tiltGestureEnable
 
         // TODO: 设置Logo位置
 //        if _logoMargin != nil {
@@ -165,13 +167,13 @@ class AMapView: NSObject, FlutterPlatformView {
         if _compassMargin != nil {
             let marginRight = _compassMargin!["marginRight"] as! Double
             let marginTop = _compassMargin!["marginTop"] as! Double
-            mapView.compassOrigin = CGPoint(x: mapView.compassOrigin.x - CGFloat(marginRight), y: mapView.compassOrigin.y + CGFloat(marginTop))
+            _mAMapView.compassOrigin = CGPoint(x: _mAMapView.compassOrigin.x - CGFloat(marginRight), y: _mAMapView.compassOrigin.y + CGFloat(marginTop))
         }
 
         if _scaleMargin != nil {
             let marginLeft = _scaleMargin!["marginLeft"] as! Double
             let marginBottom = _scaleMargin!["marginBottom"] as! Double
-            mapView.scaleOrigin = CGPoint(x: mapView.scaleOrigin.x + CGFloat(marginLeft), y: mapView.scaleOrigin.y - CGFloat(marginBottom))
+            _mAMapView.scaleOrigin = CGPoint(x: _mAMapView.scaleOrigin.x + CGFloat(marginLeft), y: _mAMapView.scaleOrigin.y - CGFloat(marginBottom))
         }
     }
 
@@ -195,6 +197,15 @@ class AMapView: NSObject, FlutterPlatformView {
         default:
             return .standard
         }
+    }
+
+    // MARK: - 暴露方法
+
+    /// 设置当前缩放等级
+    ///
+    /// - Parameter zoomLevel: 缩放等级
+    func setZoomLevel(_ zoomLevel: NSNumber) {
+        _mAMapView.setZoomLevel(CGFloat(truncating: zoomLevel), animated: true)
     }
 }
 

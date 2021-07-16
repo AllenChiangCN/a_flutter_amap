@@ -28,15 +28,6 @@ class _MyAppState extends State<MyApp> {
               showScaleControl: true,
               showZoomControl: false,
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {
-                  AFlutterAmap.setZoomLevel(12);
-                },
-                child: Text('设置zoomLevel为12'),
-              ),
-            ),
           ],
         ),
       ),

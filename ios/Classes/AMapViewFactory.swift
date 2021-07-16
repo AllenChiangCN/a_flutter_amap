@@ -10,18 +10,21 @@ import UIKit
 class AMapViewFactory: NSObject, FlutterPlatformViewFactory {
     private var messenger: FlutterBinaryMessenger
 
+    var aMapView: AMapView? = nil
+
     init(messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
         super.init()
     }
 
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
-        return AMapView(
+        aMapView = AMapView(
             frame: frame,
             viewIdentifier: viewId,
             arguments: args,
             binaryMessenger: messenger
         )
+        return aMapView!
     }
 
     func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
