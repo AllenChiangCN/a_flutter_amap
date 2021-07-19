@@ -95,4 +95,18 @@ class AFlutterAmap {
   static Future<bool> isTrafficOn() async {
     return await _channel.invokeMethod('isTrafficOn');
   }
+
+  /// 打开/关闭楼块
+  ///
+  /// [on] 打开/关闭楼块
+  static Future<void> turnOnBuildings(bool on) async {
+    await _channel.invokeMethod('turnOnBuildings', on);
+  }
+
+  /// 楼块是否打开
+  ///
+  /// 只针对iOS
+  static Future<bool> isBuildingsOn() async {
+    return await _channel.invokeMethod('isBuildingsOn');
+  }
 }

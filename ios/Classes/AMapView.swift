@@ -148,8 +148,8 @@ class AMapView: NSObject, FlutterPlatformView {
 
         setMapType(_mapType)
         _mAMapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
-        _mAMapView.isShowTraffic = _showTraffic
-        _mAMapView.isShowsBuildings = _showBuildings
+        turnOnTraffic(_showTraffic)
+        turnOnBuildings(_showBuildings)
         _mAMapView.showsCompass = _showCompass
         _mAMapView.showsScale = _showScaleControl
         _mAMapView.isShowsIndoorMap = _showIndoorMap
@@ -275,6 +275,18 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 实时路况是否打开
     func isTrafficOn(_ result: FlutterResult) {
         result(_mAMapView.isShowTraffic)
+    }
+
+    /// 打开/关闭楼块
+    ///
+    /// - Parameter on: 打开/关闭
+    func turnOnBuildings(_ on: Bool) {
+        _mAMapView.isShowsBuildings = on
+    }
+
+    /// 楼块是否打开
+    func isBuildingsOn(_ result: FlutterResult) {
+        result(_mAMapView.isShowsBuildings)
     }
 }
 

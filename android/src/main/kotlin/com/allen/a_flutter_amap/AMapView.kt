@@ -188,7 +188,7 @@ class AMapView(
         setMapType(_mapType)
         _aMap.setMapLanguage(if (_mapLanguage == "CHINESE") AMap.CHINESE else AMap.ENGLISH)
         turnOnTraffic(_showTraffic)
-        _aMap.showBuildings(_showBuildings)
+        turnOnBuildings(_showBuildings)
         _aMap.showMapText(_showMapText)
         showZoomControl(_showZoomControl)
         _uiSettings.isCompassEnabled = _showCompass
@@ -432,6 +432,20 @@ class AMapView(
      */
     fun isTrafficOn(@NonNull result: MethodChannel.Result) {
         result.success(_aMap.isTrafficEnabled)
+    }
+
+    /**
+     * 打开/关闭楼块
+     */
+    fun turnOnBuildings(on: Boolean) {
+        _aMap.showBuildings(on)
+    }
+
+    /**
+     * 获取楼块是否打开
+     */
+    fun isBuildingsOn(@NonNull result: MethodChannel.Result) {
+        result.success(false)
     }
 
     override fun getView(): View {

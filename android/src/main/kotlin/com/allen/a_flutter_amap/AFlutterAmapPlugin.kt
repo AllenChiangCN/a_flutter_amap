@@ -44,6 +44,8 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getMapType" -> _aMapViewFactory.aMapView.getMapType(result)
             "turnOnTraffic" -> _aMapViewFactory.aMapView.turnOnTraffic(call.arguments as Boolean)
             "isTrafficOn" -> _aMapViewFactory.aMapView.isTrafficOn(result)
+            "turnOnBuildings" -> _aMapViewFactory.aMapView.turnOnBuildings(call.arguments as Boolean)
+            "isBuildingsOn" -> _aMapViewFactory.aMapView.isBuildingsOn(result)
             else -> result.notImplemented()
         }
     }

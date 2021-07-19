@@ -38,6 +38,10 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnTraffic((call.arguments as! NSNumber).boolValue)
         case "isTrafficOn":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.isTrafficOn(result)
+        case "turnOnBuildings":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnBuildings((call.arguments as! NSNumber).boolValue)
+        case "isBuildingsOn":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isBuildingsOn(result)
         default:
             result(FlutterMethodNotImplemented)
         }
