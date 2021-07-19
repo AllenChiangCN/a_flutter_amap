@@ -109,4 +109,11 @@ class AFlutterAmap {
   static Future<bool> isBuildingsOn() async {
     return await _channel.invokeMethod('isBuildingsOn');
   }
+
+  /// 打开/关闭地图文字标注
+  ///
+  /// [on] 打开/关闭楼块
+  static Future<void> turnOnMapText(bool on) async {
+    await _channel.invokeMethod('turnOnMapText', on);
+  }
 }
