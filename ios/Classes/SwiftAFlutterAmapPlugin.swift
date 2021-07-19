@@ -32,6 +32,10 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getCurrentZoomLevel(result)
         case "setMapType":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapType(call.arguments as! String)
+        case "turnOnTraffic":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnTraffic((call.arguments as! NSNumber).boolValue)
+        case "isTrafficOn":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isTrafficOn(result)
         default:
             result(FlutterMethodNotImplemented)
         }

@@ -64,4 +64,16 @@ class AFlutterAmap {
   static Future<void> setMapType(MapType type) async {
     await _channel.invokeMethod('setMapType', type.name);
   }
+
+  /// 打开/关闭实时路况
+  ///
+  /// [on] 打开/关闭实时路况
+  static Future<void> turnOnTraffic(bool on) async {
+    await _channel.invokeMethod('turnOnTraffic', on);
+  }
+
+  /// 实时路况是否打开
+  static Future<bool> isTrafficOn() async {
+    return await _channel.invokeMethod('isTrafficOn');
+  }
 }

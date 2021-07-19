@@ -41,6 +41,8 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getMinZoomLevel" -> _aMapViewFactory.aMapView.getMinZoomLevel(result)
             "getCurrentZoomLevel" -> _aMapViewFactory.aMapView.getCurrentZoomLevel(result)
             "setMapType" -> _aMapViewFactory.aMapView.setMapType(call.arguments as String)
+            "turnOnTraffic" -> _aMapViewFactory.aMapView.turnOnTraffic(call.arguments as Boolean)
+            "isTrafficOn" -> _aMapViewFactory.aMapView.isTrafficOn(result)
             else -> result.notImplemented()
         }
     }

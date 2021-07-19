@@ -135,8 +135,8 @@ class AMapView: NSObject, FlutterPlatformView {
 
     /// 配置地图组件
     private func configAMapView() {
-        _mAMapView.maxZoomLevel = CGFloat(truncating: _maxZoomLevel)
-        _mAMapView.minZoomLevel = CGFloat(truncating: _minZoomLevel)
+        setMaxZoomLevel(_maxZoomLevel)
+        setMinZoomLevel(_minZoomLevel)
         _mAMapView.zoomLevel = CGFloat(truncating: _initialZoomLevel)
 
         _mAMapView.delegate = self
@@ -146,7 +146,7 @@ class AMapView: NSObject, FlutterPlatformView {
             _mAMapView.setUserTrackingMode(.follow, animated: true)
         }
 
-        _mAMapView.mapType = getMapType(_mapType)
+        setMapType(_mapType)
         _mAMapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
         _mAMapView.isShowTraffic = _showTraffic
         _mAMapView.isShowsBuildings = _showBuildings
@@ -262,6 +262,18 @@ class AMapView: NSObject, FlutterPlatformView {
     /// - Parameter type: 图层类型
     func setMapType(_ type: String) {
         _mAMapView.mapType = getMapType(type)
+    }
+
+    /// 打开/关闭实时路况
+    ///
+    /// - Parameter on: 打开/关闭
+    func turnOnTraffic(_ on: Bool) {
+        _mAMapView.isShowTraffic = on
+    }
+
+    /// 实时路况是否打开
+    func isTrafficOn(_ result: FlutterResult) {
+        result(_mAMapView.isShowTraffic)
     }
 }
 

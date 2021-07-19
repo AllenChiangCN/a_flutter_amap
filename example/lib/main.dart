@@ -36,34 +36,18 @@ class _MyAppState extends State<MyApp> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.NORMAL);
+                    onPressed: () async {
+                      AFlutterAmap.turnOnTraffic(
+                          !await AFlutterAmap.isTrafficOn());
                     },
-                    child: Text('NORMAL'),
+                    child: Text('ON/OFF'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.NIGHT);
+                    onPressed: () async {
+                      debugPrint(
+                          'Traffic: ${await AFlutterAmap.isTrafficOn() ? 'ON' : 'OFF'}');
                     },
-                    child: Text('NIGHT'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.NAVI);
-                    },
-                    child: Text('NAVI'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.BUS);
-                    },
-                    child: Text('BUS'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.SATELLITE);
-                    },
-                    child: Text('SATELLITE'),
+                    child: Text('STATUS'),
                   ),
                 ],
               ),

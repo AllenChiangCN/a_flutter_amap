@@ -170,8 +170,8 @@ class AMapView(
     }
 
     private fun initAMapView() {
-        _aMap.maxZoomLevel = _maxZoomLevel.toFloat()
-        _aMap.minZoomLevel = _minZoomLevel.toFloat()
+        setMaxZoomLevel(_maxZoomLevel)
+        setMinZoomLevel(_minZoomLevel)
         _aMap.moveCamera(CameraUpdateFactory.zoomTo(_initialZoomLevel.toFloat()))
 
         val locationStyle = MyLocationStyle().apply {
@@ -187,7 +187,7 @@ class AMapView(
 
         setMapType(_mapType)
         _aMap.setMapLanguage(if (_mapLanguage == "CHINESE") AMap.CHINESE else AMap.ENGLISH)
-        _aMap.isTrafficEnabled = _showTraffic
+        turnOnTraffic(_showTraffic)
         _aMap.showBuildings(_showBuildings)
         _aMap.showMapText(_showMapText)
         showZoomControl(_showZoomControl)
@@ -408,6 +408,20 @@ class AMapView(
      */
     fun getCurrentZoomLevel(@NonNull result: MethodChannel.Result) {
         result.success(_aMap.cameraPosition.zoom)
+    }
+
+    /**
+     * 打开/关闭实时路况
+     */
+    fun turnOnTraffic(on: Boolean) {
+        _aMap.isTrafficEnabled = on
+    }
+
+    /**
+     * 获取实时路况是否打开
+     */
+    fun isTrafficOn(@NonNull result: MethodChannel.Result) {
+        result.success(_aMap.isTrafficEnabled)
     }
 
     override fun getView(): View {
