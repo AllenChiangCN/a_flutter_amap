@@ -241,6 +241,21 @@ class AMapView: NSObject, FlutterPlatformView {
     func setMinZoomLevel(_ level: NSNumber) {
         _mAMapView.minZoomLevel = CGFloat(truncating: level)
     }
+
+    /// 获取最大缩放等级
+    func getMaxZoomLevel(_ result: FlutterResult) {
+        result(_mAMapView.maxZoomLevel)
+    }
+
+    /// 获取最小缩放等级
+    func getMinZoomLevel(_ result: FlutterResult) {
+        result(_mAMapView.minZoomLevel)
+    }
+
+    /// 获取当前缩放等级
+    func getCurrentZoomLevel(_ result: FlutterResult) {
+        result(_mAMapView.zoomLevel)
+    }
 }
 
 extension AMapView: MAMapViewDelegate {
