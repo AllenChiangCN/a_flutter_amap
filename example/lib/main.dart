@@ -2,7 +2,9 @@ import 'package:a_flutter_amap/a_flutter_amap.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -34,16 +36,26 @@ class _MyAppState extends State<MyApp> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.zoomIn();
+                    onPressed: () async {
+                      double maxLevel = await AFlutterAmap.getMaxZoomLevel();
+                      debugPrint('max level: $maxLevel');
                     },
-                    child: Text('ZoomIn'),
+                    child: Text('最大缩放等级'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.zoomOut();
+                    onPressed: () async {
+                      double minLevel = await AFlutterAmap.getMinZoomLevel();
+                      debugPrint('min level: $minLevel');
                     },
-                    child: Text('ZoomOut'),
+                    child: Text('最小缩放等级'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      double currentLevel =
+                          await AFlutterAmap.getCurrentZoomLevel();
+                      debugPrint('current level: $currentLevel');
+                    },
+                    child: Text('当前缩放等级'),
                   ),
                 ],
               ),

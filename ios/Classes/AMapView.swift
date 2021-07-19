@@ -53,7 +53,7 @@ class AMapView: NSObject, FlutterPlatformView {
 
     /// 倾斜手势是否可用
     private var _tiltGestureEnable: Bool
-    
+
     /// 是否以地图中心点缩放
     private var _isGestureScaleByMapCenter: Bool
 
@@ -163,7 +163,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _mAMapView.isScrollEnabled = _scrollGestureEnable
         _mAMapView.isRotateEnabled = _rotateGestureEnable
         _mAMapView.isRotateCameraEnabled = _tiltGestureEnable
-        
+
         _mAMapView.zoomingInPivotsAroundAnchorPoint = _isGestureScaleByMapCenter
 
         // TODO: 设置Logo位置
@@ -222,10 +222,24 @@ class AMapView: NSObject, FlutterPlatformView {
     func zoomIn() {
         _mAMapView.setZoomLevel(_mAMapView.zoomLevel + 1, animated: true)
     }
-    
+
     /// 缩小缩放等级
     func zoomOut() {
         _mAMapView.setZoomLevel(_mAMapView.zoomLevel - 1, animated: true)
+    }
+
+    /// 设置最大缩放等级
+    ///
+    /// - Parameter level: 最大缩放等级
+    func setMaxZoomLevel(_ level: NSNumber) {
+        _mAMapView.maxZoomLevel = CGFloat(truncating: level)
+    }
+
+    /// 设置最小缩放等级
+    ///
+    /// - Parameter level: 最小缩放等级
+    func setMinZoomLevel(_ level: NSNumber) {
+        _mAMapView.minZoomLevel = CGFloat(truncating: level)
     }
 }
 

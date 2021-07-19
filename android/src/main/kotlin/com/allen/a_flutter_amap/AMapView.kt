@@ -2,11 +2,13 @@ package com.allen.a_flutter_amap
 
 import android.content.Context
 import android.view.View
+import androidx.annotation.NonNull
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.amap.api.maps.*
 import com.amap.api.maps.model.MyLocationStyle
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
 
 class AMapView(
@@ -367,6 +369,45 @@ class AMapView(
      */
     fun zoomOut() {
         _aMap.animateCamera(CameraUpdateFactory.zoomOut())
+    }
+
+    /**
+     * 设置最大缩放等级
+     *
+     * @param level 最大缩放等级
+     */
+    fun setMaxZoomLevel(level: Double) {
+        _aMap.maxZoomLevel = level.toFloat()
+    }
+
+    /**
+     * 设置最小缩放等级
+     *
+     * @param level 最小缩放等级
+     */
+    fun setMinZoomLevel(level: Double) {
+        _aMap.minZoomLevel = level.toFloat()
+    }
+
+    /**
+     * 获取最大缩放等级
+     */
+    fun getMaxZoomLevel(@NonNull result: MethodChannel.Result) {
+        result.success(_aMap.maxZoomLevel)
+    }
+
+    /**
+     * 获取最小缩放等级
+     */
+    fun getMinZoomLevel(@NonNull result: MethodChannel.Result) {
+        result.success(_aMap.minZoomLevel)
+    }
+
+    /**
+     * 获取当前缩放等级
+     */
+    fun getCurrentZoomLevel(@NonNull result: MethodChannel.Result) {
+        result.success(_aMap.cameraPosition.zoom)
     }
 
     override fun getView(): View {

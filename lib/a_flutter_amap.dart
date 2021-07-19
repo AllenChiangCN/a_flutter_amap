@@ -31,4 +31,29 @@ class AFlutterAmap {
   static Future<void> zoomOut() async {
     await _channel.invokeMethod('zoomOut');
   }
+
+  /// 设置最大缩放等级
+  static Future<void> setMaxZoomLevel(double level) async {
+    await _channel.invokeMethod('setMaxZoomLevel', level);
+  }
+
+  /// 设置最小缩放等级
+  static Future<void> setMinZoomLevel(double level) async {
+    await _channel.invokeMethod('setMinZoomLevel', level);
+  }
+
+  /// 获取最大缩放等级
+  static Future<double> getMaxZoomLevel() async {
+    return await _channel.invokeMethod('getMaxZoomLevel');
+  }
+
+  /// 获取最小缩放等级
+  static Future<double> getMinZoomLevel() async {
+    return await _channel.invokeMethod('getMinZoomLevel');
+  }
+
+  /// 获取当前缩放等级
+  static Future<double> getCurrentZoomLevel() async {
+    return await _channel.invokeMethod('getCurrentZoomLevel');
+  }
 }
