@@ -368,6 +368,13 @@ class AMapView(
     }
 
     /**
+     * 获取当前缩放等级
+     */
+    fun getZoomLevel(@NonNull result: MethodChannel.Result) {
+        result.success(_aMap.cameraPosition.zoom)
+    }
+
+    /**
      * 放大缩放等级
      */
     fun zoomIn() {
@@ -411,13 +418,6 @@ class AMapView(
      */
     fun getMinZoomLevel(@NonNull result: MethodChannel.Result) {
         result.success(_aMap.minZoomLevel)
-    }
-
-    /**
-     * 获取当前缩放等级
-     */
-    fun getCurrentZoomLevel(@NonNull result: MethodChannel.Result) {
-        result.success(_aMap.cameraPosition.zoom)
     }
 
     /**

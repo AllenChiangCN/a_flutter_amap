@@ -23,6 +23,11 @@ class AFlutterAmap {
     await _channel.invokeMethod('setZoomLevel', zoomLevel);
   }
 
+  /// 获取当前缩放等级
+  static Future<double> getZoomLevel() async {
+    return await _channel.invokeMethod('getZoomLevel');
+  }
+
   /// 放大缩放等级
   static Future<void> zoomIn() async {
     await _channel.invokeMethod('zoomIn');
@@ -51,11 +56,6 @@ class AFlutterAmap {
   /// 获取最小缩放等级
   static Future<double> getMinZoomLevel() async {
     return await _channel.invokeMethod('getMinZoomLevel');
-  }
-
-  /// 获取当前缩放等级
-  static Future<double> getCurrentZoomLevel() async {
-    return await _channel.invokeMethod('getCurrentZoomLevel');
   }
 
   /// 设置地图图层类型

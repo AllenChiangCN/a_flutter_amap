@@ -195,6 +195,11 @@ class AMapView: NSObject, FlutterPlatformView {
     func setZoomLevel(_ zoomLevel: NSNumber) {
         _mAMapView.setZoomLevel(CGFloat(truncating: zoomLevel), animated: true)
     }
+    
+    /// 获取当前缩放等级
+    func getZoomLevel(_ result: FlutterResult) {
+        result(_mAMapView.zoomLevel)
+    }
 
     /// 放大缩放等级
     func zoomIn() {
@@ -228,11 +233,6 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 获取最小缩放等级
     func getMinZoomLevel(_ result: FlutterResult) {
         result(_mAMapView.minZoomLevel)
-    }
-
-    /// 获取当前缩放等级
-    func getCurrentZoomLevel(_ result: FlutterResult) {
-        result(_mAMapView.zoomLevel)
     }
 
     /// 设置地图图层类型

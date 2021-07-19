@@ -33,13 +33,13 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "setZoomLevel" -> _aMapViewFactory.aMapView.setZoomLevel(call.arguments as Double)
+            "getZoomLevel" -> _aMapViewFactory.aMapView.getZoomLevel(result)
             "zoomIn" -> _aMapViewFactory.aMapView.zoomIn()
             "zoomOut" -> _aMapViewFactory.aMapView.zoomOut()
             "setMaxZoomLevel" -> _aMapViewFactory.aMapView.setMaxZoomLevel(call.arguments as Double)
             "setMinZoomLevel" -> _aMapViewFactory.aMapView.setMinZoomLevel(call.arguments as Double)
             "getMaxZoomLevel" -> _aMapViewFactory.aMapView.getMaxZoomLevel(result)
             "getMinZoomLevel" -> _aMapViewFactory.aMapView.getMinZoomLevel(result)
-            "getCurrentZoomLevel" -> _aMapViewFactory.aMapView.getCurrentZoomLevel(result)
             "setMapType" -> _aMapViewFactory.aMapView.setMapType(call.arguments as String)
             "getMapType" -> _aMapViewFactory.aMapView.getMapType(result)
             "turnOnTraffic" -> _aMapViewFactory.aMapView.turnOnTraffic(call.arguments as Boolean)
