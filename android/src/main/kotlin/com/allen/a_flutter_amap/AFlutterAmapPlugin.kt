@@ -40,6 +40,7 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getMaxZoomLevel" -> _aMapViewFactory.aMapView.getMaxZoomLevel(result)
             "getMinZoomLevel" -> _aMapViewFactory.aMapView.getMinZoomLevel(result)
             "getCurrentZoomLevel" -> _aMapViewFactory.aMapView.getCurrentZoomLevel(result)
+            "setMapType" -> _aMapViewFactory.aMapView.setMapType(call.arguments as String)
             else -> result.notImplemented()
         }
     }

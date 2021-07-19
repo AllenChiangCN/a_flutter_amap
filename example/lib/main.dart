@@ -36,26 +36,34 @@ class _MyAppState extends State<MyApp> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ElevatedButton(
-                    onPressed: () async {
-                      double maxLevel = await AFlutterAmap.getMaxZoomLevel();
-                      debugPrint('max level: $maxLevel');
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.NORMAL);
                     },
-                    child: Text('最大缩放等级'),
+                    child: Text('NORMAL'),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      double minLevel = await AFlutterAmap.getMinZoomLevel();
-                      debugPrint('min level: $minLevel');
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.NIGHT);
                     },
-                    child: Text('最小缩放等级'),
+                    child: Text('NIGHT'),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      double currentLevel =
-                          await AFlutterAmap.getCurrentZoomLevel();
-                      debugPrint('current level: $currentLevel');
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.NAVI);
                     },
-                    child: Text('当前缩放等级'),
+                    child: Text('NAVI'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.BUS);
+                    },
+                    child: Text('BUS'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.SATELLITE);
+                    },
+                    child: Text('SATELLITE'),
                   ),
                 ],
               ),

@@ -30,6 +30,8 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getMinZoomLevel(result)
         case "getCurrentZoomLevel":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getCurrentZoomLevel(result)
+        case "setMapType":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapType(call.arguments as! String)
         default:
             result(FlutterMethodNotImplemented)
         }

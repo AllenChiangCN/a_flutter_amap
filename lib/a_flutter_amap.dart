@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:a_flutter_amap/map_type.dart';
 import 'package:flutter/services.dart';
 
 export 'amap_view.dart';
@@ -55,5 +56,12 @@ class AFlutterAmap {
   /// 获取当前缩放等级
   static Future<double> getCurrentZoomLevel() async {
     return await _channel.invokeMethod('getCurrentZoomLevel');
+  }
+
+  /// 设置地图图层类型
+  ///
+  /// [type] 地图图层类型
+  static Future<void> setMapType(MapType type) async {
+    await _channel.invokeMethod('setMapType', type.name);
   }
 }

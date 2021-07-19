@@ -210,7 +210,7 @@ class AMapView(
      *
      * @param type 图层类型名称
      */
-    private fun setMapType(type: String) {
+    fun setMapType(type: String) {
         when (type) {
             "NORMAL" -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
             "NIGHT" -> _aMap.mapType = AMap.MAP_TYPE_NIGHT

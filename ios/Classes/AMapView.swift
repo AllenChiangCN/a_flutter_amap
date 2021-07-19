@@ -256,6 +256,13 @@ class AMapView: NSObject, FlutterPlatformView {
     func getCurrentZoomLevel(_ result: FlutterResult) {
         result(_mAMapView.zoomLevel)
     }
+
+    /// 设置地图图层类型
+    ///
+    /// - Parameter type: 图层类型
+    func setMapType(_ type: String) {
+        _mAMapView.mapType = getMapType(type)
+    }
 }
 
 extension AMapView: MAMapViewDelegate {
