@@ -36,18 +36,41 @@ class _MyAppState extends State<MyApp> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ElevatedButton(
-                    onPressed: () async {
-                      AFlutterAmap.turnOnTraffic(
-                          !await AFlutterAmap.isTrafficOn());
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.NORMAL);
                     },
-                    child: Text('ON/OFF'),
+                    child: Text('NORMAL'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.NIGHT);
+                    },
+                    child: Text('NIGHT'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.NAVI);
+                    },
+                    child: Text('NAVI'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.BUS);
+                    },
+                    child: Text('BUS'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      AFlutterAmap.setMapType(MapType.SATELLITE);
+                    },
+                    child: Text('SATELLITE'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      debugPrint(
-                          'Traffic: ${await AFlutterAmap.isTrafficOn() ? 'ON' : 'OFF'}');
+                      MapType type = await AFlutterAmap.getMapType();
+                      debugPrint('类型: ${type.name}');
                     },
-                    child: Text('STATUS'),
+                    child: Text('类型'),
                   ),
                 ],
               ),

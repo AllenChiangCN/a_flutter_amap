@@ -32,6 +32,8 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getCurrentZoomLevel(result)
         case "setMapType":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapType(call.arguments as! String)
+        case "getMapType":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.getMapType(result)
         case "turnOnTraffic":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnTraffic((call.arguments as! NSNumber).boolValue)
         case "isTrafficOn":

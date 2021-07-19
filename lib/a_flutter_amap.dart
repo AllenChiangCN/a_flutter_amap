@@ -65,6 +65,25 @@ class AFlutterAmap {
     await _channel.invokeMethod('setMapType', type.name);
   }
 
+  /// 获取地图图层类型
+  static Future<MapType> getMapType() async {
+    String typeString = await _channel.invokeMethod('getMapType');
+    switch (typeString) {
+      case 'NORMAL':
+        return MapType.NORMAL;
+      case 'NIGHT':
+        return MapType.NIGHT;
+      case 'NAVI':
+        return MapType.NAVI;
+      case 'BUS':
+        return MapType.BUS;
+      case 'SATELLITE':
+        return MapType.SATELLITE;
+      default:
+        return MapType.NORMAL;
+    }
+  }
+
   /// 打开/关闭实时路况
   ///
   /// [on] 打开/关闭实时路况

@@ -211,6 +211,9 @@ class AMapView(
      * @param type 图层类型名称
      */
     fun setMapType(type: String) {
+        if (_mapType != type) {
+            _mapType = type
+        }
         when (type) {
             "NORMAL" -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
             "NIGHT" -> _aMap.mapType = AMap.MAP_TYPE_NIGHT
@@ -219,6 +222,13 @@ class AMapView(
             "SATELLITE" -> _aMap.mapType = AMap.MAP_TYPE_SATELLITE
             else -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
         }
+    }
+
+    /**
+     * 获取地图图层类型
+     */
+    fun getMapType(@NonNull result: MethodChannel.Result) {
+        result.success(_mapType)
     }
 
     /**

@@ -187,28 +187,6 @@ class AMapView: NSObject, FlutterPlatformView {
         }
     }
 
-    /// 获取地图图层类型
-    ///
-    /// - Parameter type: 类型名称
-    ///
-    /// - Returns: 类型
-    private func getMapType(_ type: String) -> MAMapType {
-        switch type {
-        case "NORMAL":
-            return .standard
-        case "NIGHT":
-            return .standardNight
-        case "NAVI":
-            return .navi
-        case "BUS":
-            return .bus
-        case "SATELLITE":
-            return .satellite
-        default:
-            return .standard
-        }
-    }
-
     // MARK: - 暴露方法
 
     /// 设置当前缩放等级
@@ -261,7 +239,30 @@ class AMapView: NSObject, FlutterPlatformView {
     ///
     /// - Parameter type: 图层类型
     func setMapType(_ type: String) {
-        _mAMapView.mapType = getMapType(type)
+        if _mapType != type {
+            _mapType = type
+        }
+        let t: MAMapType
+        switch type {
+        case "NORMAL":
+            t = MAMapType.standard
+        case "NIGHT":
+            t = MAMapType.standardNight
+        case "NAVI":
+            t = MAMapType.navi
+        case "BUS":
+            t = MAMapType.bus
+        case "SATELLITE":
+            t = MAMapType.satellite
+        default:
+            t = MAMapType.standard
+        }
+        _mAMapView.mapType = t
+    }
+
+    /// 获取地图图层类型
+    func getMapType(_ result: FlutterResult) {
+        result(_mapType)
     }
 
     /// 打开/关闭实时路况
