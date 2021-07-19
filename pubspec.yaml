@@ -1,7 +1,7 @@
 name: a_flutter_amap
 description: Amap for flutter
-version: 0.0.1
-homepage:
+version: 0.0.3
+homepage: https://github.com/AllenChiangCN/a_flutter_amap
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

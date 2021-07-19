@@ -1,8 +1,5 @@
 package com.allen.a_flutter_amap
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -15,48 +12,53 @@ import io.flutter.plugin.common.MethodChannel.Result
 
 /** AFlutterAmapPlugin */
 class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    private lateinit var mActivity: FlutterActivity
+    private lateinit var _activity: FlutterActivity
 
-    private lateinit var mFlutterPluginBinding: FlutterPlugin.FlutterPluginBinding
+    private lateinit var _flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
 
-    private lateinit var mChannel: MethodChannel
+    private lateinit var _channel: MethodChannel
+
+    private lateinit var _aMapViewFactory: AMapViewFactory
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        mFlutterPluginBinding = flutterPluginBinding
-        mChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "a_flutter_amap")
-        mChannel.setMethodCallHandler(this)
+        this._flutterPluginBinding = flutterPluginBinding
+        _channel = MethodChannel(flutterPluginBinding.binaryMessenger, "a_flutter_amap")
+        _channel.setMethodCallHandler(this)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        mChannel.setMethodCallHandler(null)
+        _channel.setMethodCallHandler(null)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else {
-            result.notImplemented()
+        when (call.method) {
+            "setZoomLevel" -> _aMapViewFactory.aMapView.setZoomLevel(call.arguments as Double)
+            "getZoomLevel" -> _aMapViewFactory.aMapView.getZoomLevel(result)
+            "zoomIn" -> _aMapViewFactory.aMapView.zoomIn()
+            "zoomOut" -> _aMapViewFactory.aMapView.zoomOut()
+            "setMaxZoomLevel" -> _aMapViewFactory.aMapView.setMaxZoomLevel(call.arguments as Double)
+            "setMinZoomLevel" -> _aMapViewFactory.aMapView.setMinZoomLevel(call.arguments as Double)
+            "getMaxZoomLevel" -> _aMapViewFactory.aMapView.getMaxZoomLevel(result)
+            "getMinZoomLevel" -> _aMapViewFactory.aMapView.getMinZoomLevel(result)
+            "setMapType" -> _aMapViewFactory.aMapView.setMapType(call.arguments as String)
+            "getMapType" -> _aMapViewFactory.aMapView.getMapType(result)
+            "turnOnTraffic" -> _aMapViewFactory.aMapView.turnOnTraffic(call.arguments as Boolean)
+            "isTrafficOn" -> _aMapViewFactory.aMapView.isTrafficOn(result)
+            "turnOnBuildings" -> _aMapViewFactory.aMapView.turnOnBuildings(call.arguments as Boolean)
+            "isBuildingsOn" -> _aMapViewFactory.aMapView.isBuildingsOn(result)
+            "turnOnMapText" -> _aMapViewFactory.aMapView.turnOnMapText(call.arguments as Boolean)
+            "setMapLanguage" -> _aMapViewFactory.aMapView.setMapLanguage(call.arguments as String)
+            else -> result.notImplemented()
         }
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        mActivity = binding.activity as FlutterActivity
-        mFlutterPluginBinding.platformViewRegistry.registerViewFactory(
+        _activity = binding.activity as FlutterActivity
+        _aMapViewFactory = AMapViewFactory(_activity)
+        _flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "AMapView",
-            AMapViewFactory(mActivity)
+            _aMapViewFactory
         )
-        binding.addRequestPermissionsResultListener { requestCode, permissions, grantResults ->
-            if (requestCode == AMapView.PERMISSION_REQUEST_CODE) {
-                if (permissions.size == 1 && permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
-                    grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                ) {
-                    Log.d("AMapView", "Permission granted")
-                } else {
-                    Log.d("AMapView", "Permission denied still")
-                }
-            }
-            true
-        }
     }
 
     override fun onDetachedFromActivityForConfigChanges() {

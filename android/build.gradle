@@ -50,4 +50,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "com.amap.api:3dmap:$amap_3d_version"
     api "com.amap.api:search:$amap_search_version"
+    api "com.amap.api:location:$amap_location_version"
 }
