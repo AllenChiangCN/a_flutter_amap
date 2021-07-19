@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:a_flutter_amap/map_type.dart';
 import 'package:flutter/services.dart';
 
+import 'map_language.dart';
+
 export 'amap_view.dart';
 export 'compass_margin.dart';
 export 'location_type.dart';
@@ -113,7 +115,31 @@ class AFlutterAmap {
   /// 打开/关闭地图文字标注
   ///
   /// [on] 打开/关闭楼块
+  ///
+  /// 只针对Android
   static Future<void> turnOnMapText(bool on) async {
     await _channel.invokeMethod('turnOnMapText', on);
+  }
+
+  /// 设置底图语言
+  ///
+  /// [language] 底图语言
+  static Future<void> setMapLanguage(MapLanguage language) async {
+    await _channel.invokeMethod('setMapLanguage', language.name);
+  }
+
+  /// 获取底图语言
+  ///
+  /// 只针对iOS
+  static Future<MapLanguage> getMapLanguage() async {
+    String languageString = await _channel.invokeMethod('getMapLanguage');
+    switch (languageString) {
+      case 'CHINESE':
+        return MapLanguage.CHINESE;
+      case 'ENGLISH':
+        return MapLanguage.ENGLISH;
+      default:
+        return MapLanguage.CHINESE;
+    }
   }
 }

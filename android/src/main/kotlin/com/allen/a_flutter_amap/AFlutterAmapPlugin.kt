@@ -47,6 +47,7 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "turnOnBuildings" -> _aMapViewFactory.aMapView.turnOnBuildings(call.arguments as Boolean)
             "isBuildingsOn" -> _aMapViewFactory.aMapView.isBuildingsOn(result)
             "turnOnMapText" -> _aMapViewFactory.aMapView.turnOnMapText(call.arguments as Boolean)
+            "setMapLanguage" -> _aMapViewFactory.aMapView.setMapLanguage(call.arguments as String)
             else -> result.notImplemented()
         }
     }

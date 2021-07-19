@@ -42,6 +42,10 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnBuildings((call.arguments as! NSNumber).boolValue)
         case "isBuildingsOn":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.isBuildingsOn(result)
+        case "setMapLanguage":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapLanguage(call.arguments as! String)
+        case "getMapLanguage":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.getMapLanguage(result)
         default:
             result(FlutterMethodNotImplemented)
         }

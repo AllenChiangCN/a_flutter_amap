@@ -37,40 +37,23 @@ class _MyAppState extends State<MyApp> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      AFlutterAmap.setMapType(MapType.NORMAL);
+                      AFlutterAmap.setMapLanguage(MapLanguage.CHINESE);
                     },
-                    child: Text('NORMAL'),
+                    child: Text('中文'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      AFlutterAmap.setMapType(MapType.NIGHT);
+                      AFlutterAmap.setMapLanguage(MapLanguage.ENGLISH);
                     },
-                    child: Text('NIGHT'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.NAVI);
-                    },
-                    child: Text('NAVI'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.BUS);
-                    },
-                    child: Text('BUS'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapType(MapType.SATELLITE);
-                    },
-                    child: Text('SATELLITE'),
+                    child: Text('英文'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      MapType type = await AFlutterAmap.getMapType();
-                      debugPrint('类型: ${type.name}');
+                      MapLanguage language =
+                          await AFlutterAmap.getMapLanguage();
+                      debugPrint('语言: ${language.name}');
                     },
-                    child: Text('类型'),
+                    child: Text('语言'),
                   ),
                 ],
               ),

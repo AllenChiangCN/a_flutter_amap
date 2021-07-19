@@ -147,7 +147,7 @@ class AMapView: NSObject, FlutterPlatformView {
         }
 
         setMapType(_mapType)
-        _mAMapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
+        setMapLanguage(_mapLanguage)
         turnOnTraffic(_showTraffic)
         turnOnBuildings(_showBuildings)
         _mAMapView.showsCompass = _showCompass
@@ -195,7 +195,7 @@ class AMapView: NSObject, FlutterPlatformView {
     func setZoomLevel(_ zoomLevel: NSNumber) {
         _mAMapView.setZoomLevel(CGFloat(truncating: zoomLevel), animated: true)
     }
-    
+
     /// 获取当前缩放等级
     func getZoomLevel(_ result: FlutterResult) {
         result(_mAMapView.zoomLevel)
@@ -287,6 +287,21 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 楼块是否打开
     func isBuildingsOn(_ result: FlutterResult) {
         result(_mAMapView.isShowsBuildings)
+    }
+
+    /// 设置底图语言
+    ///
+    /// - Parameter language: 底图语言
+    func setMapLanguage(_ language: String) {
+        if _mapLanguage != language {
+            _mapLanguage = language
+        }
+        _mAMapView.mapLanguage = _mapLanguage == "CHINESE" ? 0 : 1
+    }
+
+    /// 获取底图语言
+    func getMapLanguage(_ result: FlutterResult) {
+        result(_mapLanguage)
     }
 }
 

@@ -186,7 +186,7 @@ class AMapView(
         }
 
         setMapType(_mapType)
-        _aMap.setMapLanguage(if (_mapLanguage == "CHINESE") AMap.CHINESE else AMap.ENGLISH)
+        setMapLanguage(_mapLanguage)
         turnOnTraffic(_showTraffic)
         turnOnBuildings(_showBuildings)
         turnOnMapText(_showMapText)
@@ -203,32 +203,6 @@ class AMapView(
         } else {
             setLogoPosition(_logoPosition)
         }
-    }
-
-    /**
-     * 设置地图图层类型
-     *
-     * @param type 图层类型名称
-     */
-    fun setMapType(type: String) {
-        if (_mapType != type) {
-            _mapType = type
-        }
-        when (type) {
-            "NORMAL" -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
-            "NIGHT" -> _aMap.mapType = AMap.MAP_TYPE_NIGHT
-            "NAVI" -> _aMap.mapType = AMap.MAP_TYPE_NAVI
-            "BUS" -> _aMap.mapType = AMap.MAP_TYPE_BUS
-            "SATELLITE" -> _aMap.mapType = AMap.MAP_TYPE_SATELLITE
-            else -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
-        }
-    }
-
-    /**
-     * 获取地图图层类型
-     */
-    fun getMapType(@NonNull result: MethodChannel.Result) {
-        result.success(_mapType)
     }
 
     /**
@@ -421,6 +395,32 @@ class AMapView(
     }
 
     /**
+     * 设置地图图层类型
+     *
+     * @param type 图层类型名称
+     */
+    fun setMapType(type: String) {
+        if (_mapType != type) {
+            _mapType = type
+        }
+        when (type) {
+            "NORMAL" -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
+            "NIGHT" -> _aMap.mapType = AMap.MAP_TYPE_NIGHT
+            "NAVI" -> _aMap.mapType = AMap.MAP_TYPE_NAVI
+            "BUS" -> _aMap.mapType = AMap.MAP_TYPE_BUS
+            "SATELLITE" -> _aMap.mapType = AMap.MAP_TYPE_SATELLITE
+            else -> _aMap.mapType = AMap.MAP_TYPE_NORMAL
+        }
+    }
+
+    /**
+     * 获取地图图层类型
+     */
+    fun getMapType(@NonNull result: MethodChannel.Result) {
+        result.success(_mapType)
+    }
+
+    /**
      * 打开/关闭实时路况
      */
     fun turnOnTraffic(on: Boolean) {
@@ -453,6 +453,15 @@ class AMapView(
      */
     fun turnOnMapText(on: Boolean) {
         _aMap.showMapText(on)
+    }
+
+    /**
+     * 设置底图语言
+     *
+     * @param language 底图语言
+     */
+    fun setMapLanguage(language: String) {
+        _aMap.setMapLanguage(if (language == "CHINESE") AMap.CHINESE else AMap.ENGLISH)
     }
 
     override fun getView(): View {
