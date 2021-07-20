@@ -1,6 +1,7 @@
 package com.allen.a_flutter_amap
 
 import androidx.annotation.NonNull
+import com.amap.api.maps.model.LatLng
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -32,22 +33,22 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
-            "setZoomLevel" -> _aMapViewFactory.aMapView.setZoomLevel(call.arguments as Double)
+            "setZoomLevel" -> _aMapViewFactory.aMapView.setZoomLevel(call.arguments<Double>())
             "getZoomLevel" -> _aMapViewFactory.aMapView.getZoomLevel(result)
             "zoomIn" -> _aMapViewFactory.aMapView.zoomIn()
             "zoomOut" -> _aMapViewFactory.aMapView.zoomOut()
-            "setMaxZoomLevel" -> _aMapViewFactory.aMapView.setMaxZoomLevel(call.arguments as Double)
-            "setMinZoomLevel" -> _aMapViewFactory.aMapView.setMinZoomLevel(call.arguments as Double)
+            "setMaxZoomLevel" -> _aMapViewFactory.aMapView.setMaxZoomLevel(call.arguments<Double>())
+            "setMinZoomLevel" -> _aMapViewFactory.aMapView.setMinZoomLevel(call.arguments<Double>())
             "getMaxZoomLevel" -> _aMapViewFactory.aMapView.getMaxZoomLevel(result)
             "getMinZoomLevel" -> _aMapViewFactory.aMapView.getMinZoomLevel(result)
-            "setMapType" -> _aMapViewFactory.aMapView.setMapType(call.arguments as String)
+            "setMapType" -> _aMapViewFactory.aMapView.setMapType(call.arguments<String>())
             "getMapType" -> _aMapViewFactory.aMapView.getMapType(result)
-            "turnOnTraffic" -> _aMapViewFactory.aMapView.turnOnTraffic(call.arguments as Boolean)
+            "turnOnTraffic" -> _aMapViewFactory.aMapView.turnOnTraffic(call.arguments<Boolean>())
             "isTrafficOn" -> _aMapViewFactory.aMapView.isTrafficOn(result)
-            "turnOnBuildings" -> _aMapViewFactory.aMapView.turnOnBuildings(call.arguments as Boolean)
+            "turnOnBuildings" -> _aMapViewFactory.aMapView.turnOnBuildings(call.arguments<Boolean>())
             "isBuildingsOn" -> _aMapViewFactory.aMapView.isBuildingsOn(result)
-            "turnOnMapText" -> _aMapViewFactory.aMapView.turnOnMapText(call.arguments as Boolean)
-            "setMapLanguage" -> _aMapViewFactory.aMapView.setMapLanguage(call.arguments as String)
+            "turnOnMapText" -> _aMapViewFactory.aMapView.turnOnMapText(call.arguments<Boolean>())
+            "setMapLanguage" -> _aMapViewFactory.aMapView.setMapLanguage(call.arguments<String>())
             "setLocationType" -> _aMapViewFactory.aMapView.setLocationType(call.arguments<String>())
             "getLocationType" -> _aMapViewFactory.aMapView.getLocationType(result)
             "setLocationInterval" -> _aMapViewFactory.aMapView.setLocationInterval(call.arguments<Int>())
@@ -60,6 +61,35 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "isLocationButtonOn" -> _aMapViewFactory.aMapView.isLocationButtonOn(result)
             "turnOnScaleControl" -> _aMapViewFactory.aMapView.turnOnScaleControl(call.arguments<Boolean>())
             "isScaleControlOn" -> _aMapViewFactory.aMapView.isScaleControlOn(result)
+            "enableAllGesture" -> _aMapViewFactory.aMapView.enableAllGesture(call.arguments<Boolean>())
+            "isAllGestureEnable" -> _aMapViewFactory.aMapView.isAllGestureEnable(result)
+            "enableZoomGesture" -> _aMapViewFactory.aMapView.enableZoomGesture(call.arguments<Boolean>())
+            "isZoomGestureEnable" -> _aMapViewFactory.aMapView.isZoomGestureEnable(result)
+            "enableRotateGesture" -> _aMapViewFactory.aMapView.enableRotateGesture(call.arguments<Boolean>())
+            "isRotateGestureEnable" -> _aMapViewFactory.aMapView.isRotateGestureEnable(result)
+            "enableScrollGesture" -> _aMapViewFactory.aMapView.enableScrollGesture(call.arguments<Boolean>())
+            "isScrollGestureEnable" -> _aMapViewFactory.aMapView.isScrollGestureEnable(result)
+            "enableTiltGesture" -> _aMapViewFactory.aMapView.enableTiltGesture(call.arguments<Boolean>())
+            "isTiltGestureEnable" -> _aMapViewFactory.aMapView.isTiltGestureEnable(result)
+            "setLogoPosition" -> _aMapViewFactory.aMapView.setLogoPosition(call.arguments<String>())
+            "getLogoPosition" -> _aMapViewFactory.aMapView.getLogoPosition(result)
+            "setLogoMargin" -> _aMapViewFactory.aMapView.setLogoMargin(call.arguments<HashMap<String, Int>>())
+            "setZoomPosition" -> _aMapViewFactory.aMapView.setZoomPosition(call.arguments<String>())
+            "getZoomPosition" -> _aMapViewFactory.aMapView.getZoomPosition(result)
+            "setIsGestureScaleByMapCenterPosition" -> _aMapViewFactory.aMapView.setIsGestureScaleByMapCenterPosition(
+                call.arguments<Boolean>()
+            )
+            "getIsGestureScaleByMapCenterPosition" -> _aMapViewFactory.aMapView.getIsGestureScaleByMapCenterPosition(
+                result
+            )
+            "setCustomMapStyleId" -> _aMapViewFactory.aMapView.setCustomMapStyleId(call.arguments<String>())
+            "disableCustomMapStyle" -> _aMapViewFactory.aMapView.disableCustomMapStyle()
+            "setMapCenter" -> {
+                val latLngMap = call.arguments<HashMap<String, Double>>()
+                val latLng = LatLng(latLngMap["latitude"]!!, latLngMap["longitude"]!!)
+                _aMapViewFactory.aMapView.setMapCenter(latLng)
+            }
+            "getMapCenter" -> _aMapViewFactory.aMapView.getMapCenter(result)
             else -> result.notImplemented()
         }
     }

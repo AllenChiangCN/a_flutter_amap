@@ -106,8 +106,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">CompassMargin.fromJson(Map&lt;String, dynamic&gt; json) {
-  marginRight = double.tryParse(json[&quot;marginRight&quot;].toString()) ?? 0;
-  marginTop = double.tryParse(json[&quot;marginTop&quot;].toString()) ?? 0;
+  marginRight = int.tryParse(json[&quot;marginRight&quot;].toString()) ?? 0;
+  marginTop = int.tryParse(json[&quot;marginTop&quot;].toString()) ?? 0;
 }</code></pre>
 </section>
 
@@ -122,7 +122,7 @@
 <footer>
   <span class="no-break">
     a_flutter_amap
-      0.0.4
+      0.0.5
   </span>
 
   

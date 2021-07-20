@@ -13,6 +13,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late AMapViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AMapViewController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,12 +32,9 @@ class _MyAppState extends State<MyApp> {
         body: Stack(
           children: [
             AMapView(
-              autoLocateAfterInit: true,
-              showBuildings: false,
+              controller: controller,
+              autoLocateAfterInit: false,
               showCompass: true,
-              showLocationButton: true,
-              showScaleControl: true,
-              showZoomControl: false,
             ),
             Align(
               alignment: Alignment.bottomRight,
@@ -37,19 +43,45 @@ class _MyAppState extends State<MyApp> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: () async {
-                      AFlutterAmap.turnOnScaleControl(
-                        !await AFlutterAmap.isScaleControlOn(),
+                    onPressed: () {
+                      controller.setMapCenter(
+                        LatLng(latitude: 39.903963, longitude: 116.411161),
                       );
                     },
-                    child: Text('开/关'),
+                    child: Text('北京'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.setMapCenter(
+                        LatLng(latitude: 32.07387, longitude: 118.767728),
+                      );
+                    },
+                    child: Text('南京'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.setMapCenter(
+                        LatLng(latitude: 34.334954, longitude: 108.836088),
+                      );
+                    },
+                    child: Text('西安'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.setMapCenter(
+                        LatLng(latitude: 29.526291, longitude: 106.638822),
+                      );
+                    },
+                    child: Text('重庆'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      bool on = await AFlutterAmap.isScaleControlOn();
-                      debugPrint('status: ${on ? 'on' : 'off'}');
+                      LatLng center = await controller.getMapCenter();
+                      debugPrint(
+                        'latitude: ${center.latitude}, longitude: ${center.longitude}',
+                      );
                     },
-                    child: Text('status'),
+                    child: Text('当前中点'),
                   ),
                 ],
               ),

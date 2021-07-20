@@ -106,8 +106,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">ScaleMargin.fromJson(Map&lt;String, dynamic&gt; json) {
-  marginLeft = double.tryParse(json[&quot;marginLeft&quot;].toString()) ?? 0;
-  marginBottom = double.tryParse(json[&quot;marginBottom&quot;].toString()) ?? 0;
+  marginLeft = int.tryParse(json[&quot;marginLeft&quot;].toString()) ?? 0;
+  marginBottom = int.tryParse(json[&quot;marginBottom&quot;].toString()) ?? 0;
 }</code></pre>
 </section>
 
@@ -122,7 +122,7 @@
 <footer>
   <span class="no-break">
     a_flutter_amap
-      0.0.4
+      0.0.5
   </span>
 
   

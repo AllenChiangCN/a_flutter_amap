@@ -2,10 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.allen.a_flutter_amap_example">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
+        android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="a_flutter_amap_example"
-        android:debuggable="true"
+        android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
 
         <meta-data
