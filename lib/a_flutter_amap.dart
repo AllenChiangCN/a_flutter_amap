@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:a_flutter_amap/map_type.dart';
 import 'package:flutter/services.dart';
 
+import 'location_type.dart';
 import 'map_language.dart';
 
 export 'amap_view.dart';
@@ -20,7 +21,7 @@ class AFlutterAmap {
 
   /// 设置当前缩放等级
   ///
-  /// [zoomLevel] 缩放等级
+  /// [zoomLevel] - 缩放等级
   static Future<void> setZoomLevel(double zoomLevel) async {
     await _channel.invokeMethod('setZoomLevel', zoomLevel);
   }
@@ -62,7 +63,7 @@ class AFlutterAmap {
 
   /// 设置地图图层类型
   ///
-  /// [type] 地图图层类型
+  /// [type] - 地图图层类型
   static Future<void> setMapType(MapType type) async {
     await _channel.invokeMethod('setMapType', type.name);
   }
@@ -88,7 +89,7 @@ class AFlutterAmap {
 
   /// 打开/关闭实时路况
   ///
-  /// [on] 打开/关闭实时路况
+  /// [on] - 打开/关闭实时路况
   static Future<void> turnOnTraffic(bool on) async {
     await _channel.invokeMethod('turnOnTraffic', on);
   }
@@ -100,7 +101,7 @@ class AFlutterAmap {
 
   /// 打开/关闭楼块
   ///
-  /// [on] 打开/关闭楼块
+  /// [on] - 打开/关闭楼块
   static Future<void> turnOnBuildings(bool on) async {
     await _channel.invokeMethod('turnOnBuildings', on);
   }
@@ -114,7 +115,7 @@ class AFlutterAmap {
 
   /// 打开/关闭地图文字标注
   ///
-  /// [on] 打开/关闭楼块
+  /// [on] - 打开/关闭楼块
   ///
   /// 只针对Android
   static Future<void> turnOnMapText(bool on) async {
@@ -123,7 +124,7 @@ class AFlutterAmap {
 
   /// 设置底图语言
   ///
-  /// [language] 底图语言
+  /// [language] - 底图语言
   static Future<void> setMapLanguage(MapLanguage language) async {
     await _channel.invokeMethod('setMapLanguage', language.name);
   }
@@ -141,5 +142,97 @@ class AFlutterAmap {
       default:
         return MapLanguage.CHINESE;
     }
+  }
+
+  /// 设置定位类型
+  ///
+  /// [type] - 定位类型
+  static Future<void> setLocationType(LocationType type) async {
+    await _channel.invokeMethod('setLocationType', type.name);
+  }
+
+  /// 获取定位类型
+  static Future<LocationType> getLocationType() async {
+    String typeString = await _channel.invokeMethod('getLocationType');
+    switch (typeString) {
+      case 'SHOW':
+        return LocationType.SHOW;
+      case 'LOCATE':
+        return LocationType.LOCATE;
+      case 'FOLLOW':
+        return LocationType.FOLLOW;
+      case 'MAP_ROTATE':
+        return LocationType.MAP_ROTATE;
+      case 'LOCATION_ROTATE':
+        return LocationType.LOCATION_ROTATE;
+      case 'LOCATION_ROTATE_NO_CENTER':
+        return LocationType.LOCATION_ROTATE_NO_CENTER;
+      case 'FOLLOW_NO_CENTER':
+        return LocationType.FOLLOW_NO_CENTER;
+      case 'MAP_ROTATE_NO_CENTER':
+        return LocationType.MAP_ROTATE_NO_CENTER;
+      default:
+        return LocationType.SHOW;
+    }
+  }
+
+  /// 设置定位间隔
+  ///
+  /// [interval] - 定位间隔，单位毫秒
+  static Future<void> setLocationInterval(int interval) async {
+    await _channel.invokeMethod('setLocationInterval', interval);
+  }
+
+  /// 获取定位间隔
+  static Future<int> getLocationInterval() async {
+    return await _channel.invokeMethod('getLocationInterval');
+  }
+
+  /// 设置是否显示缩放按钮
+  ///
+  /// [on] - 是否显示
+  static Future<void> turnOnZoomControl(bool on) async {
+    await _channel.invokeMethod('turnOnZoomControl', on);
+  }
+
+  /// 缩放按钮是否显示
+  static Future<bool> isZoomControlOn() async {
+    return await _channel.invokeMethod('isZoomControlOn');
+  }
+
+  /// 设置是否显示指南针
+  ///
+  /// [on] - 是否显示
+  static Future<void> turnOnCompass(bool on) async {
+    await _channel.invokeMethod('turnOnCompass', on);
+  }
+
+  /// 指南针是否显示
+  static Future<bool> isCompassOn() async {
+    return await _channel.invokeMethod('isCompassOn');
+  }
+
+  /// 设置是否显示定位按钮
+  ///
+  /// [on] - 是否显示
+  static Future<void> turnOnLocationButton(bool on) async {
+    await _channel.invokeMethod('turnOnLocationButton', on);
+  }
+
+  /// 定位按钮是否显示
+  static Future<bool> isLocationButtonOn() async {
+    return await _channel.invokeMethod('isLocationButtonOn');
+  }
+
+  /// 设置是否显示比例尺控件
+  ///
+  /// [on] - 是否显示
+  static Future<void> turnOnScaleControl(bool on) async {
+    await _channel.invokeMethod('turnOnScaleControl', on);
+  }
+
+  /// 比例尺控件是否显示
+  static Future<bool> isScaleControlOn() async {
+    return await _channel.invokeMethod('isScaleControlOn');
   }
 }

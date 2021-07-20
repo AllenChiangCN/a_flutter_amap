@@ -29,6 +29,8 @@ class AMapView(
 
     private var _uiSettings: UiSettings = _aMap.uiSettings
 
+    private var _locationStyle = MyLocationStyle()
+
     /**
      * 初始化后是否自动定位
      */
@@ -174,12 +176,12 @@ class AMapView(
         setMinZoomLevel(_minZoomLevel)
         _aMap.moveCamera(CameraUpdateFactory.zoomTo(_initialZoomLevel.toFloat()))
 
-        val locationStyle = MyLocationStyle().apply {
-            myLocationType(getLocationType(_locationType))
-            interval(_locationInterval.toLong())
-            showMyLocation(true)
+        _locationStyle.let {
+            it.myLocationType(handleLocationType(_locationType))
+            it.interval(_locationInterval.toLong())
+            it.showMyLocation(true)
         }
-        _aMap.myLocationStyle = locationStyle
+        _aMap.myLocationStyle = _locationStyle
 
         if (_autoLocateAfterInit) {
             _aMap.isMyLocationEnabled = true
@@ -191,9 +193,9 @@ class AMapView(
         turnOnBuildings(_showBuildings)
         turnOnMapText(_showMapText)
         showZoomControl(_showZoomControl)
-        _uiSettings.isCompassEnabled = _showCompass
-        _uiSettings.isMyLocationButtonEnabled = _showLocationButton
-        _uiSettings.isScaleControlsEnabled = _showScaleControl
+        turnOnCompass(_showCompass)
+        turnOnLocationButton(_showLocationButton)
+        turnOnScaleControl(_showScaleControl)
         showIndoorMap(_showIndoorMap)
         _uiSettings.isGestureScaleByMapCenter = _isGestureScaleByMapCenter
         enableAllGesture(_allGestureEnable)
@@ -206,11 +208,11 @@ class AMapView(
     }
 
     /**
-     * 获取定位类型常量
+     * 处理定位类型常量
      *
      * @param type 定位类型名称
      */
-    private fun getLocationType(type: String): Int {
+    private fun handleLocationType(type: String): Int {
         return when (type) {
             "SHOW" -> MyLocationStyle.LOCATION_TYPE_SHOW
             "LOCATE" -> MyLocationStyle.LOCATION_TYPE_LOCATE
@@ -230,7 +232,7 @@ class AMapView(
      * @param show 是否显示
      */
     private fun showZoomControl(show: Boolean) {
-        _uiSettings.isZoomControlsEnabled = show
+        turnOnZoomControl(show)
 
         if (show) {
             setZoomPosition(_zoomPosition)
@@ -462,6 +464,115 @@ class AMapView(
      */
     fun setMapLanguage(language: String) {
         _aMap.setMapLanguage(if (language == "CHINESE") AMap.CHINESE else AMap.ENGLISH)
+    }
+
+    /**
+     * 设置定位类型
+     *
+     * @param type 定位类型
+     */
+    fun setLocationType(type: String) {
+        _locationStyle.myLocationType(handleLocationType(type))
+        _aMap.myLocationStyle = _locationStyle
+    }
+
+    /**
+     * 获取定位类型
+     */
+    fun getLocationType(@NonNull result: MethodChannel.Result) {
+        val typeString = when (_locationStyle.myLocationType) {
+            0 -> "SHOW"
+            1 -> "LOCATE"
+            2 -> "FOLLOW"
+            3 -> "MAP_ROTATE"
+            4 -> "LOCATION_ROTATE"
+            5 -> "LOCATION_ROTATE_NO_CENTER"
+            6 -> "FOLLOW_NO_CENTER"
+            7 -> "MAP_ROTATE_NO_CENTER"
+            else -> "show"
+        }
+        result.success(typeString)
+    }
+
+    /**
+     * 设置定位间隔
+     *
+     * @param interval 定位间隔，单位毫秒
+     */
+    fun setLocationInterval(interval: Int) {
+        _locationStyle.interval(interval.toLong())
+        _aMap.myLocationStyle = _locationStyle
+    }
+
+    /**
+     * 获取定位间隔
+     */
+    fun getLocationInterval(@NonNull result: MethodChannel.Result) {
+        result.success(_locationStyle.interval)
+    }
+
+    /**
+     * 设置是否显示缩放按钮
+     *
+     * @param on 是否显示
+     */
+    fun turnOnZoomControl(on: Boolean) {
+        _uiSettings.isZoomControlsEnabled = on
+    }
+
+    /**
+     * 缩放按钮是否显示
+     */
+    fun isZoomControlOn(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isZoomControlsEnabled)
+    }
+
+    /**
+     * 设置是否显示指南针
+     *
+     * @param on 是否显示
+     */
+    fun turnOnCompass(on: Boolean) {
+        _uiSettings.isCompassEnabled = on
+    }
+
+    /**
+     * 指南针是否显示
+     */
+    fun isCompassOn(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isCompassEnabled)
+    }
+
+    /**
+     * 设置是否显示定位按钮
+     *
+     * @param on 是否显示
+     */
+    fun turnOnLocationButton(on: Boolean) {
+        _uiSettings.isMyLocationButtonEnabled = on
+    }
+
+    /**
+     * 定位按钮是否显示
+     */
+    fun isLocationButtonOn(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isMyLocationButtonEnabled)
+    }
+
+    /**
+     * 设置是否显示比例尺控件
+     *
+     * @param on 是否显示
+     */
+    fun turnOnScaleControl(on: Boolean) {
+        _uiSettings.isScaleControlsEnabled = on
+    }
+
+    /**
+     * 比例尺控件是否显示
+     */
+    fun isScaleControlOn(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isScaleControlsEnabled)
     }
 
     override fun getView(): View {

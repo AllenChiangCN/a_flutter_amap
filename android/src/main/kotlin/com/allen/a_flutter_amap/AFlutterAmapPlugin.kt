@@ -48,6 +48,18 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "isBuildingsOn" -> _aMapViewFactory.aMapView.isBuildingsOn(result)
             "turnOnMapText" -> _aMapViewFactory.aMapView.turnOnMapText(call.arguments as Boolean)
             "setMapLanguage" -> _aMapViewFactory.aMapView.setMapLanguage(call.arguments as String)
+            "setLocationType" -> _aMapViewFactory.aMapView.setLocationType(call.arguments<String>())
+            "getLocationType" -> _aMapViewFactory.aMapView.getLocationType(result)
+            "setLocationInterval" -> _aMapViewFactory.aMapView.setLocationInterval(call.arguments<Int>())
+            "getLocationInterval" -> _aMapViewFactory.aMapView.getLocationInterval(result)
+            "turnOnZoomControl" -> _aMapViewFactory.aMapView.turnOnZoomControl(call.arguments<Boolean>())
+            "isZoomControlOn" -> _aMapViewFactory.aMapView.isZoomControlOn(result)
+            "turnOnCompass" -> _aMapViewFactory.aMapView.turnOnCompass(call.arguments<Boolean>())
+            "isCompassOn" -> _aMapViewFactory.aMapView.isCompassOn(result)
+            "turnOnLocationButton" -> _aMapViewFactory.aMapView.turnOnLocationButton(call.arguments<Boolean>())
+            "isLocationButtonOn" -> _aMapViewFactory.aMapView.isLocationButtonOn(result)
+            "turnOnScaleControl" -> _aMapViewFactory.aMapView.turnOnScaleControl(call.arguments<Boolean>())
+            "isScaleControlOn" -> _aMapViewFactory.aMapView.isScaleControlOn(result)
             else -> result.notImplemented()
         }
     }

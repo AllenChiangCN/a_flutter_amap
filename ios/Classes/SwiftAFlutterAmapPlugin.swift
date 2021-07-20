@@ -46,6 +46,14 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapLanguage(call.arguments as! String)
         case "getMapLanguage":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getMapLanguage(result)
+        case "turnOnCompass":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnCompass((call.arguments as! NSNumber).boolValue)
+        case "isCompassOn":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isCompassOn(result)
+        case "turnOnScaleControl":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnScaleControl((call.arguments as! NSNumber).boolValue)
+        case "isScaleControlOn":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isScaleControlOn(result)
         default:
             result(FlutterMethodNotImplemented)
         }

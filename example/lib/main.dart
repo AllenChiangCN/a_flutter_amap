@@ -34,26 +34,22 @@ class _MyAppState extends State<MyApp> {
               alignment: Alignment.bottomRight,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapLanguage(MapLanguage.CHINESE);
+                    onPressed: () async {
+                      AFlutterAmap.turnOnScaleControl(
+                        !await AFlutterAmap.isScaleControlOn(),
+                      );
                     },
-                    child: Text('中文'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapLanguage(MapLanguage.ENGLISH);
-                    },
-                    child: Text('英文'),
+                    child: Text('开/关'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      MapLanguage language =
-                          await AFlutterAmap.getMapLanguage();
-                      debugPrint('语言: ${language.name}');
+                      bool on = await AFlutterAmap.isScaleControlOn();
+                      debugPrint('status: ${on ? 'on' : 'off'}');
                     },
-                    child: Text('语言'),
+                    child: Text('status'),
                   ),
                 ],
               ),

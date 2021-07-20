@@ -150,7 +150,7 @@ class AMapView: NSObject, FlutterPlatformView {
         setMapLanguage(_mapLanguage)
         turnOnTraffic(_showTraffic)
         turnOnBuildings(_showBuildings)
-        _mAMapView.showsCompass = _showCompass
+        turnOnCompass(_showCompass)
         _mAMapView.showsScale = _showScaleControl
         _mAMapView.isShowsIndoorMap = _showIndoorMap
         if _showIndoorMap {
@@ -187,7 +187,7 @@ class AMapView: NSObject, FlutterPlatformView {
         }
     }
 
-    // MARK: - 暴露方法
+    // MARK: - 插件暴露方法
 
     /// 设置当前缩放等级
     ///
@@ -302,6 +302,30 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 获取底图语言
     func getMapLanguage(_ result: FlutterResult) {
         result(_mapLanguage)
+    }
+
+    /// 打开/关闭指南针
+    ///
+    /// - Parameter on: 打开/关闭
+    func turnOnCompass(_ on: Bool) {
+        _mAMapView.showsCompass = on
+    }
+
+    /// 指南针是否打开
+    func isCompassOn(_ result: FlutterResult) {
+        result(_mAMapView.showsCompass)
+    }
+
+    /// 打开/关闭比例尺控件
+    ///
+    /// - Parameter on: 打开/关闭
+    func turnOnScaleControl(_ on: Bool) {
+        _mAMapView.showsScale = on
+    }
+
+    /// 比例尺控件是否打开
+    func isScaleControlOn(_ result: FlutterResult) {
+        result(_mAMapView.showsScale)
     }
 }
 
