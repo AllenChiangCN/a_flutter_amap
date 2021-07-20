@@ -54,6 +54,32 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnScaleControl((call.arguments as! NSNumber).boolValue)
         case "isScaleControlOn":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.isScaleControlOn(result)
+        case "enableZoomGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableZoomGesture((call.arguments as! NSNumber).boolValue)
+        case "isZoomGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isZoomGestureEnable(result)
+        case "enableRotateGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableRotateGesture((call.arguments as! NSNumber).boolValue)
+        case "isRotateGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isRotateGestureEnable(result)
+        case "enableScrollGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableScrollGesture((call.arguments as! NSNumber).boolValue)
+        case "isScrollGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isScrollGestureEnable(result)
+        case "enableTiltGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableTiltGesture((call.arguments as! NSNumber).boolValue)
+        case "isTiltGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isTiltGestureEnable(result)
+        case "setLogoMargin":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setLogoMargin(call.arguments as! Dictionary<String, Int>)
+        case "setCompassMargin":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setCompassMargin(call.arguments as! Dictionary<String, Int>)
+        case "setScaleMargin":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setScaleMargin(call.arguments as! Dictionary<String, Int>)
+        case "setIsGestureScaleByMapCenterPosition":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setIsGestureScaleByMapCenterPosition((call.arguments as! NSNumber).boolValue)
+        case "getIsGestureScaleByMapCenterPosition":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.getIsGestureScaleByMapCenterPosition(result)
         default:
             result(FlutterMethodNotImplemented)
         }

@@ -13,6 +13,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool flag = false;
+
+  void refreshFlag() async {
+    flag = await AFlutterAmap.getIsGestureScaleByMapCenterPosition();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +35,11 @@ class _MyAppState extends State<MyApp> {
               showCompass: true,
               showLocationButton: true,
               showScaleControl: true,
-              showZoomControl: false,
+              showZoomControl: true,
+              logoMargin: LogoMargin(
+                marginLeft: 40,
+                marginBottom: 40,
+              ),
             ),
             Align(
               alignment: Alignment.bottomRight,
@@ -36,20 +47,18 @@ class _MyAppState extends State<MyApp> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  Text('flag: $flag'),
                   ElevatedButton(
-                    onPressed: () async {
-                      AFlutterAmap.turnOnScaleControl(
-                        !await AFlutterAmap.isScaleControlOn(),
-                      );
+                    onPressed: () {
+                      refreshFlag();
                     },
-                    child: Text('开/关'),
+                    child: Text('Refresh Flag'),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      bool on = await AFlutterAmap.isScaleControlOn();
-                      debugPrint('status: ${on ? 'on' : 'off'}');
+                    onPressed: () {
+                      AFlutterAmap.setIsGestureScaleByMapCenterPosition(!flag);
                     },
-                    child: Text('status'),
+                    child: Text('Toggle Flag'),
                   ),
                 ],
               ),

@@ -13,15 +13,12 @@ import io.flutter.plugin.platform.PlatformView
 
 class AMapView(
     context: Context,
-    val activity: FlutterActivity,
+    private val activity: FlutterActivity,
     id: Int,
     creationParams: Map<String, Any?>
 ) :
     PlatformView,
     DefaultLifecycleObserver {
-    companion object {
-        const val PERMISSION_REQUEST_CODE = 0x00000001
-    }
 
     private var _mapView: MapView = MapView(context)
 
@@ -149,8 +146,8 @@ class AMapView(
      *
      * marginBottom: 下边距
      */
-    private var _logoMargin: HashMap<String, Any>? =
-        creationParams["logoMargin"] as HashMap<String, Any>?
+    private var _logoMargin: HashMap<String, Int>? =
+        creationParams["logoMargin"] as HashMap<String, Int>?
 
     /**
      * 初始缩放等级，默认[3,19]，有室内地图时[3,20]
@@ -200,8 +197,8 @@ class AMapView(
         _uiSettings.isGestureScaleByMapCenter = _isGestureScaleByMapCenter
         enableAllGesture(_allGestureEnable)
         if (_logoMargin != null) {
-            _uiSettings.setLogoLeftMargin((_logoMargin!!["marginLeft"] as Double).toInt())
-            _uiSettings.setLogoBottomMargin((_logoMargin!!["marginBottom"] as Double).toInt())
+            _uiSettings.setLogoLeftMargin(_logoMargin!!["marginLeft"] ?: 0)
+            _uiSettings.setLogoBottomMargin(_logoMargin!!["marginBottom"] ?: 0)
         } else {
             setLogoPosition(_logoPosition)
         }
@@ -274,63 +271,6 @@ class AMapView(
                 enableScrollGesture(_scrollGestureEnable)
                 enableTiltGesture(_tiltGestureEnable)
             }
-        }
-    }
-
-    /**
-     * 缩放手势是否可用
-     */
-    private fun enableZoomGesture(enable: Boolean) {
-        _uiSettings.isZoomGesturesEnabled = enable
-    }
-
-    /**
-     * 旋转手势是否可用
-     */
-    private fun enableRotateGesture(enable: Boolean) {
-        _uiSettings.isRotateGesturesEnabled = enable
-    }
-
-    /**
-     * 拖拽手势是否可用
-     */
-    private fun enableScrollGesture(enable: Boolean) {
-        _uiSettings.isScrollGesturesEnabled = enable
-    }
-
-    /**
-     * 倾斜手势是否可用
-     */
-    private fun enableTiltGesture(enable: Boolean) {
-        _uiSettings.isTiltGesturesEnabled = enable
-    }
-
-    /**
-     * 设置缩放控件位置
-     */
-    private fun setZoomPosition(position: String) {
-        when (position) {
-            "RIGHT_BOTTOM" ->
-                _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
-            "RIGHT_CENTER" ->
-                _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_CENTER
-            else -> _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
-        }
-    }
-
-    /**
-     * 设置Logo位置
-     */
-    private fun setLogoPosition(position: String) {
-        when (position) {
-            "BOTTOM_LEFT" ->
-                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_LEFT
-            "BOTTOM_RIGHT" ->
-                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_RIGHT
-            "BOTTOM_CENTER" ->
-                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_CENTER
-            else ->
-                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_LEFT
         }
     }
 
@@ -573,6 +513,169 @@ class AMapView(
      */
     fun isScaleControlOn(@NonNull result: MethodChannel.Result) {
         result.success(_uiSettings.isScaleControlsEnabled)
+    }
+
+    /**
+     * 设置是否启用所有手势
+     *
+     * @param on 是否启用
+     */
+    fun enableAllGesture(on: Boolean) {
+        _uiSettings.setAllGesturesEnabled(on)
+    }
+
+    /**
+     * 所有手势是否启用
+     */
+    fun isAllGestureEnable(@NonNull result: MethodChannel.Result) {
+        result.success(
+            _uiSettings.isZoomGesturesEnabled &&
+                    _uiSettings.isRotateGesturesEnabled &&
+                    _uiSettings.isScrollGesturesEnabled &&
+                    _uiSettings.isTiltGesturesEnabled
+        )
+    }
+
+    /**
+     * 设置是否启用缩放手势
+     *
+     * @param on 是否启用
+     */
+    fun enableZoomGesture(on: Boolean) {
+        _uiSettings.isZoomGesturesEnabled = on
+    }
+
+    /**
+     * 缩放手势是否启用
+     */
+    fun isZoomGestureEnable(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isZoomGesturesEnabled)
+    }
+
+    /**
+     * 设置是否启用旋转手势
+     *
+     * @param on 是否启用
+     */
+    fun enableRotateGesture(on: Boolean) {
+        _uiSettings.isRotateGesturesEnabled = on
+    }
+
+    /**
+     * 旋转手势是否启用
+     */
+    fun isRotateGestureEnable(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isRotateGesturesEnabled)
+    }
+
+    /**
+     * 设置是否启用拖拽手势
+     *
+     * @param on 是否启用
+     */
+    fun enableScrollGesture(on: Boolean) {
+        _uiSettings.isScrollGesturesEnabled = on
+    }
+
+    /**
+     * 拖拽手势是否启用
+     */
+    fun isScrollGestureEnable(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isScrollGesturesEnabled)
+    }
+
+    /**
+     * 设置是否启用倾斜手势
+     *
+     * @param on 是否启用
+     */
+    fun enableTiltGesture(on: Boolean) {
+        _uiSettings.isTiltGesturesEnabled = on
+    }
+
+    /**
+     * 倾斜手势是否启用
+     */
+    fun isTiltGestureEnable(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isTiltGesturesEnabled)
+    }
+
+    /**
+     * 设置Logo位置
+     */
+    fun setLogoPosition(position: String) {
+        when (position) {
+            "BOTTOM_LEFT" ->
+                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_LEFT
+            "BOTTOM_RIGHT" ->
+                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_RIGHT
+            "BOTTOM_CENTER" ->
+                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_CENTER
+            else ->
+                _uiSettings.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_LEFT
+        }
+    }
+
+    /**
+     * 获取Logo位置
+     */
+    fun getLogoPosition(@NonNull result: MethodChannel.Result) {
+        val logoPosition = when (_uiSettings.logoPosition) {
+            0 -> "BOTTOM_LEFT"
+            1 -> "BOTTOM_CENTER"
+            2 -> "BOTTOM_RIGHT"
+            else -> "BOTTOM_LEFT"
+        }
+        result.success(logoPosition)
+    }
+
+    /**
+     * 设置Logo边距
+     */
+    fun setLogoMargin(margin: HashMap<String, Int>) {
+        _uiSettings.setLogoLeftMargin(margin["marginLeft"] ?: 0)
+        _uiSettings.setLogoBottomMargin(margin["marginBottom"] ?: 0)
+    }
+
+    /**
+     * 设置缩放按钮位置
+     */
+    fun setZoomPosition(position: String) {
+        when (position) {
+            "RIGHT_BOTTOM" ->
+                _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
+            "RIGHT_CENTER" ->
+                _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_CENTER
+            else -> _uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
+        }
+    }
+
+    /**
+     * 获取缩放按钮位置
+     */
+    fun getZoomPosition(@NonNull result: MethodChannel.Result) {
+        val zoomPosition = when (_uiSettings.zoomPosition) {
+            1 -> "RIGHT_CENTER"
+            2 -> "RIGHT_BOTTOM"
+            else -> "RIGHT_BOTTOM"
+        }
+        result.success(zoomPosition)
+    }
+
+    /**
+     * 设置是否以地图中心点缩放
+     *
+     * @param flag 是否以地图中心点缩放
+     */
+    fun setIsGestureScaleByMapCenterPosition(flag: Boolean) {
+        _uiSettings.isGestureScaleByMapCenter = flag
+    }
+
+    /**
+     * 获取是否以地图中心点缩放
+     */
+    fun getIsGestureScaleByMapCenterPosition(@NonNull result: MethodChannel.Result) {
+        result.success(_uiSettings.isGestureScaleByMapCenter)
     }
 
     override fun getView(): View {

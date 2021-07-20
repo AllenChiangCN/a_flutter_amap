@@ -76,12 +76,12 @@ class AMapView extends StatelessWidget {
 
   /// 是否显示底图文字标注
   ///
-  /// 只针对Android
+  /// * 只针对Android
   final bool showMapText;
 
   /// 是否显示缩放控件
   ///
-  /// 只针对Android
+  /// * 只针对Android
   final bool showZoomControl;
 
   /// 是否显示指南针
@@ -89,7 +89,7 @@ class AMapView extends StatelessWidget {
 
   /// 是否显示定位按钮
   ///
-  /// 只针对Android
+  /// * 只针对Android
   final bool showLocationButton;
 
   /// 是否显示比例尺控件
@@ -123,12 +123,12 @@ class AMapView extends StatelessWidget {
 
   /// 缩放控件位置
   ///
-  /// 只针对Android
+  /// * 只针对Android
   final ZoomPosition zoomPosition;
 
   /// Logo位置
   ///
-  /// 只针对Android
+  /// * 只针对Android
   final LogoPosition logoPosition;
 
   /// Logo相对左下角边距，同时会影响比例尺控件的位置
@@ -138,12 +138,12 @@ class AMapView extends StatelessWidget {
 
   /// 指南针相对右上角边距
   ///
-  /// 只针对iOS
+  /// * 只针对iOS
   final CompassMargin? compassMargin;
 
   /// 比例尺相对左下角边距
   ///
-  /// 只针对iOS
+  /// * 只针对iOS
   final ScaleMargin? scaleMargin;
 
   /// 初始缩放等级

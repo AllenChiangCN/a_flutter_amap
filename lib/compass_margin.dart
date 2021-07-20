@@ -8,18 +8,18 @@ class CompassMargin {
   ///
   /// [marginTop] 上边距
   CompassMargin({
-    this.marginRight = 0.0,
-    this.marginTop = 0.0,
+    this.marginRight = 0,
+    this.marginTop = 0,
   });
 
   CompassMargin.fromJson(Map<String, dynamic> json) {
-    marginRight = double.tryParse(json["marginRight"].toString()) ?? 0;
-    marginTop = double.tryParse(json["marginTop"].toString()) ?? 0;
+    marginRight = int.tryParse(json["marginRight"].toString()) ?? 0;
+    marginTop = int.tryParse(json["marginTop"].toString()) ?? 0;
   }
 
-  double marginRight = 0.0;
+  int marginRight = 0;
 
-  double marginTop = 0.0;
+  int marginTop = 0;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

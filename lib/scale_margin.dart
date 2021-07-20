@@ -8,18 +8,18 @@ class ScaleMargin {
   ///
   /// [marginBottom] 下边距
   ScaleMargin({
-    this.marginLeft = 0.0,
-    this.marginBottom = 0.0,
+    this.marginLeft = 0,
+    this.marginBottom = 0,
   });
 
   ScaleMargin.fromJson(Map<String, dynamic> json) {
-    marginLeft = double.tryParse(json["marginLeft"].toString()) ?? 0;
-    marginBottom = double.tryParse(json["marginBottom"].toString()) ?? 0;
+    marginLeft = int.tryParse(json["marginLeft"].toString()) ?? 0;
+    marginBottom = int.tryParse(json["marginBottom"].toString()) ?? 0;
   }
 
-  double marginLeft = 0.0;
+  int marginLeft = 0;
 
-  double marginBottom = 0.0;
+  int marginBottom = 0;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

@@ -1,6 +1,11 @@
 import 'dart:async';
 
+import 'package:a_flutter_amap/compass_margin.dart';
+import 'package:a_flutter_amap/logo_margin.dart';
+import 'package:a_flutter_amap/logo_position.dart';
 import 'package:a_flutter_amap/map_type.dart';
+import 'package:a_flutter_amap/scale_margin.dart';
+import 'package:a_flutter_amap/zoom_position.dart';
 import 'package:flutter/services.dart';
 
 import 'location_type.dart';
@@ -108,7 +113,7 @@ class AFlutterAmap {
 
   /// 楼块是否打开
   ///
-  /// 只针对iOS
+  /// * 只针对iOS
   static Future<bool> isBuildingsOn() async {
     return await _channel.invokeMethod('isBuildingsOn');
   }
@@ -117,7 +122,7 @@ class AFlutterAmap {
   ///
   /// [on] - 打开/关闭楼块
   ///
-  /// 只针对Android
+  /// * 只针对Android
   static Future<void> turnOnMapText(bool on) async {
     await _channel.invokeMethod('turnOnMapText', on);
   }
@@ -131,7 +136,7 @@ class AFlutterAmap {
 
   /// 获取底图语言
   ///
-  /// 只针对iOS
+  /// * 只针对iOS
   static Future<MapLanguage> getMapLanguage() async {
     String languageString = await _channel.invokeMethod('getMapLanguage');
     switch (languageString) {
@@ -191,11 +196,15 @@ class AFlutterAmap {
   /// 设置是否显示缩放按钮
   ///
   /// [on] - 是否显示
+  ///
+  /// * 只针对Android
   static Future<void> turnOnZoomControl(bool on) async {
     await _channel.invokeMethod('turnOnZoomControl', on);
   }
 
   /// 缩放按钮是否显示
+  ///
+  /// * 只针对Android
   static Future<bool> isZoomControlOn() async {
     return await _channel.invokeMethod('isZoomControlOn');
   }
@@ -215,11 +224,15 @@ class AFlutterAmap {
   /// 设置是否显示定位按钮
   ///
   /// [on] - 是否显示
+  ///
+  /// * 只针对Android
   static Future<void> turnOnLocationButton(bool on) async {
     await _channel.invokeMethod('turnOnLocationButton', on);
   }
 
   /// 定位按钮是否显示
+  ///
+  /// * 只针对Android
   static Future<bool> isLocationButtonOn() async {
     return await _channel.invokeMethod('isLocationButtonOn');
   }
@@ -234,5 +247,158 @@ class AFlutterAmap {
   /// 比例尺控件是否显示
   static Future<bool> isScaleControlOn() async {
     return await _channel.invokeMethod('isScaleControlOn');
+  }
+
+  /// 设置是否启用所有手势
+  ///
+  /// [on] - 是否启用
+  ///
+  /// * 只针对Android
+  static Future<void> enableAllGesture(bool enable) async {
+    await _channel.invokeMethod('enableAllGesture', enable);
+  }
+
+  /// 所有手势是否启用
+  ///
+  /// * 只针对Android
+  static Future<bool> isAllGestureEnable() async {
+    return await _channel.invokeMethod('isAllGestureEnable');
+  }
+
+  /// 设置是否启用缩放手势
+  ///
+  /// [on] - 是否启用
+  static Future<void> enableZoomGesture(bool enable) async {
+    await _channel.invokeMethod('enableZoomGesture', enable);
+  }
+
+  /// 缩放手势是否启用
+  static Future<bool> isZoomGestureEnable() async {
+    return await _channel.invokeMethod('isZoomGestureEnable');
+  }
+
+  /// 设置是否启用旋转手势
+  ///
+  /// [on] - 是否启用
+  static Future<void> enableRotateGesture(bool enable) async {
+    await _channel.invokeMethod('enableRotateGesture', enable);
+  }
+
+  /// 旋转手势是否启用
+  static Future<bool> isRotateGestureEnable() async {
+    return await _channel.invokeMethod('isRotateGestureEnable');
+  }
+
+  /// 设置是否启用拖拽手势
+  ///
+  /// [on] - 是否启用
+  static Future<void> enableScrollGesture(bool enable) async {
+    await _channel.invokeMethod('enableScrollGesture', enable);
+  }
+
+  /// 拖拽手势是否启用
+  static Future<bool> isScrollGestureEnable() async {
+    return await _channel.invokeMethod('isScrollGestureEnable');
+  }
+
+  /// 设置是否启用倾斜手势
+  ///
+  /// [on] - 是否启用
+  static Future<void> enableTiltGesture(bool enable) async {
+    await _channel.invokeMethod('enableTiltGesture', enable);
+  }
+
+  /// 倾斜手势是否启用
+  static Future<bool> isTiltGestureEnable() async {
+    return await _channel.invokeMethod('isTiltGestureEnable');
+  }
+
+  /// 设置Logo位置
+  ///
+  /// [logoPosition] - Logo位置
+  ///
+  /// * 只针对Android
+  static Future<void> setLogoPosition(LogoPosition logoPosition) async {
+    await _channel.invokeMethod('setLogoPosition', logoPosition.name);
+  }
+
+  /// 获取Logo位置
+  ///
+  /// * 只针对Android
+  static Future<LogoPosition> getLogoPosition() async {
+    String logoPosition = await _channel.invokeMethod('getLogoPosition');
+    switch (logoPosition) {
+      case "BOTTOM_LEFT":
+        return LogoPosition.BOTTOM_LEFT;
+      case "BOTTOM_CENTER":
+        return LogoPosition.BOTTOM_CENTER;
+      case "BOTTOM_RIGHT":
+        return LogoPosition.BOTTOM_RIGHT;
+      default:
+        return LogoPosition.BOTTOM_LEFT;
+    }
+  }
+
+  /// 设置Logo左下边距
+  ///
+  /// [logoMargin] - 左下边距
+  ///
+  /// * iOS上为递增效果
+  static Future<void> setLogoMargin(LogoMargin logoMargin) async {
+    await _channel.invokeMethod('setLogoMargin', logoMargin.toJson());
+  }
+
+  /// 设置缩放按钮位置
+  ///
+  /// [zoomPosiiton] - 缩放按钮位置
+  ///
+  /// * 只针对Android
+  static Future<void> setZoomPosition(ZoomPosition zoomPosition) async {
+    await _channel.invokeMethod('setZoomPosition', zoomPosition.name);
+  }
+
+  /// 获取缩放按钮位置
+  ///
+  /// * 只针对Android
+  static Future<ZoomPosition> getZoomPosition() async {
+    String zoomPosition = await _channel.invokeMethod('getZoomPosition');
+    switch (zoomPosition) {
+      case "RIGHT_BOTTOM":
+        return ZoomPosition.RIGHT_BOTTOM;
+      case "RIGHT_CENTER":
+        return ZoomPosition.RIGHT_CENTER;
+      default:
+        return ZoomPosition.RIGHT_BOTTOM;
+    }
+  }
+
+  /// 设置指南针右上边距(递增效果)
+  ///
+  /// [margin] - 右上边距
+  ///
+  /// * 只针对iOS
+  static Future<void> setCompassMargin(CompassMargin margin) async {
+    await _channel.invokeMethod('setCompassMargin', margin.toJson());
+  }
+
+  /// 设置比例尺左下边距(递增效果)
+  ///
+  /// [margin] - 左下边距
+  ///
+  /// * 只针对iOS
+  static Future<void> setScaleMargin(ScaleMargin margin) async {
+    await _channel.invokeMethod('setScaleMargin', margin.toJson());
+  }
+
+  /// 设置是否以地图中心点缩放
+  ///
+  /// [flag] - 是否以地图中心点缩放
+  static Future<void> setIsGestureScaleByMapCenterPosition(bool flag) async {
+    await _channel.invokeMethod('setIsGestureScaleByMapCenterPosition', flag);
+  }
+
+  /// 获取是否以地图中心点缩放
+  static Future<bool> getIsGestureScaleByMapCenterPosition() async {
+    return await _channel.invokeMethod('getIsGestureScaleByMapCenterPosition');
   }
 }
