@@ -47,6 +47,8 @@ class AMapView extends StatelessWidget {
     this.minZoomLevel = 3.0,
     this.customMapStyleId,
     this.defaultCameraPosition,
+    this.androidBound,
+    this.iOSBound,
   })  : assert(
             initialZoomLevel >= minZoomLevel &&
                 initialZoomLevel <= maxZoomLevel,
@@ -171,6 +173,16 @@ class AMapView extends StatelessWidget {
   /// 视觉位置，用于设置默认显示区域
   final CameraPosition? defaultCameraPosition;
 
+  /// Android显示范围，西南角和东北角
+  ///
+  /// * 只针对Android
+  final List<LatLng>? androidBound;
+
+  /// iOS显示范围，西南角和东北角，经纬度变化比例
+  ///
+  /// * 只针对iOS
+  final IosBound? iOSBound;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> creationParams = <String, dynamic>{
@@ -204,6 +216,8 @@ class AMapView extends StatelessWidget {
       'minZoomLevel': minZoomLevel,
       'customMapStyleId': customMapStyleId,
       'defaultCameraPosition': defaultCameraPosition?.toJson(),
+      'androidBound': androidBound?.map((e) => e.toJson()).toList(),
+      'iOSBound': iOSBound?.toJson(),
     };
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

@@ -240,7 +240,7 @@ class AMapViewController {
 
   /// 设置是否启用所有手势
   ///
-  /// [on] - 是否启用
+  /// [enable] - 是否启用
   ///
   /// * 只针对Android
   Future<void> enableAllGesture(bool enable) async {
@@ -256,7 +256,7 @@ class AMapViewController {
 
   /// 设置是否启用缩放手势
   ///
-  /// [on] - 是否启用
+  /// [enable] - 是否启用
   Future<void> enableZoomGesture(bool enable) async {
     await _channel.invokeMethod('enableZoomGesture', enable);
   }
@@ -268,7 +268,7 @@ class AMapViewController {
 
   /// 设置是否启用旋转手势
   ///
-  /// [on] - 是否启用
+  /// [enable] - 是否启用
   Future<void> enableRotateGesture(bool enable) async {
     await _channel.invokeMethod('enableRotateGesture', enable);
   }
@@ -280,7 +280,7 @@ class AMapViewController {
 
   /// 设置是否启用拖拽手势
   ///
-  /// [on] - 是否启用
+  /// [enable] - 是否启用
   Future<void> enableScrollGesture(bool enable) async {
     await _channel.invokeMethod('enableScrollGesture', enable);
   }
@@ -292,7 +292,7 @@ class AMapViewController {
 
   /// 设置是否启用倾斜手势
   ///
-  /// [on] - 是否启用
+  /// [enable] - 是否启用
   Future<void> enableTiltGesture(bool enable) async {
     await _channel.invokeMethod('enableTiltGesture', enable);
   }
@@ -339,7 +339,7 @@ class AMapViewController {
 
   /// 设置缩放按钮位置
   ///
-  /// [zoomPosiiton] - 缩放按钮位置
+  /// [zoomPosition] - 缩放按钮位置
   ///
   /// * 只针对Android
   Future<void> setZoomPosition(ZoomPosition zoomPosition) async {
@@ -416,6 +416,30 @@ class AMapViewController {
     return LatLng(
       latitude: latLngMap['latitude'] as double,
       longitude: latLngMap['longitude'] as double,
+    );
+  }
+
+  /// 设置地图显示范围
+  ///
+  /// [bound] - 西南角和东北角
+  ///
+  /// * 只针对Android
+  Future<void> setAndroidBound(List<LatLng> bound) async {
+    await _channel.invokeMethod(
+      'setBound',
+      bound.map((e) => e.toJson()).toList(),
+    );
+  }
+
+  /// 设置地图显示范围
+  ///
+  /// [bound] - 西南角和东北角
+  ///
+  /// * 只针对iOS
+  Future<void> setIOSBound(IosBound bound) async {
+    await _channel.invokeMethod(
+      'setBound',
+      bound.toJson(),
     );
   }
 }

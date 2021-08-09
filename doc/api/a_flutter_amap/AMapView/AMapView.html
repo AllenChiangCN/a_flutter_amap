@@ -68,6 +68,7 @@
       <a href="../../a_flutter_amap/AMapView-class.html#instance-properties">Properties</a>
     </li>
     <li><a href="../../a_flutter_amap/AMapView/allGestureEnable.html">allGestureEnable</a></li>
+    <li><a href="../../a_flutter_amap/AMapView/androidBound.html">androidBound</a></li>
     <li><a href="../../a_flutter_amap/AMapView/autoLocateAfterInit.html">autoLocateAfterInit</a></li>
     <li><a href="../../a_flutter_amap/AMapView/compassMargin.html">compassMargin</a></li>
     <li><a href="../../a_flutter_amap/AMapView/controller.html">controller</a></li>
@@ -75,6 +76,7 @@
     <li><a href="../../a_flutter_amap/AMapView/defaultCameraPosition.html">defaultCameraPosition</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
     <li><a href="../../a_flutter_amap/AMapView/initialZoomLevel.html">initialZoomLevel</a></li>
+    <li><a href="../../a_flutter_amap/AMapView/iOSBound.html">iOSBound</a></li>
     <li><a href="../../a_flutter_amap/AMapView/isGestureScaleByMapCenter.html">isGestureScaleByMapCenter</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
     <li><a href="../../a_flutter_amap/AMapView/locationInterval.html">locationInterval</a></li>
@@ -163,7 +165,9 @@
 <li><span class="parameter" id="-param-maxZoomLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">maxZoomLevel</span> = <span class="default-value">20.0</span>, </span></li>
 <li><span class="parameter" id="-param-minZoomLevel"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minZoomLevel</span> = <span class="default-value">3.0</span>, </span></li>
 <li><span class="parameter" id="-param-customMapStyleId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">customMapStyleId</span>, </span></li>
-<li><span class="parameter" id="-param-defaultCameraPosition"><span class="type-annotation"><a href="../../a_flutter_amap/CameraPosition-class.html">CameraPosition</a>?</span> <span class="parameter-name">defaultCameraPosition</span>}</span></li>
+<li><span class="parameter" id="-param-defaultCameraPosition"><span class="type-annotation"><a href="../../a_flutter_amap/CameraPosition-class.html">CameraPosition</a>?</span> <span class="parameter-name">defaultCameraPosition</span>, </span></li>
+<li><span class="parameter" id="-param-androidBound"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../a_flutter_amap/LatLng-class.html">LatLng</a></span>&gt;</span>?</span> <span class="parameter-name">androidBound</span>, </span></li>
+<li><span class="parameter" id="-param-iOSBound"><span class="type-annotation"><a href="../../a_flutter_amap/IosBound-class.html">IosBound</a>?</span> <span class="parameter-name">iOSBound</span>}</span></li>
 </ol>)
     </section>
 
@@ -206,6 +210,8 @@
   this.minZoomLevel = 3.0,
   this.customMapStyleId,
   this.defaultCameraPosition,
+  this.androidBound,
+  this.iOSBound,
 })  : assert(
           initialZoomLevel &gt;= minZoomLevel &amp;&amp;
               initialZoomLevel &lt;= maxZoomLevel,
@@ -226,7 +232,7 @@
 <footer>
   <span class="no-break">
     a_flutter_amap
-      0.0.5
+      0.0.6
   </span>
 
   

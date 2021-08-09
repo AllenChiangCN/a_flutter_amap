@@ -96,6 +96,9 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 自定义地图样式id
     private var _customMapStyleId: NSString?
 
+    /// 显示范围
+    private var _bound: Dictionary<String, NSObject>?
+
     // MARK: - 方法
 
     init(frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger messenger: FlutterBinaryMessenger?) {
@@ -122,6 +125,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _maxZoomLevel = params["maxZoomLevel"] as! NSNumber
         _minZoomLevel = params["minZoomLevel"] as! NSNumber
         _customMapStyleId = params["customMapStyleId"] as? NSString
+        _bound = params["iOSBound"] as? Dictionary<String, NSObject>
 
         _view.backgroundColor = UIColor.white
         _mAMapView = MAMapView(frame: _view.bounds)
@@ -137,6 +141,9 @@ class AMapView: NSObject, FlutterPlatformView {
     private func createAMapView(view _view: UIView) {
         configAMapView()
         _view.addSubview(_mAMapView)
+        if _bound != nil {
+            setBound(_bound!)
+        }
     }
 
     /// 配置地图组件
@@ -148,7 +155,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _mAMapView.delegate = self
 
         _mAMapView.showsUserLocation = _autoLocateAfterInit
-        if _autoLocateAfterInit {
+        if _autoLocateAfterInit && _bound == nil {
             _mAMapView.setUserTrackingMode(.follow, animated: true)
         }
 
@@ -455,6 +462,21 @@ class AMapView: NSObject, FlutterPlatformView {
             "latitude": _mAMapView.centerCoordinate.latitude,
             "longitude": _mAMapView.centerCoordinate.longitude,
         ])
+    }
+
+    /// 设置地图显示范围
+    ///
+    /// - Parameter bound: 地图显示范围
+    func setBound(_ bound: Dictionary<String, NSObject>) {
+        let latLng = bound["latLng"] as! Dictionary<String, Double>
+        let southWest = CLLocationCoordinate2D(
+            latitude: latLng["latitude"]!,
+            longitude: latLng["longitude"]!
+        )
+        _mAMapView.limitRegion = MACoordinateRegion(center: southWest, span: MACoordinateSpan(
+            latitudeDelta: bound["latitudeDelta"] as! Double,
+            longitudeDelta: bound["longitudeDelta"] as! Double)
+        )
     }
 }
 

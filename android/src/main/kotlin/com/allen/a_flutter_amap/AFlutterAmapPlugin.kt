@@ -90,6 +90,9 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 _aMapViewFactory.aMapView.setMapCenter(latLng)
             }
             "getMapCenter" -> _aMapViewFactory.aMapView.getMapCenter(result)
+            "setBound" -> {
+                _aMapViewFactory.aMapView.setBound(call.arguments<List<HashMap<String, Double>>>())
+            }
             else -> result.notImplemented()
         }
     }

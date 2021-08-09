@@ -6,10 +6,7 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.amap.api.maps.*
-import com.amap.api.maps.model.CameraPosition
-import com.amap.api.maps.model.CustomMapStyleOptions
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MyLocationStyle
+import com.amap.api.maps.model.*
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
@@ -208,6 +205,12 @@ class AMapView(
     private var _defaultCameraPosition: HashMap<String, Any>? =
         creationParams["defaultCameraPosition"] as HashMap<String, Any>?
 
+    /**
+     * 显示范围，西南角和东北角
+     */
+    private var _bound: List<HashMap<String, Double>>? =
+        creationParams["androidBound"] as List<HashMap<String, Double>>?
+
     init {
         activity.lifecycle.addObserver(this)
     }
@@ -215,7 +218,7 @@ class AMapView(
     private fun initAMapView() {
         setMaxZoomLevel(_maxZoomLevel)
         setMinZoomLevel(_minZoomLevel)
-        if (_defaultCameraPosition == null) {
+        if (_defaultCameraPosition == null && _bound == null) {
             _aMap.moveCamera(CameraUpdateFactory.zoomTo(_initialZoomLevel.toFloat()))
         }
 
@@ -226,8 +229,12 @@ class AMapView(
         }
         _aMap.myLocationStyle = _locationStyle
 
-        if (_autoLocateAfterInit && _defaultCameraPosition == null) {
+        if (_autoLocateAfterInit && _defaultCameraPosition == null && _bound == null) {
             _aMap.isMyLocationEnabled = true
+        }
+
+        if (_bound != null) {
+            setBound(_bound!!)
         }
 
         setMapType(_mapType)
@@ -771,6 +778,26 @@ class AMapView(
             "longitude" to target.longitude
         )
         result.success(latLngMap)
+    }
+
+    /**
+     * 设置地图显示范围
+     *
+     * @param bound 西南角、东北角
+     */
+    fun setBound(bound: List<HashMap<String, Double>>) {
+        _aMap.setMapStatusLimits(
+            LatLngBounds(
+                LatLng(
+                    bound[0]["latitude"]!!,
+                    bound[0]["longitude"]!!
+                ),
+                LatLng(
+                    bound[1]["latitude"]!!,
+                    bound[1]["longitude"]!!
+                )
+            )
+        )
     }
 
     override fun getView(): View {

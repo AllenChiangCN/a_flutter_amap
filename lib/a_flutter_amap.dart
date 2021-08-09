@@ -2,6 +2,7 @@ export 'src/amap_view.dart';
 export 'src/amap_view_controller.dart';
 export 'src/camera_position.dart';
 export 'src/compass_margin.dart';
+export 'src/ios_bound.dart';
 export 'src/lat_lng.dart';
 export 'src/location_type.dart';
 export 'src/logo_margin.dart';

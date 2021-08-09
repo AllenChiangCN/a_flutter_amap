@@ -35,6 +35,15 @@ class _MyAppState extends State<MyApp> {
               controller: controller,
               autoLocateAfterInit: false,
               showCompass: true,
+              androidBound: [
+                LatLng(latitude: 39.694, longitude: 116.104917),
+                LatLng(latitude: 40.377269, longitude: 117.031672),
+              ],
+              iOSBound: IosBound(
+                latLng: LatLng(latitude: 29.546073, longitude: 106.539373),
+                latitudeDelta: 1.5,
+                longitudeDelta: 2.5,
+              ),
             ),
             Align(
               alignment: Alignment.bottomRight,
@@ -44,44 +53,27 @@ class _MyAppState extends State<MyApp> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      controller.setMapCenter(
-                        LatLng(latitude: 39.903963, longitude: 116.411161),
-                      );
+                      controller.setAndroidBound([
+                        LatLng(latitude: 29.546073, longitude: 106.539373),
+                        LatLng(latitude: 29.578474, longitude: 106.569929),
+                      ]);
                     },
-                    child: Text('北京'),
+                    child: Text('Android重庆'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      controller.setMapCenter(
-                        LatLng(latitude: 32.07387, longitude: 118.767728),
+                      controller.setIOSBound(
+                        IosBound(
+                          latLng: LatLng(
+                            latitude: 29.546073,
+                            longitude: 106.539373,
+                          ),
+                          latitudeDelta: 1.5,
+                          longitudeDelta: 2.5,
+                        ),
                       );
                     },
-                    child: Text('南京'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.setMapCenter(
-                        LatLng(latitude: 34.334954, longitude: 108.836088),
-                      );
-                    },
-                    child: Text('西安'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.setMapCenter(
-                        LatLng(latitude: 29.526291, longitude: 106.638822),
-                      );
-                    },
-                    child: Text('重庆'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      LatLng center = await controller.getMapCenter();
-                      debugPrint(
-                        'latitude: ${center.latitude}, longitude: ${center.longitude}',
-                      );
-                    },
-                    child: Text('当前中点'),
+                    child: Text('iOS重庆'),
                   ),
                 ],
               ),
