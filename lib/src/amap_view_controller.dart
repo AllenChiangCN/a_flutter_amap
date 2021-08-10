@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/services.dart';
 
 import '../a_flutter_amap.dart';
@@ -453,12 +451,7 @@ class AMapViewController {
   ///
   /// [param] - 参数
   Future<void> addMarker(AddMarkerParam param) async {
-    var marker = await _channel.invokeMethod(
-      'addMarker',
-      json.decode(
-        json.encode(param),
-      ),
-    );
+    var marker = await _channel.invokeMethod('addMarker', param.toJson());
     print(marker);
   }
 }

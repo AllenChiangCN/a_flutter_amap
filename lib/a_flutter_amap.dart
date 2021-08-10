@@ -11,5 +11,7 @@ export 'src/logo_margin.dart';
 export 'src/logo_position.dart';
 export 'src/map_language.dart';
 export 'src/map_type.dart';
+export 'src/marker_color.dart';
 export 'src/scale_margin.dart';
+export 'src/util/string_extension.dart';
 export 'src/zoom_position.dart';

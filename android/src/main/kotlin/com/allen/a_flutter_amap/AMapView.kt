@@ -878,20 +878,32 @@ class AMapView(
     fun addMarker(param: HashMap<String, Any?>, @NonNull result: MethodChannel.Result) {
         val latLngMap = param["position"] as HashMap<String, Double>
         val latLng = LatLng(latLngMap["latitude"]!!, latLngMap["longitude"]!!)
-        val anchorMap = param["anchor"] as HashMap<String, Double>
         val title = param["title"] as String
         val snippet = param["snippet"] as String
         val draggable = param["draggable"] as Boolean
         val visible = param["visible"] as Boolean
+        val isInfoWindowEnable = param["isInfoWindowEnable"] as Boolean
         val alpha = param["alpha"] as Double
+        val rotateAngle = param["rotateAngle"] as Double
+        val zIndex = param["zIndex"] as Int
+        val anchorMap = param["anchor"] as HashMap<String, Double>
+        val markerColor = param["markerColor"] as String?
         val marker = _aMap.addMarker(MarkerOptions().apply {
             position(latLng)
-            anchor(anchorMap["anchorU"]!!.toFloat(), anchorMap["anchorV"]!!.toFloat())
             title(title)
             snippet(snippet)
             draggable(draggable)
             visible(visible)
+            infoWindowEnable(isInfoWindowEnable)
             alpha(alpha.toFloat())
+            rotateAngle(rotateAngle.toFloat())
+            zIndex(zIndex.toFloat())
+            anchor(anchorMap["anchorU"]!!.toFloat(), anchorMap["anchorV"]!!.toFloat())
+            if (markerColor == null) {
+                icon(BitmapDescriptorFactory.defaultMarker())
+            } else {
+                icon(BitmapDescriptorFactory.defaultMarker(getMarkerColor(markerColor)!!))
+            }
         })
         if (marker != null) {
             _markers.add(marker)
@@ -924,6 +936,22 @@ class AMapView(
             )
         } else {
             result.error("2001", "添加Marker失败", null)
+        }
+    }
+
+    private fun getMarkerColor(@NonNull color: String): Float? {
+        return when (color) {
+            "RED" -> BitmapDescriptorFactory.HUE_RED
+            "ORANGE" -> BitmapDescriptorFactory.HUE_ORANGE
+            "YELLOW" -> BitmapDescriptorFactory.HUE_YELLOW
+            "GREEN" -> BitmapDescriptorFactory.HUE_GREEN
+            "CYAN" -> BitmapDescriptorFactory.HUE_CYAN
+            "AZURE" -> BitmapDescriptorFactory.HUE_AZURE
+            "BLUE" -> BitmapDescriptorFactory.HUE_BLUE
+            "VIOLET" -> BitmapDescriptorFactory.HUE_VIOLET
+            "MAGENTA" -> BitmapDescriptorFactory.HUE_MAGENTA
+            "ROSE" -> BitmapDescriptorFactory.HUE_ROSE
+            else -> null
         }
     }
 

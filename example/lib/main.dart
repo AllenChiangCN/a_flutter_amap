@@ -15,6 +15,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AMapViewController controller;
 
+  String _selectedColor = 'red';
+
   @override
   void initState() {
     super.initState();
@@ -54,20 +56,56 @@ class _MyAppState extends State<MyApp> {
                     },
                     child: Text('清空所有Overlay(false)'),
                   ),
+                  DropdownButton<String>(
+                    value: _selectedColor,
+                    items: [
+                      'red',
+                      'orange',
+                      'yellow',
+                      'green',
+                      'cyan',
+                      'azure',
+                      'blue',
+                      'violet',
+                      'magenta',
+                      'rose'
+                    ]
+                        .map((e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e),
+                            ))
+                        .toList(),
+                    onChanged: (color) {
+                      setState(() {
+                        _selectedColor = color!;
+                      });
+                      controller.addMarker(
+                        AddMarkerParam(
+                          position: LatLng(
+                            latitude: 29.573833,
+                            longitude: 106.550198,
+                          ),
+                          title: '鲤鱼池',
+                          snippet: '鲤鱼池轻轨站扶梯维护',
+                          rotateAngle: -45.0,
+                          markerColor: _selectedColor.toUpperCase().markerColor,
+                        ),
+                      );
+                    },
+                  ),
                   ElevatedButton(
                     onPressed: () {
-                      controller.addMarker(AddMarkerParam(
-                        position: LatLng(
-                          latitude: 29.573833,
-                          longitude: 106.550198,
+                      controller.addMarker(
+                        AddMarkerParam(
+                          position: LatLng(
+                            latitude: 29.573833,
+                            longitude: 106.550198,
+                          ),
+                          title: '鲤鱼池',
+                          snippet: '鲤鱼池轻轨站扶梯维护',
+                          rotateAngle: -45.0,
                         ),
-                        anchor: Anchor(anchorU: 0.5, anchorV: 1),
-                        title: '鲤鱼池',
-                        snippet: '鲤鱼池轻轨站扶梯维护',
-                        draggable: true,
-                        visible: true,
-                        alpha: 1,
-                      ));
+                      );
                     },
                     child: Text('添加Marker'),
                   ),
