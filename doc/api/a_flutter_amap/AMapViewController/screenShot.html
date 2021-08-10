@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the enableScrollGesture method from the AMapViewController class, for the Dart programming language.">
-  <title>enableScrollGesture method - AMapViewController class - a_flutter_amap library - Dart API</title>
+  <meta name="description" content="API docs for the screenShot method from the AMapViewController class, for the Dart programming language.">
+  <title>screenShot method - AMapViewController class - a_flutter_amap library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">a_flutter_amap</a></li>
     <li><a href="../../a_flutter_amap/a_flutter_amap-library.html">a_flutter_amap</a></li>
     <li><a href="../../a_flutter_amap/AMapViewController-class.html">AMapViewController</a></li>
-    <li class="self-crumb">enableScrollGesture method</li>
+    <li class="self-crumb">screenShot method</li>
   </ol>
-  <div class="self-name">enableScrollGesture</div>
+  <div class="self-name">screenShot</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,7 +53,7 @@
   <li><a href="../../index.html">a_flutter_amap</a></li>
   <li><a href="../../a_flutter_amap/a_flutter_amap-library.html">a_flutter_amap</a></li>
   <li><a href="../../a_flutter_amap/AMapViewController-class.html">AMapViewController</a></li>
-  <li class="self-crumb">enableScrollGesture method</li>
+  <li class="self-crumb">screenShot method</li>
 </ol>
 
 
@@ -141,32 +141,30 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-method">enableScrollGesture</span> method 
+<h1><span class="kind-method">screenShot</span> method 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
-<span class="name ">enableScrollGesture</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="enableScrollGesture-param-enable"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">enable</span></span></li>
-</ol>)
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+<span class="name ">screenShot</span>(<wbr>)
 
       
 
     </section>
     
 <section class="desc markdown">
-  <p>设置是否启用拖拽手势</p>
-<p><code>enable</code> - 是否启用</p>
+  <p>地图截屏</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; enableScrollGesture(bool enable) async {
-  await _channel.invokeMethod(&#39;enableScrollGesture&#39;, enable);
+  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; screenShot() async {
+  return await _channel.invokeMethod(&#39;screenShot&#39;);
 }</code></pre>
 </section>
 
