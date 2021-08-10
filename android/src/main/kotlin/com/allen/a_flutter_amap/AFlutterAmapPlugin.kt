@@ -94,6 +94,11 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 _aMapViewFactory.aMapView.setBound(call.arguments<List<HashMap<String, Double>>>())
             }
             "screenShot" -> _aMapViewFactory.aMapView.screenShot(result)
+            "clearAllOverlay" -> _aMapViewFactory.aMapView.clearAllOverlay(call.arguments<Boolean>())
+            "addMarker" -> _aMapViewFactory.aMapView.addMarker(
+                call.arguments<HashMap<String, Any?>>(),
+                result
+            )
             else -> result.notImplemented()
         }
     }

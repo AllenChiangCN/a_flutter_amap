@@ -1,4 +1,4 @@
-import 'package:a_flutter_amap/a_flutter_amap.dart';
+import '../a_flutter_amap.dart';
 
 /// iOS显示范围
 ///

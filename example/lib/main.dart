@@ -43,16 +43,33 @@ class _MyAppState extends State<MyApp> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        String screenShotPath = await controller.screenShot();
-                        debugPrint('截屏保存路径: $screenShotPath');
-                      } catch (e) {
-                        print(e);
-                        debugPrint('截屏失败');
-                      }
+                    onPressed: () {
+                      controller.clearAllOverlay(true);
                     },
-                    child: Text('截屏'),
+                    child: Text('清空所有Overlay(true)'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.clearAllOverlay(false);
+                    },
+                    child: Text('清空所有Overlay(false)'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.addMarker(AddMarkerParam(
+                        position: LatLng(
+                          latitude: 29.573833,
+                          longitude: 106.550198,
+                        ),
+                        anchor: Anchor(anchorU: 0.5, anchorV: 1),
+                        title: '鲤鱼池',
+                        snippet: '鲤鱼池轻轨站扶梯维护',
+                        draggable: true,
+                        visible: true,
+                        alpha: 1,
+                      ));
+                    },
+                    child: Text('添加Marker'),
                   ),
                 ],
               ),

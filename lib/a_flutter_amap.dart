@@ -1,5 +1,7 @@
+export 'src/add_marker_param.dart';
 export 'src/amap_view.dart';
 export 'src/amap_view_controller.dart';
+export 'src/anchor.dart';
 export 'src/camera_position.dart';
 export 'src/compass_margin.dart';
 export 'src/ios_bound.dart';

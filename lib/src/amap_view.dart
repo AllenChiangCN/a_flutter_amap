@@ -1,16 +1,8 @@
-import 'package:a_flutter_amap/a_flutter_amap.dart';
-import 'package:a_flutter_amap/src/amap_view_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'compass_margin.dart';
-import 'location_type.dart';
-import 'logo_margin.dart';
-import 'logo_position.dart';
-import 'map_type.dart';
-import 'scale_margin.dart';
-import 'zoom_position.dart';
+import '../a_flutter_amap.dart';
 
 /// 高德地图
 class AMapView extends StatelessWidget {

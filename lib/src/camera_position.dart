@@ -1,4 +1,4 @@
-import 'lat_lng.dart';
+import '../a_flutter_amap.dart';
 
 /// 视角位置
 class CameraPosition {

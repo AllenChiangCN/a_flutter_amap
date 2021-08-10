@@ -60,6 +60,8 @@ class AMapView(
 
     private var _customMapStyleOptions = CustomMapStyleOptions()
 
+    private var _markers: MutableList<Marker> = mutableListOf()
+
     /**
      * 初始化后是否自动定位
      */
@@ -859,6 +861,70 @@ class AMapView(
                 }
             }
         })
+    }
+
+    /**
+     * 清空所有Overlay
+     *
+     * @param keepMyLocationOverlay 是否保留myLocationOverlay
+     */
+    fun clearAllOverlay(keepMyLocationOverlay: Boolean) {
+        _aMap.clear(keepMyLocationOverlay)
+    }
+
+    /**
+     * 添加Marker
+     */
+    fun addMarker(param: HashMap<String, Any?>, @NonNull result: MethodChannel.Result) {
+        val latLngMap = param["position"] as HashMap<String, Double>
+        val latLng = LatLng(latLngMap["latitude"]!!, latLngMap["longitude"]!!)
+        val anchorMap = param["anchor"] as HashMap<String, Double>
+        val title = param["title"] as String
+        val snippet = param["snippet"] as String
+        val draggable = param["draggable"] as Boolean
+        val visible = param["visible"] as Boolean
+        val alpha = param["alpha"] as Double
+        val marker = _aMap.addMarker(MarkerOptions().apply {
+            position(latLng)
+            anchor(anchorMap["anchorU"]!!.toFloat(), anchorMap["anchorV"]!!.toFloat())
+            title(title)
+            snippet(snippet)
+            draggable(draggable)
+            visible(visible)
+            alpha(alpha.toFloat())
+        })
+        if (marker != null) {
+            _markers.add(marker)
+            result.success(
+                hashMapOf(
+                    "isRemoved" to marker.isRemoved,
+                    "isClickable" to marker.isClickable,
+                    "isInfoWindowEnable" to marker.isInfoWindowEnable,
+                    "period" to marker.period,
+                    "id" to marker.id,
+                    "position" to hashMapOf(
+                        "latitude" to marker.position.latitude,
+                        "longitude" to marker.position.longitude
+                    ),
+                    "title" to marker.title,
+                    "snippet" to marker.snippet,
+                    "isDraggable" to marker.isDraggable,
+                    "isInfoWindowShown" to marker.isInfoWindowShown,
+                    "isVisible" to marker.isVisible,
+                    "rotateAngle" to marker.rotateAngle,
+                    "isFlat" to marker.isFlat,
+                    "zIndex" to marker.zIndex,
+                    "alpha" to marker.alpha,
+                    "displayLevel" to marker.displayLevel,
+                    "isInfoWindowAutoOverturn" to marker.isInfoWindowAutoOverturn,
+                    "anchorU" to marker.anchorU,
+                    "anchorV" to marker.anchorV,
+                    "isViewModel" to marker.isViewMode
+                )
+            )
+        } else {
+            result.error("2001", "添加Marker失败", null)
+        }
     }
 
     override fun getView(): View {

@@ -1,14 +1,8 @@
-import 'package:a_flutter_amap/a_flutter_amap.dart';
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 
-import 'compass_margin.dart';
-import 'location_type.dart';
-import 'logo_margin.dart';
-import 'logo_position.dart';
-import 'map_language.dart';
-import 'map_type.dart';
-import 'scale_margin.dart';
-import 'zoom_position.dart';
+import '../a_flutter_amap.dart';
 
 class AMapViewController {
   final MethodChannel _channel = const MethodChannel('a_flutter_amap');
@@ -446,5 +440,25 @@ class AMapViewController {
   /// 地图截屏
   Future<String> screenShot() async {
     return await _channel.invokeMethod('screenShot');
+  }
+
+  /// 清空所有Overlay
+  ///
+  /// [keepMyLocationOverlay] - 是否保留myLocationOverlay
+  Future<void> clearAllOverlay(bool keepMyLocationOverlay) async {
+    await _channel.invokeMethod('clearAllOverlay', keepMyLocationOverlay);
+  }
+
+  /// 添加Marker
+  ///
+  /// [param] - 参数
+  Future<void> addMarker(AddMarkerParam param) async {
+    var marker = await _channel.invokeMethod(
+      'addMarker',
+      json.decode(
+        json.encode(param),
+      ),
+    );
+    print(marker);
   }
 }
