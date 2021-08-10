@@ -2,6 +2,7 @@
 
 - Android端
   - 添加默认Marker
+  - 绘制线
 
 - iOS端
 

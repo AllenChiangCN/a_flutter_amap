@@ -99,6 +99,7 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 call.arguments<HashMap<String, Any?>>(),
                 result
             )
+            "addPolyline" -> _aMapViewFactory.aMapView.addPolyline(call.arguments<HashMap<String, Any?>>())
             else -> result.notImplemented()
         }
     }

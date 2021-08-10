@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:a_flutter_amap/src/polyline_options.dart';
 import 'package:flutter/services.dart';
 
 import '../a_flutter_amap.dart';
@@ -460,5 +461,15 @@ class AMapViewController {
       ),
     );
     print(marker);
+  }
+
+  /// 绘制一条线
+  ///
+  /// [polylineOptions] - 参数
+  Future<void> addPolyline(PolylineOptions polylineOptions) async {
+    await _channel.invokeMethod(
+      'addPolyline',
+      polylineOptions.toJson(),
+    );
   }
 }

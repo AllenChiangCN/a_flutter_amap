@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.Color
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -19,6 +20,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AMapView(
@@ -925,6 +927,60 @@ class AMapView(
         } else {
             result.error("2001", "添加Marker失败", null)
         }
+    }
+
+    /**
+     * 绘制一条线
+     */
+    fun addPolyline(param: HashMap<String, Any?>) {
+        val alpha = param["alpha"] as Int
+        val red = param["red"] as Int
+        val green = param["green"] as Int
+        val blue = param["blue"] as Int
+        val width = (param["width"] as Double).toFloat()
+        val zIndex = (param["zIndex"] as Double).toFloat()
+        val isGeodesic = param["isGeodesic"] as Boolean
+        val isDottedLine = param["isDottedLine"] as Boolean
+        val useGradient = param["useGradient"] as Boolean
+        val isVisible = param["isVisible"] as Boolean
+        val lineCapType = param["lineCapType"] as Int
+        val lineJoinType = param["lineJoinType"] as Int
+        val dottedLineType = param["dottedLineType"] as Int
+        val latlngs = param["latlngs"] as List<Map<String, Double>>
+        val latLngList: MutableList<LatLng> = mutableListOf()
+        latlngs.forEach {
+            val latLng = LatLng(it["latitude"]!!, it["longitude"]!!)
+            latLngList.add(latLng)
+        }
+
+        val lineCapType1 = when (lineCapType) {
+            0 -> PolylineOptions.LineCapType.LineCapButt
+            1 -> PolylineOptions.LineCapType.LineCapSquare
+            2 -> PolylineOptions.LineCapType.LineCapArrow
+            3 -> PolylineOptions.LineCapType.LineCapRound
+            else -> PolylineOptions.LineCapType.LineCapButt
+        }
+
+        val lineJoinType1 = when (lineJoinType) {
+            0 -> PolylineOptions.LineJoinType.LineJoinBevel
+            1 -> PolylineOptions.LineJoinType.LineJoinMiter
+            2 -> PolylineOptions.LineJoinType.LineJoinRound
+            else -> PolylineOptions.LineJoinType.LineJoinBevel
+        }
+
+        val options = PolylineOptions().addAll(latLngList).width(width)
+            .color(Color.argb(alpha, red, green, blue))
+            .geodesic(isGeodesic)
+            .setDottedLine(isDottedLine)
+            .setDottedLineType(dottedLineType)
+            .lineCapType(lineCapType1)
+            .lineJoinType(lineJoinType1)
+            .visible(isVisible)
+            .zIndex(zIndex)
+            .useGradient(useGradient)
+
+        _aMap.addPolyline(options)
+
     }
 
     override fun getView(): View {
