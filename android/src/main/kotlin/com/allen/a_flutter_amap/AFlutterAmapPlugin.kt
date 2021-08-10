@@ -95,6 +95,8 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
             "screenShot" -> _aMapViewFactory.aMapView.screenShot(result)
             "clearAllOverlay" -> _aMapViewFactory.aMapView.clearAllOverlay(call.arguments<Boolean>())
+            "clearAllMarkers" -> _aMapViewFactory.aMapView.clearAllMarkers()
+            "clearMapScreenMarkers" -> _aMapViewFactory.aMapView.clearMapScreenMarkers()
             "addMarker" -> _aMapViewFactory.aMapView.addMarker(
                 call.arguments<HashMap<String, Any?>>(),
                 result

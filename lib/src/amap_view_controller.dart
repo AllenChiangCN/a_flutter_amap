@@ -447,6 +447,16 @@ class AMapViewController {
     await _channel.invokeMethod('clearAllOverlay', keepMyLocationOverlay);
   }
 
+  /// 清空所有Marker
+  Future<void> clearAllMarkers() async {
+    await _channel.invokeMethod('clearAllMarkers');
+  }
+
+  /// 清空地图可见范围内的Marker
+  Future<void> clearMapScreenMarkers() async {
+    await _channel.invokeMethod('clearMapScreenMarkers');
+  }
+
   /// 添加Marker
   ///
   /// [param] - 参数

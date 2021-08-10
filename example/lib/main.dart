@@ -56,6 +56,34 @@ class _MyAppState extends State<MyApp> {
                     },
                     child: Text('清空所有Overlay(false)'),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.clearAllMarkers();
+                    },
+                    child: Text('清空所有Marker'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.clearMapScreenMarkers();
+                    },
+                    child: Text('清空可见Marker'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.addMarker(
+                        AddMarkerParam(
+                          position: LatLng(
+                            latitude: 29.573833,
+                            longitude: 106.550198,
+                          ),
+                          title: '鲤鱼池',
+                          snippet: '鲤鱼池轻轨站扶梯维护',
+                          rotateAngle: -45.0,
+                        ),
+                      );
+                    },
+                    child: Text('添加Marker'),
+                  ),
                   DropdownButton<String>(
                     value: _selectedColor,
                     items: [
@@ -92,22 +120,6 @@ class _MyAppState extends State<MyApp> {
                         ),
                       );
                     },
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.addMarker(
-                        AddMarkerParam(
-                          position: LatLng(
-                            latitude: 29.573833,
-                            longitude: 106.550198,
-                          ),
-                          title: '鲤鱼池',
-                          snippet: '鲤鱼池轻轨站扶梯维护',
-                          rotateAngle: -45.0,
-                        ),
-                      );
-                    },
-                    child: Text('添加Marker'),
                   ),
                 ],
               ),

@@ -1,7 +1,10 @@
 ## 0.0.8
 
 - Android端
-  - 添加默认Marker
+  - 添加默认Marker方法
+  - 清空所有Overlay方法
+  - 清空所有Marker方法
+  - 清空地图可见范围内的Marker方法
 
 - iOS端
 

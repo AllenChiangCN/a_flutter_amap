@@ -60,6 +60,9 @@ class AMapView(
 
     private var _customMapStyleOptions = CustomMapStyleOptions()
 
+    /**
+     * 所有Marker
+     */
     private var _markers: MutableList<Marker> = mutableListOf()
 
     /**
@@ -870,6 +873,31 @@ class AMapView(
      */
     fun clearAllOverlay(keepMyLocationOverlay: Boolean) {
         _aMap.clear(keepMyLocationOverlay)
+        _markers.clear()
+        print(_markers.size)
+    }
+
+    /**
+     * 清空所有Marker
+     */
+    fun clearAllMarkers() {
+        _markers.forEach {
+            it.remove()
+        }
+        _markers.clear()
+        print(_markers.size)
+    }
+
+    /**
+     * 清空地图可见范围内的Marker
+     */
+    fun clearMapScreenMarkers() {
+        val visibleMarkers = _aMap.mapScreenMarkers
+        visibleMarkers.forEach {
+            it.remove()
+        }
+        _markers.removeAll { it.isRemoved }
+        print(_markers.size)
     }
 
     /**
