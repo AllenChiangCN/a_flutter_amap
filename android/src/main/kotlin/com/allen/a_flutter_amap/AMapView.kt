@@ -1,15 +1,25 @@
 package com.allen.a_flutter_amap
 
 import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.amap.api.maps.*
 import com.amap.api.maps.model.*
+import io.flutter.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class AMapView(
     context: Context,
@@ -798,6 +808,57 @@ class AMapView(
                 )
             )
         )
+    }
+
+    /**
+     * 地图截屏
+     */
+    fun screenShot(@NonNull result: MethodChannel.Result) {
+        _aMap.getMapScreenShot(object : AMap.OnMapScreenShotListener {
+            override fun onMapScreenShot(bitmap: Bitmap?) {
+
+            }
+
+            override fun onMapScreenShot(bitmap: Bitmap?, status: Int) {
+                val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+                if (null == bitmap) {
+                    result.error("1001", "Bitmap为空", null)
+                }
+                try {
+                    val contextWrapper = ContextWrapper(activity.applicationContext)
+                    val path =
+                        contextWrapper.externalCacheDir!!.absolutePath +
+                                "/" + sdf.format(Date()) + ".png"
+                    val fos = FileOutputStream(path)
+                    val b: Boolean = bitmap!!.compress(CompressFormat.PNG, 100, fos)
+                    try {
+                        fos.flush()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        result.error("1002", "截屏保存失败", null)
+                    }
+                    try {
+                        fos.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        result.error("1002", "截屏保存失败", null)
+                    }
+                    if (b) {
+                        result.success(path)
+                    } else {
+                        result.error("1002", "截屏保存失败", null)
+                    }
+                    if (status != 0) {
+                        Log.d("Screenshot", "地图渲染完成，截屏无网格")
+                    } else {
+                        Log.d("Screenshot", "地图未渲染完成，截屏有网格")
+                    }
+                } catch (e: FileNotFoundException) {
+                    result.error("1003", "截屏失败", null)
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 
     override fun getView(): View {

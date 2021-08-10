@@ -91,6 +91,8 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getMapCenter(result)
         case "setBound":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.setBound(call.arguments as! Dictionary<String, NSObject>)
+        case "screenShot":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.screenShot(result)
         default:
             result(FlutterMethodNotImplemented)
         }

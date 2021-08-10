@@ -478,6 +478,26 @@ class AMapView: NSObject, FlutterPlatformView {
             longitudeDelta: bound["longitudeDelta"] as! Double)
         )
     }
+
+    /// 地图截屏
+    func screenShot(_ result: FlutterResult) {
+        let image = _mAMapView.takeSnapshot(in: _mAMapView.bounds)
+        if image != nil {
+            let path = NSTemporaryDirectory()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let filePath = "\(path)\(dateFormatter.string(from: Date())).png"
+            do {
+                try image!.pngData()?.write(to: URL(fileURLWithPath: filePath, isDirectory: false), options: .atomicWrite)
+                result(filePath)
+            } catch {
+                print("截屏保存失败\(error.localizedDescription)")
+                result(FlutterError(code: "1002", message: "截屏保存失败", details: nil))
+            }
+        } else {
+            result(FlutterError(code: "1003", message: "截屏失败", details: nil))
+        }
+    }
 }
 
 extension AMapView: MAMapViewDelegate {

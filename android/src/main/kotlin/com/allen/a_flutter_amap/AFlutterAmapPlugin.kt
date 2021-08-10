@@ -93,6 +93,7 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "setBound" -> {
                 _aMapViewFactory.aMapView.setBound(call.arguments<List<HashMap<String, Double>>>())
             }
+            "screenShot" -> _aMapViewFactory.aMapView.screenShot(result)
             else -> result.notImplemented()
         }
     }

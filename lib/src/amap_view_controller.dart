@@ -442,4 +442,9 @@ class AMapViewController {
       bound.toJson(),
     );
   }
+
+  /// 地图截屏
+  Future<String> screenShot() async {
+    return await _channel.invokeMethod('screenShot');
+  }
 }
