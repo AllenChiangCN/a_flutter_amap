@@ -162,6 +162,17 @@ class _MyAppState extends State<MyApp> {
                     },
                     child: Text('addPolyline'),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.addCircle(
+                        latLng: LatLng(
+                          latitude: 39.984059,
+                          longitude: 116.307771,
+                        ),
+                      );
+                    },
+                    child: Text('addCircle'),
+                  ),
                 ],
               ),
             ),

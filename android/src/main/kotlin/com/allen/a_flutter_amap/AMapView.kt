@@ -71,6 +71,11 @@ class AMapView(
     private var _polylines: MutableList<Polyline> = mutableListOf()
 
     /**
+     * 所有Circle
+     */
+    private var _circles: MutableList<Circle> = mutableListOf()
+
+    /**
      * 初始化后是否自动定位
      */
     private var _autoLocateAfterInit: Boolean = creationParams["autoLocateAfterInit"] as Boolean
@@ -991,7 +996,7 @@ class AMapView(
     /**
      * 绘制一条线
      */
-    fun addPolyline(param: HashMap<String, Any?>) {
+    fun addPolyline(param: HashMap<String, Any?>, @NonNull result: MethodChannel.Result) {
         val alpha = param["alpha"] as Int
         val red = param["red"] as Int
         val green = param["green"] as Int
@@ -1042,7 +1047,47 @@ class AMapView(
         if (polyline != null) {
             _polylines.add(polyline)
         } else {
+            result.error("2002", "绘制线失败", null)
+        }
+    }
 
+    /**
+     * 绘制圆形面
+     */
+    fun addCircle(param: HashMap<String, Any?>, @NonNull result: MethodChannel.Result) {
+        val latlng = param["latLng"] as Map<String, Double>
+        val radius = param["radius"] as Double
+        val fillColorAlpha = param["fillColorAlpha"] as Int
+        val fillColorRed = param["fillColorRed"] as Int
+        val fillColorGreen = param["fillColorGreen"] as Int
+        val fillColorBlue = param["fillColorBlue"] as Int
+        val strokeColorAlpha = param["strokeColorAlpha"] as Int
+        val strokeColorRed = param["strokeColorRed"] as Int
+        val strokeColorGreen = param["strokeColorGreen"] as Int
+        val strokeColorBlue = param["strokeColorBlue"] as Int
+        val strokeWidth = (param["strokeWidth"] as Double).toFloat()
+        val zIndex = (param["zIndex"] as Double).toFloat()
+
+        val options = CircleOptions()
+            .center(LatLng(latlng["latitude"]!!, latlng["longitude"]!!))
+            .radius(radius)
+            .strokeWidth(strokeWidth)
+            .fillColor(Color.argb(fillColorAlpha, fillColorRed, fillColorGreen, fillColorBlue))
+            .strokeColor(
+                Color.argb(
+                    strokeColorAlpha,
+                    strokeColorRed,
+                    strokeColorGreen,
+                    strokeColorBlue
+                )
+            )
+            .zIndex(zIndex)
+
+        val circle = _aMap.addCircle(options)
+        if (circle != null) {
+            _circles.add(circle)
+        } else {
+            result.error("2003", "绘制圆失败", null)
         }
     }
 

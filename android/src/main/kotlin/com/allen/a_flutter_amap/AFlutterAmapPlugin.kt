@@ -101,7 +101,14 @@ class AFlutterAmapPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 call.arguments<HashMap<String, Any?>>(),
                 result
             )
-            "addPolyline" -> _aMapViewFactory.aMapView.addPolyline(call.arguments<HashMap<String, Any?>>())
+            "addPolyline" -> _aMapViewFactory.aMapView.addPolyline(
+                call.arguments<HashMap<String, Any?>>(),
+                result
+            )
+            "addCircle" -> _aMapViewFactory.aMapView.addCircle(
+                call.arguments<HashMap<String, Any?>>(),
+                result
+            )
             else -> result.notImplemented()
         }
     }

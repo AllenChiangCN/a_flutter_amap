@@ -469,9 +469,66 @@ class AMapViewController {
   ///
   /// [polylineOptions] - 参数
   Future<void> addPolyline(PolylineOptions polylineOptions) async {
-    await _channel.invokeMethod(
+    var polyline = await _channel.invokeMethod(
       'addPolyline',
       polylineOptions.toJson(),
     );
+    print(polyline);
+  }
+
+  /// 绘制圆
+  ///
+  /// [latLng] - 中心位置 LatLng
+  /// [radius] - 半径 double
+  ///
+  /// 填充颜色
+  /// [fillColorAlpha]  int
+  /// [fillColorRed]  int
+  /// [fillColorGreen]  int
+  /// [fillColorBlue]  int
+  ///
+  /// 边线颜色
+  /// [strokeColorAlpha]  int
+  /// [strokeColorRed]  int
+  /// [strokeColorGreen]  int
+  /// [strokeColorBlue]  int
+  ///
+  /// [strokeWidth] - 宽度  double  23, 142, 248
+  ///
+  /// [zIndex] - 设置Z轴的值
+  Future<void> addCircle({
+    required LatLng latLng,
+    double? radius = 1000,
+    int? fillColorAlpha = 128,
+    int? fillColorRed = 23,
+    int? fillColorGreen = 142,
+    int? fillColorBlue = 248,
+    int? strokeColorAlpha = 128,
+    int? strokeColorRed = 23,
+    int? strokeColorGreen = 142,
+    int? strokeColorBlue = 248,
+    double? strokeWidth = 100,
+    double? zIndex = 1,
+  }) async {
+    Map<String, dynamic> param = {
+      'latLng': {
+        "latitude": latLng.latitude,
+        "longitude": latLng.longitude,
+      },
+      'radius': radius,
+      'fillColorAlpha': fillColorAlpha,
+      'fillColorRed': fillColorRed,
+      'fillColorGreen': fillColorGreen,
+      'fillColorBlue': fillColorBlue,
+      'strokeColorAlpha': strokeColorAlpha,
+      'strokeColorRed': strokeColorRed,
+      'strokeColorGreen': strokeColorGreen,
+      'strokeColorBlue': strokeColorBlue,
+      'strokeWidth': strokeWidth,
+      'zIndex': strokeWidth,
+    };
+
+    var circle = await _channel.invokeMethod('addCircle', param);
+    print(circle);
   }
 }
