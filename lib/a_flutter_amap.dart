@@ -15,3 +15,7 @@ export 'src/marker_color.dart';
 export 'src/scale_margin.dart';
 export 'src/util/string_extension.dart';
 export 'src/zoom_position.dart';
+export 'src/polyline_options.dart';
+export 'src/dotted_line_type.dart';
+export 'src/line_cap_type.dart';
+export 'src/line_join_type.dart';

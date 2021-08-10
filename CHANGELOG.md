@@ -5,6 +5,8 @@
   - 清空所有Overlay方法
   - 清空所有Marker方法
   - 清空地图可见范围内的Marker方法
+  - 添加默认Marker
+  - 绘制线
 
 - iOS端
 

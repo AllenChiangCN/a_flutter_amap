@@ -121,6 +121,47 @@ class _MyAppState extends State<MyApp> {
                       );
                     },
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.addPolyline(
+                        PolylineOptions(
+                          latlngs: [
+                            LatLng(
+                              latitude: 39.999391,
+                              longitude: 116.135972,
+                            ),
+                            LatLng(
+                              latitude: 39.898323,
+                              longitude: 116.057694,
+                            ),
+                            LatLng(
+                              latitude: 39.900430,
+                              longitude: 116.265061,
+                            ),
+                            LatLng(
+                              latitude: 39.955192,
+                              longitude: 116.140092,
+                            ),
+                          ],
+                          lineCapType: LineCapType.LineCapSquare.value,
+                          dottedLineType:
+                              DottedLineType.DOTTEDLINE_TYPE_CIRCLE.value,
+                          lineJoinType: LineJoinType.LineJoinBevel.value,
+                          width: 10,
+                          isGeodesic: false,
+                          isDottedLine: false,
+                          alpha: 255,
+                          red: 23,
+                          green: 142,
+                          blue: 248,
+                          isVisible: true,
+                          useGradient: true,
+                          zIndex: 50,
+                        ),
+                      );
+                    },
+                    child: Text('addPolyline'),
+                  ),
                 ],
               ),
             ),

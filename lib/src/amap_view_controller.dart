@@ -464,4 +464,14 @@ class AMapViewController {
     var marker = await _channel.invokeMethod('addMarker', param.toJson());
     print(marker);
   }
+
+  /// 绘制一条线
+  ///
+  /// [polylineOptions] - 参数
+  Future<void> addPolyline(PolylineOptions polylineOptions) async {
+    await _channel.invokeMethod(
+      'addPolyline',
+      polylineOptions.toJson(),
+    );
+  }
 }
