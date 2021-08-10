@@ -14,4 +14,4 @@
     ```
 
 - TODO:
-    - [ ] iOS Logo位置调整
+  - [ ] iOS Logo位置属性

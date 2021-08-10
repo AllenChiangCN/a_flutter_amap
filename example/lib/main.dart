@@ -13,6 +13,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late AMapViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AMapViewController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,37 +32,27 @@ class _MyAppState extends State<MyApp> {
         body: Stack(
           children: [
             AMapView(
+              controller: controller,
               autoLocateAfterInit: true,
-              showBuildings: false,
               showCompass: true,
-              showLocationButton: true,
-              showScaleControl: true,
-              showZoomControl: false,
             ),
             Align(
               alignment: Alignment.bottomRight,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapLanguage(MapLanguage.CHINESE);
-                    },
-                    child: Text('中文'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      AFlutterAmap.setMapLanguage(MapLanguage.ENGLISH);
-                    },
-                    child: Text('英文'),
-                  ),
-                  ElevatedButton(
                     onPressed: () async {
-                      MapLanguage language =
-                          await AFlutterAmap.getMapLanguage();
-                      debugPrint('语言: ${language.name}');
+                      try {
+                        String screenShotPath = await controller.screenShot();
+                        debugPrint('截屏保存路径: $screenShotPath');
+                      } catch (e) {
+                        print(e);
+                        debugPrint('截屏失败');
+                      }
                     },
-                    child: Text('语言'),
+                    child: Text('截屏'),
                   ),
                 ],
               ),

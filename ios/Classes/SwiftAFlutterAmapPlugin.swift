@@ -46,6 +46,53 @@ public class SwiftAFlutterAmapPlugin: NSObject, FlutterPlugin {
             SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapLanguage(call.arguments as! String)
         case "getMapLanguage":
             SwiftAFlutterAmapPlugin.factory?.aMapView?.getMapLanguage(result)
+        case "turnOnCompass":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnCompass((call.arguments as! NSNumber).boolValue)
+        case "isCompassOn":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isCompassOn(result)
+        case "turnOnScaleControl":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.turnOnScaleControl((call.arguments as! NSNumber).boolValue)
+        case "isScaleControlOn":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isScaleControlOn(result)
+        case "enableZoomGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableZoomGesture((call.arguments as! NSNumber).boolValue)
+        case "isZoomGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isZoomGestureEnable(result)
+        case "enableRotateGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableRotateGesture((call.arguments as! NSNumber).boolValue)
+        case "isRotateGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isRotateGestureEnable(result)
+        case "enableScrollGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableScrollGesture((call.arguments as! NSNumber).boolValue)
+        case "isScrollGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isScrollGestureEnable(result)
+        case "enableTiltGesture":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.enableTiltGesture((call.arguments as! NSNumber).boolValue)
+        case "isTiltGestureEnable":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.isTiltGestureEnable(result)
+        case "setLogoMargin":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setLogoMargin(call.arguments as! Dictionary<String, Int>)
+        case "setCompassMargin":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setCompassMargin(call.arguments as! Dictionary<String, Int>)
+        case "setScaleMargin":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setScaleMargin(call.arguments as! Dictionary<String, Int>)
+        case "setIsGestureScaleByMapCenterPosition":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setIsGestureScaleByMapCenterPosition((call.arguments as! NSNumber).boolValue)
+        case "getIsGestureScaleByMapCenterPosition":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.getIsGestureScaleByMapCenterPosition(result)
+        case "setCustomMapStyleId":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setCustomMapStyleId(call.arguments as! NSString)
+        case "disableCustomMapStyle":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.disableCustomMapStyle()
+        case "setMapCenter":
+            let latLngMap = call.arguments as! Dictionary<String, Double>
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setMapCenter(latLngMap)
+        case "getMapCenter":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.getMapCenter(result)
+        case "setBound":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.setBound(call.arguments as! Dictionary<String, NSObject>)
+        case "screenShot":
+            SwiftAFlutterAmapPlugin.factory?.aMapView?.screenShot(result)
         default:
             result(FlutterMethodNotImplemented)
         }

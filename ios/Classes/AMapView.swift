@@ -13,6 +13,8 @@ class AMapView: NSObject, FlutterPlatformView {
 
     private var _mAMapView: MAMapView
 
+    private var _customMapStyleOptions = MAMapCustomStyleOptions()
+
     // MARK: - 属性
 
     /// 初始化后是否自动定位
@@ -62,21 +64,21 @@ class AMapView: NSObject, FlutterPlatformView {
     /// marginLeft: 左边距
     ///
     /// marginBottom: 下边距
-    private var _logoMargin: NSDictionary?
+    private var _logoMargin: Dictionary<String, Int>?
 
     /// 指南针右上边距
     ///
     /// marginRight: 右边距
     ///
     /// marginTop: 上边距
-    private var _compassMargin: NSDictionary?
+    private var _compassMargin: Dictionary<String, Int>?
 
     /// 比例尺左下边距
     ///
     /// marginLeft: 左边距
     ///
     /// marginBottom: 下边距
-    private var _scaleMargin: NSDictionary?
+    private var _scaleMargin: Dictionary<String, Int>?
 
     /// 初始缩放等级
     ///
@@ -90,6 +92,12 @@ class AMapView: NSObject, FlutterPlatformView {
 
     /// 最小缩放等级
     private var _minZoomLevel: NSNumber
+
+    /// 自定义地图样式id
+    private var _customMapStyleId: NSString?
+
+    /// 显示范围
+    private var _bound: Dictionary<String, NSObject>?
 
     // MARK: - 方法
 
@@ -110,12 +118,14 @@ class AMapView: NSObject, FlutterPlatformView {
         _scrollGestureEnable = params["scrollGestureEnable"] as! Bool
         _tiltGestureEnable = params["tiltGestureEnable"] as! Bool
         _isGestureScaleByMapCenter = params["isGestureScaleByMapCenter"] as! Bool
-        _logoMargin = params["logoMargin"] as? NSDictionary
-        _compassMargin = params["compassMargin"] as? NSDictionary
-        _scaleMargin = params["scaleMargin"] as? NSDictionary
+        _logoMargin = params["logoMargin"] as? Dictionary<String, Int>
+        _compassMargin = params["compassMargin"] as? Dictionary<String, Int>
+        _scaleMargin = params["scaleMargin"] as? Dictionary<String, Int>
         _initialZoomLevel = params["initialZoomLevel"] as! NSNumber
         _maxZoomLevel = params["maxZoomLevel"] as! NSNumber
         _minZoomLevel = params["minZoomLevel"] as! NSNumber
+        _customMapStyleId = params["customMapStyleId"] as? NSString
+        _bound = params["iOSBound"] as? Dictionary<String, NSObject>
 
         _view.backgroundColor = UIColor.white
         _mAMapView = MAMapView(frame: _view.bounds)
@@ -131,6 +141,9 @@ class AMapView: NSObject, FlutterPlatformView {
     private func createAMapView(view _view: UIView) {
         configAMapView()
         _view.addSubview(_mAMapView)
+        if _bound != nil {
+            setBound(_bound!)
+        }
     }
 
     /// 配置地图组件
@@ -142,7 +155,7 @@ class AMapView: NSObject, FlutterPlatformView {
         _mAMapView.delegate = self
 
         _mAMapView.showsUserLocation = _autoLocateAfterInit
-        if _autoLocateAfterInit {
+        if _autoLocateAfterInit && _bound == nil {
             _mAMapView.setUserTrackingMode(.follow, animated: true)
         }
 
@@ -150,7 +163,7 @@ class AMapView: NSObject, FlutterPlatformView {
         setMapLanguage(_mapLanguage)
         turnOnTraffic(_showTraffic)
         turnOnBuildings(_showBuildings)
-        _mAMapView.showsCompass = _showCompass
+        turnOnCompass(_showCompass)
         _mAMapView.showsScale = _showScaleControl
         _mAMapView.isShowsIndoorMap = _showIndoorMap
         if _showIndoorMap {
@@ -167,27 +180,31 @@ class AMapView: NSObject, FlutterPlatformView {
         _mAMapView.zoomingInPivotsAroundAnchorPoint = _isGestureScaleByMapCenter
 
         // TODO: 设置Logo位置
-//        if _logoMargin != nil {
-//            let marginLeft = _logoMargin!["marginLeft"] as! Double
-//            let marginBottom = _logoMargin!["marginBottom"] as! Double
-//            print("左边距: \(marginLeft), 下边距: \(marginBottom)")
-//            mapView.logoCenter = CGPoint(x: mapView.logoCenter.x + CGFloat(marginLeft), y: mapView.logoCenter.y - CGFloat(marginBottom))
-//        }
+        if _logoMargin != nil {
+            let marginLeft = _logoMargin!["marginLeft"]!
+            let marginBottom = _logoMargin!["marginBottom"]!
+            print("左边距: \(marginLeft), 下边距: \(marginBottom)")
+            _mAMapView.logoCenter = CGPoint(x: _mAMapView.logoCenter.x + CGFloat(marginLeft), y: _mAMapView.logoCenter.y - CGFloat(marginBottom))
+        }
 
         if _compassMargin != nil {
-            let marginRight = _compassMargin!["marginRight"] as! Double
-            let marginTop = _compassMargin!["marginTop"] as! Double
+            let marginRight = _compassMargin!["marginRight"]!
+            let marginTop = _compassMargin!["marginTop"]!
             _mAMapView.compassOrigin = CGPoint(x: _mAMapView.compassOrigin.x - CGFloat(marginRight), y: _mAMapView.compassOrigin.y + CGFloat(marginTop))
         }
 
         if _scaleMargin != nil {
-            let marginLeft = _scaleMargin!["marginLeft"] as! Double
-            let marginBottom = _scaleMargin!["marginBottom"] as! Double
+            let marginLeft = _scaleMargin!["marginLeft"]!
+            let marginBottom = _scaleMargin!["marginBottom"]!
             _mAMapView.scaleOrigin = CGPoint(x: _mAMapView.scaleOrigin.x + CGFloat(marginLeft), y: _mAMapView.scaleOrigin.y - CGFloat(marginBottom))
+        }
+
+        if _customMapStyleId != nil {
+            setCustomMapStyleId(_customMapStyleId!)
         }
     }
 
-    // MARK: - 暴露方法
+    // MARK: - 插件暴露方法
 
     /// 设置当前缩放等级
     ///
@@ -302,6 +319,184 @@ class AMapView: NSObject, FlutterPlatformView {
     /// 获取底图语言
     func getMapLanguage(_ result: FlutterResult) {
         result(_mapLanguage)
+    }
+
+    /// 打开/关闭指南针
+    ///
+    /// - Parameter on: 打开/关闭
+    func turnOnCompass(_ on: Bool) {
+        _mAMapView.showsCompass = on
+    }
+
+    /// 指南针是否打开
+    func isCompassOn(_ result: FlutterResult) {
+        result(_mAMapView.showsCompass)
+    }
+
+    /// 打开/关闭比例尺控件
+    ///
+    /// - Parameter on: 打开/关闭
+    func turnOnScaleControl(_ on: Bool) {
+        _mAMapView.showsScale = on
+    }
+
+    /// 比例尺控件是否打开
+    func isScaleControlOn(_ result: FlutterResult) {
+        result(_mAMapView.showsScale)
+    }
+
+    /// 启用/停用缩放手势
+    ///
+    /// - Parameter on: 启用/停用
+    func enableZoomGesture(_ on: Bool) {
+        _mAMapView.isZoomEnabled = on
+    }
+
+    /// 缩放手势是否启用
+    func isZoomGestureEnable(_ result: FlutterResult) {
+        result(_mAMapView.isZoomEnabled)
+    }
+
+    /// 启用/停用旋转手势
+    ///
+    /// - Parameter on: 启用/停用
+    func enableRotateGesture(_ on: Bool) {
+        _mAMapView.isRotateEnabled = on
+    }
+
+    /// 旋转手势是否启用
+    func isRotateGestureEnable(_ result: FlutterResult) {
+        result(_mAMapView.isRotateEnabled)
+    }
+
+    /// 启用/停用拖拽手势
+    ///
+    /// - Parameter on: 启用/停用
+    func enableScrollGesture(_ on: Bool) {
+        _mAMapView.isScrollEnabled = on
+    }
+
+    /// 拖拽手势是否启用
+    func isScrollGestureEnable(_ result: FlutterResult) {
+        result(_mAMapView.isScrollEnabled)
+    }
+
+    /// 启用/停用倾斜手势
+    ///
+    /// - Parameter on: 启用/停用
+    func enableTiltGesture(_ on: Bool) {
+        _mAMapView.isRotateCameraEnabled = on
+    }
+
+    /// 倾斜手势是否启用
+    func isTiltGestureEnable(_ result: FlutterResult) {
+        result(_mAMapView.isRotateCameraEnabled)
+    }
+
+    /// 设置Logo左下边距
+    ///
+    /// - Parameter margin: 左下边距，包含*marginLeft*和*marginBottom*
+    func setLogoMargin(_ margin: Dictionary<String, Int>) {
+        let marginLeft = margin["marginLeft"]!
+        let marginBottom = margin["marginBottom"]!
+        _mAMapView.logoCenter = CGPoint(x: _mAMapView.logoCenter.x + CGFloat(marginLeft),
+                                        y: _mAMapView.logoCenter.y - CGFloat(marginBottom))
+    }
+
+    /// 设置指南针右上边距
+    ///
+    /// - Parameter margin: 右上边距，包含*marginRight*和*marginTop*
+    func setCompassMargin(_ margin: Dictionary<String, Int>) {
+        let marginRight = margin["marginRight"]!
+        let marginTop = margin["marginTop"]!
+        _mAMapView.compassOrigin = CGPoint(x: _mAMapView.compassOrigin.x - CGFloat(marginRight),
+                                           y: _mAMapView.compassOrigin.y + CGFloat(marginTop))
+    }
+
+    /// 设置比例尺左下边距
+    ///
+    /// - Parameter margin: 左下边距，包含*marginLeft*和*marginBottom*
+    func setScaleMargin(_ margin: Dictionary<String, Int>) {
+        let marginLeft = margin["marginLeft"]!
+        let marginBottom = margin["marginBottom"]!
+        _mAMapView.scaleOrigin = CGPoint(x: _mAMapView.scaleOrigin.x + CGFloat(marginLeft),
+                                         y: _mAMapView.scaleOrigin.y - CGFloat(marginBottom))
+    }
+
+    /// 设置是否以地图中心点缩放
+    ///
+    /// - Parameter flag: 是否以地图中心点缩放
+    func setIsGestureScaleByMapCenterPosition(_ flag: Bool) {
+        _mAMapView.zoomingInPivotsAroundAnchorPoint = flag
+    }
+
+    /// 获取是否以地图中心点缩放
+    func getIsGestureScaleByMapCenterPosition(_ result: FlutterResult) {
+        result(_mAMapView.zoomingInPivotsAroundAnchorPoint)
+    }
+
+    /// 设置自定义地图样式
+    ///
+    /// - Parameter id: 自定义地图样式id
+    func setCustomMapStyleId(_ id: NSString) {
+        _customMapStyleOptions.styleId = id as String
+        _mAMapView.setCustomMapStyleOptions(_customMapStyleOptions)
+        _mAMapView.customMapStyleEnabled = true
+    }
+
+    /// 关闭自定义地图样式
+    func disableCustomMapStyle() {
+        _mAMapView.customMapStyleEnabled = false
+    }
+
+    /// 设置地图中心点
+    ///
+    /// - Parameter latLng: 地图中心点, latitude, longitude
+    func setMapCenter(_ latLng: Dictionary<String, Double>) {
+        _mAMapView.setCenter(CLLocationCoordinate2D(latitude: latLng["latitude"]!, longitude: latLng["longitude"]!), animated: true)
+    }
+
+    /// 获取地图中心点
+    func getMapCenter(_ result: FlutterResult) {
+        result([
+            "latitude": _mAMapView.centerCoordinate.latitude,
+            "longitude": _mAMapView.centerCoordinate.longitude,
+        ])
+    }
+
+    /// 设置地图显示范围
+    ///
+    /// - Parameter bound: 地图显示范围
+    func setBound(_ bound: Dictionary<String, NSObject>) {
+        let latLng = bound["latLng"] as! Dictionary<String, Double>
+        let southWest = CLLocationCoordinate2D(
+            latitude: latLng["latitude"]!,
+            longitude: latLng["longitude"]!
+        )
+        _mAMapView.limitRegion = MACoordinateRegion(center: southWest, span: MACoordinateSpan(
+            latitudeDelta: bound["latitudeDelta"] as! Double,
+            longitudeDelta: bound["longitudeDelta"] as! Double)
+        )
+    }
+
+    /// 地图截屏
+    func screenShot(_ result: FlutterResult) {
+        let image = _mAMapView.takeSnapshot(in: _mAMapView.bounds)
+        if image != nil {
+            let path = NSTemporaryDirectory()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let filePath = "\(path)\(dateFormatter.string(from: Date())).png"
+            do {
+                try image!.pngData()?.write(to: URL(fileURLWithPath: filePath, isDirectory: false), options: .atomicWrite)
+                result(filePath)
+            } catch {
+                print("截屏保存失败\(error.localizedDescription)")
+                result(FlutterError(code: "1002", message: "截屏保存失败", details: nil))
+            }
+        } else {
+            result(FlutterError(code: "1003", message: "截屏失败", details: nil))
+        }
     }
 }
 
